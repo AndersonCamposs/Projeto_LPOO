@@ -177,6 +177,12 @@ public class RegistrarUsuarioPane extends javax.swing.JPanel {
             usuario.setSenha(senhaUsuario);
 
             usuarioDAOImpl.save(usuario);
+            JOptionPane.showMessageDialog(this, "Usuário salvo com sucesso!", "SUCESSO: Usuário salvo", JOptionPane.INFORMATION_MESSAGE);
+            // limpar os campos
+            inputNomeUsuario.setText("");
+            inputLoginUsuario.setText("");
+            inputSenhaUsuario.setText("");
+            inputRepetirSenhaUsuario.setText("");             
         }
     }//GEN-LAST:event_btnSalvarUsuarioActionPerformed
 
