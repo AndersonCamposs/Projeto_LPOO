@@ -4,7 +4,9 @@
  */
 package view;
 
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import model.dao.GenericDAOImpl;
 import model.dao.UsuarioDAOImpl;
 import model.entity.Usuario;
 
@@ -163,29 +165,36 @@ public class RegistrarUsuarioPane extends javax.swing.JPanel {
         if(!new String(inputSenhaUsuario.getPassword()).equals(new String(inputRepetirSenhaUsuario.getPassword()))) {
             JOptionPane.showMessageDialog(this, "As senhas não são iguais. Tente novamente!", "ERRO: Senhas diferentes", JOptionPane.ERROR_MESSAGE);
         } else {
-            Usuario usuario = new Usuario();
-            UsuarioDAOImpl usuarioDAOImpl = new UsuarioDAOImpl();
-            usuario.setNome(inputNomeUsuario.getText());
-            usuario.setLogin(inputLoginUsuario.getText());
-            usuario.setSenha(new String(inputSenhaUsuario.getPassword()));
+            try{
+                UsuarioDAOImpl usuarioDAOImpl = new UsuarioDAOImpl();
+                Usuario usuario = new Usuario();
+                usuario.setNome(inputNomeUsuario.getText());
+                usuario.setLogin(inputLoginUsuario.getText());
+                usuario.setSenha(new String(inputSenhaUsuario.getPassword()));
 
-            usuarioDAOImpl.save(usuario);
-            JOptionPane.showMessageDialog(this, "Usuário salvo com sucesso!", "SUCESSO: Usuário salvo", JOptionPane.INFORMATION_MESSAGE);
-            // limpar os campos
-            inputNomeUsuario.setText("");
-            inputLoginUsuario.setText("");
-            inputSenhaUsuario.setText("");
-            inputRepetirSenhaUsuario.setText("");             
+                usuarioDAOImpl.save(usuario);
+                ((GenericDAOImpl<?, ?>) usuarioDAOImpl).close();
+                
+                JOptionPane.showMessageDialog(this, "Usuário salvo com sucesso!", "SUCESSO: Usuário salvo", JOptionPane.INFORMATION_MESSAGE);
+                // limpar os campos
+                this.limparCampos();
+                
+            } catch(SQLException e) {
+                System.out.println("");
+            }
         }
     }//GEN-LAST:event_btnSalvarUsuarioActionPerformed
 
     private void btnLimparUsuarioFormActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparUsuarioFormActionPerformed
+        this.limparCampos();
+    }//GEN-LAST:event_btnLimparUsuarioFormActionPerformed
+
+    private void limparCampos() {
         inputNomeUsuario.setText("");
         inputLoginUsuario.setText("");
         inputSenhaUsuario.setText("");
         inputRepetirSenhaUsuario.setText("");
-    }//GEN-LAST:event_btnLimparUsuarioFormActionPerformed
-
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLimparUsuarioForm;
