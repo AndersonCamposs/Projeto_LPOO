@@ -165,7 +165,6 @@ public class RegistrarUsuarioPane extends javax.swing.JPanel {
         if(!new String(inputSenhaUsuario.getPassword()).equals(new String(inputRepetirSenhaUsuario.getPassword()))) {
             JOptionPane.showMessageDialog(this, "As senhas não são iguais. Tente novamente!", "ERRO: Senhas diferentes", JOptionPane.ERROR_MESSAGE);
         } else {
-            try{
                 UsuarioDAOImpl usuarioDAOImpl = new UsuarioDAOImpl();
                 Usuario usuario = new Usuario();
                 usuario.setNome(inputNomeUsuario.getText());
@@ -178,10 +177,6 @@ public class RegistrarUsuarioPane extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Usuário salvo com sucesso!", "SUCESSO: Usuário salvo", JOptionPane.INFORMATION_MESSAGE);
                 // limpar os campos
                 this.limparCampos();
-                
-            } catch(SQLException e) {
-                System.out.println("");
-            }
         }
     }//GEN-LAST:event_btnSalvarUsuarioActionPerformed
 
