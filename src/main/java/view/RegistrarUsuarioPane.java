@@ -27,12 +27,12 @@ public class RegistrarUsuarioPane extends javax.swing.JPanel {
     public RegistrarUsuarioPane(Long id) {
         initComponents();
         UsuarioDAOImpl usuarioDAOImpl = new UsuarioDAOImpl();
-        Usuario usuario = usuarioDAOImpl.findById(id);
+        this.u = usuarioDAOImpl.findById(id);
         jLabel1.setText("Editar usuário");
-        inputLoginUsuario.setText(usuario.getLogin());
-        inputNomeUsuario.setText(usuario.getNome());
-        inputSenhaUsuario.setText(usuario.getSenha());
-        inputRepetirSenhaUsuario.setText(usuario.getSenha());
+        inputLoginUsuario.setText(u.getLogin());
+        inputNomeUsuario.setText(u.getNome());
+        inputSenhaUsuario.setText(u.getSenha());
+        inputRepetirSenhaUsuario.setText(u.getSenha());
     }
 
     /**
@@ -174,7 +174,17 @@ public class RegistrarUsuarioPane extends javax.swing.JPanel {
 
     private void btnSalvarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarUsuarioActionPerformed
         if(!new String(inputSenhaUsuario.getPassword()).equals(new String(inputRepetirSenhaUsuario.getPassword()))) {
+            inputSenhaUsuario.setText("");
+            inputRepetirSenhaUsuario.setText("");
             JOptionPane.showMessageDialog(this, "As senhas não são iguais. Tente novamente!", "ERRO: Senhas diferentes", JOptionPane.ERROR_MESSAGE);
+        } if(this.u != null) {
+            UsuarioDAOImpl usuarioDAOImpl = new UsuarioDAOImpl();
+            u.setLogin(inputLoginUsuario.getText());
+            u.setNome(inputNomeUsuario.getText());
+            u.setSenha(new String(inputSenhaUsuario.getPassword()));
+            usuarioDAOImpl.update(u);
+            
+            JOptionPane.showMessageDialog(this, "Usuário atualizado com sucesso!", "SUCESSO: Usuário atualizado", JOptionPane.INFORMATION_MESSAGE);
         } else {
                 UsuarioDAOImpl usuarioDAOImpl = new UsuarioDAOImpl();
                 Usuario usuario = new Usuario();
@@ -215,4 +225,5 @@ public class RegistrarUsuarioPane extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     // End of variables declaration//GEN-END:variables
+    Usuario u;
 }

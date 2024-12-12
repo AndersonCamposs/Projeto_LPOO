@@ -93,7 +93,6 @@ public class ListarUsuarioPane extends javax.swing.JPanel {
             int linhaSelecionada = tabelaUsuarios.getSelectedRow();
             if (linhaSelecionada != -1) {
                 Long idSelecionado = (Long) tabelaUsuarios.getValueAt(linhaSelecionada, 0);
-                System.out.printf("O ID SELECIONADO FOI: %d%n", idSelecionado);
                 telaPrincipal.formularioEdicao(idSelecionado);
             }
             
