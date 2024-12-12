@@ -4,6 +4,7 @@
  */
 package view;
 
+import java.awt.Dimension;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import model.dao.GenericDAOImpl;
@@ -22,6 +23,7 @@ public class RegistrarUsuarioPane extends javax.swing.JPanel {
     public RegistrarUsuarioPane() {
         initComponents();
         jLabel1.setText("Registrar usuário");
+        btnDeletar.setVisible(false);
     }
     
     public RegistrarUsuarioPane(Long id) {
@@ -33,6 +35,7 @@ public class RegistrarUsuarioPane extends javax.swing.JPanel {
         inputNomeUsuario.setText(u.getNome());
         inputSenhaUsuario.setText(u.getSenha());
         inputRepetirSenhaUsuario.setText(u.getSenha());
+        btnDeletar.setVisible(true);
     }
 
     /**
@@ -55,6 +58,9 @@ public class RegistrarUsuarioPane extends javax.swing.JPanel {
         inputRepetirSenhaUsuario = new javax.swing.JPasswordField();
         btnSalvarUsuario = new javax.swing.JButton();
         btnLimparUsuarioForm = new javax.swing.JButton();
+        btnDeletar = new javax.swing.JButton();
+
+        setPreferredSize(new java.awt.Dimension(0, 0));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
 
@@ -96,6 +102,13 @@ public class RegistrarUsuarioPane extends javax.swing.JPanel {
             }
         });
 
+        btnDeletar.setText("Deletar");
+        btnDeletar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeletarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -134,6 +147,10 @@ public class RegistrarUsuarioPane extends javax.swing.JPanel {
                                     .addComponent(jLabel5)
                                     .addComponent(btnLimparUsuarioForm))))))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btnDeletar)
+                .addGap(158, 158, 158))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -160,7 +177,9 @@ public class RegistrarUsuarioPane extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSalvarUsuario)
                     .addComponent(btnLimparUsuarioForm))
-                .addContainerGap(75, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(btnDeletar)
+                .addContainerGap(61, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -183,6 +202,7 @@ public class RegistrarUsuarioPane extends javax.swing.JPanel {
             u.setNome(inputNomeUsuario.getText());
             u.setSenha(new String(inputSenhaUsuario.getPassword()));
             usuarioDAOImpl.update(u);
+            //((GenericDAOImpl<?, ?>) usuarioDAOImpl).close();
             
             JOptionPane.showMessageDialog(this, "Usuário atualizado com sucesso!", "SUCESSO: Usuário atualizado", JOptionPane.INFORMATION_MESSAGE);
         } else {
@@ -205,6 +225,21 @@ public class RegistrarUsuarioPane extends javax.swing.JPanel {
         this.limparCampos();
     }//GEN-LAST:event_btnLimparUsuarioFormActionPerformed
 
+    private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
+        if(JOptionPane.showConfirmDialog(this, "Tem certeza que deseja deletar este usuário?",
+        "Deletar usuário", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+            if (u != null) {
+                UsuarioDAOImpl usuarioDAOImpl = new UsuarioDAOImpl();
+                usuarioDAOImpl.delete(u);
+                JOptionPane.showMessageDialog(this, "Usuário deletado com sucesso!", "SUCESSO: Usuário deletado", JOptionPane.INFORMATION_MESSAGE);  
+                u = null;
+                limparCampos();
+                btnDeletar.setVisible(false);
+            }
+            
+        }
+    }//GEN-LAST:event_btnDeletarActionPerformed
+
     private void limparCampos() {
         inputNomeUsuario.setText("");
         inputLoginUsuario.setText("");
@@ -213,6 +248,7 @@ public class RegistrarUsuarioPane extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnDeletar;
     private javax.swing.JButton btnLimparUsuarioForm;
     private javax.swing.JButton btnSalvarUsuario;
     private javax.swing.JTextField inputLoginUsuario;

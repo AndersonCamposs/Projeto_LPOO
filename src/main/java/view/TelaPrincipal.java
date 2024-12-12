@@ -168,7 +168,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     
     private void montarFormularioUsuarioJIF(Optional<Long> id) {
         formularioUsuarioJIF = new JInternalFrame("Formulário de usuário");
-        formularioUsuarioJIF.setBounds(100, 100, 410, 330);
+        formularioUsuarioJIF.setBounds(100, 100, 410, 370);
         formularioUsuarioJIF.setVisible(true);
         formularioUsuarioJIF.setClosable(true);
         formularioUsuarioJIF.setResizable(true);
