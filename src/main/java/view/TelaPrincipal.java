@@ -80,6 +80,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         jMenu3.add(registrarUsuarioMenuItem);
 
+        listarUsuarioMenuItemActionPerformed.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
         listarUsuarioMenuItemActionPerformed.setSelected(true);
         listarUsuarioMenuItemActionPerformed.setText("Listar usuários");
         listarUsuarioMenuItemActionPerformed.addActionListener(new java.awt.event.ActionListener() {
@@ -94,7 +95,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenu5.setText("Cliente");
 
         jCheckBoxMenuItem2.setSelected(true);
-        jCheckBoxMenuItem2.setText("Registrar usuário");
+        jCheckBoxMenuItem2.setText("Registrar cliente");
         jCheckBoxMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCheckBoxMenuItem2ActionPerformed(evt);

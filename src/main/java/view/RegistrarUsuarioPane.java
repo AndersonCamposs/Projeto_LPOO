@@ -160,21 +160,14 @@ public class RegistrarUsuarioPane extends javax.swing.JPanel {
     }//GEN-LAST:event_inputSenhaUsuarioActionPerformed
 
     private void btnSalvarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarUsuarioActionPerformed
-       
-        
-        String nomeUsuario = inputNomeUsuario.getText();
-        String loginUsuario = inputLoginUsuario.getText();
-        String senhaUsuario = new String(inputSenhaUsuario.getPassword());
-        String repetirSenhaUsuario = new String(inputRepetirSenhaUsuario.getPassword());
-        
-        if(!senhaUsuario.equals(repetirSenhaUsuario)) {
+        if(!new String(inputSenhaUsuario.getPassword()).equals(new String(inputRepetirSenhaUsuario.getPassword()))) {
             JOptionPane.showMessageDialog(this, "As senhas não são iguais. Tente novamente!", "ERRO: Senhas diferentes", JOptionPane.ERROR_MESSAGE);
         } else {
             Usuario usuario = new Usuario();
             UsuarioDAOImpl usuarioDAOImpl = new UsuarioDAOImpl();
-            usuario.setNome(nomeUsuario);
-            usuario.setLogin(loginUsuario);
-            usuario.setSenha(senhaUsuario);
+            usuario.setNome(inputNomeUsuario.getText());
+            usuario.setLogin(inputLoginUsuario.getText());
+            usuario.setSenha(new String(inputSenhaUsuario.getPassword()));
 
             usuarioDAOImpl.save(usuario);
             JOptionPane.showMessageDialog(this, "Usuário salvo com sucesso!", "SUCESSO: Usuário salvo", JOptionPane.INFORMATION_MESSAGE);
