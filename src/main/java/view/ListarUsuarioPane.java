@@ -6,6 +6,7 @@ package view;
 
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
+import model.dao.GenericDAOImpl;
 import model.entity.Usuario;
 import model.dao.UsuarioDAOImpl;
 
@@ -25,7 +26,7 @@ public class ListarUsuarioPane extends javax.swing.JPanel {
         for(Usuario usuario: listaUsuario) {
             model.addRow(new Object[]{usuario.getId(), usuario.getLogin(), usuario.getNome()});
         }
-        
+        ((GenericDAOImpl<?, ?>) usuarioDAOImpl).close();
     }
 
     /**
@@ -63,6 +64,11 @@ public class ListarUsuarioPane extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        tabelaUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelaUsuariosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tabelaUsuarios);
         if (tabelaUsuarios.getColumnModel().getColumnCount() > 0) {
             tabelaUsuarios.getColumnModel().getColumn(0).setMaxWidth(60);
@@ -81,6 +87,10 @@ public class ListarUsuarioPane extends javax.swing.JPanel {
                 .addGap(0, 64, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void tabelaUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaUsuariosMouseClicked
+        System.out.println(evt.getClickCount());
+    }//GEN-LAST:event_tabelaUsuariosMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
