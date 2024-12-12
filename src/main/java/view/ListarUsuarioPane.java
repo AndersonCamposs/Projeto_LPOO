@@ -26,7 +26,7 @@ public class ListarUsuarioPane extends javax.swing.JPanel {
         for(Usuario usuario: listaUsuario) {
             model.addRow(new Object[]{usuario.getId(), usuario.getLogin(), usuario.getNome()});
         }
-        ((GenericDAOImpl<?, ?>) usuarioDAOImpl).close();
+        
     }
 
     /**
@@ -53,7 +53,7 @@ public class ListarUsuarioPane extends javax.swing.JPanel {
                 java.lang.Long.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, true, true
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -89,7 +89,14 @@ public class ListarUsuarioPane extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tabelaUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaUsuariosMouseClicked
-        System.out.println(evt.getClickCount());
+        if(evt.getClickCount() == 2) {
+            int linhaSelecionada = tabelaUsuarios.getSelectedRow();
+            if (linhaSelecionada != -1) {
+                Long idSelecionado = (Long) tabelaUsuarios.getValueAt(linhaSelecionada, 0);
+                System.out.printf("O ID SELECIONADO FOI: %d%n", idSelecionado);
+            }
+            
+        }
     }//GEN-LAST:event_tabelaUsuariosMouseClicked
 
 
