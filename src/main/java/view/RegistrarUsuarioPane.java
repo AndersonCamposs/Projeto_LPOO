@@ -21,6 +21,18 @@ public class RegistrarUsuarioPane extends javax.swing.JPanel {
      */
     public RegistrarUsuarioPane() {
         initComponents();
+        jLabel1.setText("Registrar usuário");
+    }
+    
+    public RegistrarUsuarioPane(Long id) {
+        initComponents();
+        UsuarioDAOImpl usuarioDAOImpl = new UsuarioDAOImpl();
+        Usuario usuario = usuarioDAOImpl.findById(id);
+        jLabel1.setText("Editar usuário");
+        inputLoginUsuario.setText(usuario.getLogin());
+        inputNomeUsuario.setText(usuario.getNome());
+        inputSenhaUsuario.setText(usuario.getSenha());
+        inputRepetirSenhaUsuario.setText(usuario.getSenha());
     }
 
     /**
@@ -45,7 +57,6 @@ public class RegistrarUsuarioPane extends javax.swing.JPanel {
         btnLimparUsuarioForm = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel1.setText("Registrar usuário");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setText("Nome:");
@@ -149,7 +160,7 @@ public class RegistrarUsuarioPane extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSalvarUsuario)
                     .addComponent(btnLimparUsuarioForm))
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addContainerGap(75, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -172,7 +183,7 @@ public class RegistrarUsuarioPane extends javax.swing.JPanel {
                 usuario.setSenha(new String(inputSenhaUsuario.getPassword()));
 
                 usuarioDAOImpl.save(usuario);
-                ((GenericDAOImpl<?, ?>) usuarioDAOImpl).close();
+                //((GenericDAOImpl<?, ?>) usuarioDAOImpl).close();
                 
                 JOptionPane.showMessageDialog(this, "Usuário salvo com sucesso!", "SUCESSO: Usuário salvo", JOptionPane.INFORMATION_MESSAGE);
                 // limpar os campos

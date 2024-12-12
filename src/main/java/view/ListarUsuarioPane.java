@@ -16,11 +16,11 @@ import model.dao.UsuarioDAOImpl;
  */
 public class ListarUsuarioPane extends javax.swing.JPanel {
 
-    /**
-     * Creates new form ListarUsuarioPane
-     */
-    public ListarUsuarioPane() {
+    private TelaPrincipal telaPrincipal;
+    
+    public ListarUsuarioPane(TelaPrincipal telaPrincipal) {
         initComponents();
+        this.telaPrincipal = telaPrincipal;
         DefaultTableModel model = (DefaultTableModel) tabelaUsuarios.getModel();
         List<Usuario> listaUsuario = usuarioDAOImpl.findAll();
         for(Usuario usuario: listaUsuario) {
@@ -94,6 +94,7 @@ public class ListarUsuarioPane extends javax.swing.JPanel {
             if (linhaSelecionada != -1) {
                 Long idSelecionado = (Long) tabelaUsuarios.getValueAt(linhaSelecionada, 0);
                 System.out.printf("O ID SELECIONADO FOI: %d%n", idSelecionado);
+                telaPrincipal.formularioEdicao(idSelecionado);
             }
             
         }

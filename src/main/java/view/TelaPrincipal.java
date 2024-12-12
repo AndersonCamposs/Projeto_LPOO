@@ -1,6 +1,8 @@
 
 package view;
 
+import java.awt.Component;
+import java.util.Optional;
 import javax.swing.JInternalFrame;
 
 public class TelaPrincipal extends javax.swing.JFrame {
@@ -11,7 +13,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     public TelaPrincipal() {
         initComponents();
     }
-
+   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -155,27 +157,53 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void registrarUsuarioMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarUsuarioMenuItemActionPerformed
-        JInternalFrame janelaInterna = new JInternalFrame("Registrar usuário");
-        janelaInterna.setBounds(100, 100, 410, 330);
-        janelaInterna.setVisible(true);
-        janelaInterna.setClosable(true);
-        janelaInterna.setResizable(true);
-        RegistrarUsuarioPane registrarUsuarioPane = new RegistrarUsuarioPane();
-        janelaInterna.add(registrarUsuarioPane);
-        jDesktopPane1.add(janelaInterna);
+        this.limparTela();
+        montarFormularioUsuarioJIF(Optional.empty());
     }//GEN-LAST:event_registrarUsuarioMenuItemActionPerformed
 
+    public void formularioEdicao(Long id) {
+        this.limparTela();
+        montarFormularioUsuarioJIF(Optional.of(id));
+    }
+    
+    private void montarFormularioUsuarioJIF(Optional<Long> id) {
+        formularioUsuarioJIF = new JInternalFrame("Formulário de usuário");
+        formularioUsuarioJIF.setBounds(100, 100, 410, 330);
+        formularioUsuarioJIF.setVisible(true);
+        formularioUsuarioJIF.setClosable(true);
+        formularioUsuarioJIF.setResizable(true);
+        
+        RegistrarUsuarioPane formulario;
+        if(id.isEmpty()) {
+            formulario = new RegistrarUsuarioPane();
+        } else {
+            formulario = new RegistrarUsuarioPane(id.get());
+        }
+        formularioUsuarioJIF.add(formulario);
+        jDesktopPane1.add(formularioUsuarioJIF);
+    }
+    
     private void listarUsuarioMenuItemActionPerformedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listarUsuarioMenuItemActionPerformedActionPerformed
         JInternalFrame janelaInterna = new JInternalFrame("Lista de clientes");
         janelaInterna.setBounds(100, 100, 410, 330);
         janelaInterna.setVisible(true);
         janelaInterna.setClosable(true);
         janelaInterna.setResizable(true);
-        ListarUsuarioPane listarUsuarioPane = new ListarUsuarioPane();
+        ListarUsuarioPane listarUsuarioPane = new ListarUsuarioPane(this);
         janelaInterna.add(listarUsuarioPane);
         jDesktopPane1.add(janelaInterna);
     }//GEN-LAST:event_listarUsuarioMenuItemActionPerformedActionPerformed
  
+    private void limparTela() {
+        for(Component component: jDesktopPane1.getComponents()) {
+            if(component instanceof JInternalFrame) {
+                jDesktopPane1.remove(component);
+            }
+        }
+        this.revalidate();
+        this.repaint();
+    }
+    
     private void jCheckBoxMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItem2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jCheckBoxMenuItem2ActionPerformed
@@ -234,4 +262,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JCheckBoxMenuItem listarUsuarioMenuItemActionPerformed;
     private javax.swing.JCheckBoxMenuItem registrarUsuarioMenuItem;
     // End of variables declaration//GEN-END:variables
+    JInternalFrame formularioUsuarioJIF;
+    JInternalFrame listarUsuarioJIF;
 }
