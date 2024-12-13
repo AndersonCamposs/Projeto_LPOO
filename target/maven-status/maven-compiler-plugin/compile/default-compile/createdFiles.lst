@@ -20,3 +20,4 @@ view\RegistrarUsuarioPane$5.class
 view\RegistrarUsuarioPane$3.class
 model\dao\GenericDAO.class
 view\TelaPrincipal$3.class
+view\RegistrarClientePane.class
