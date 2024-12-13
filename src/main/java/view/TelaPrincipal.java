@@ -34,7 +34,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         registrarClienteMenuItem = new javax.swing.JCheckBoxMenuItem();
         listarClientesMenuItem = new javax.swing.JCheckBoxMenuItem();
         jMenu4 = new javax.swing.JMenu();
-        jCheckBoxMenuItem5 = new javax.swing.JCheckBoxMenuItem();
+        registrarReservaMenuItem = new javax.swing.JCheckBoxMenuItem();
         jCheckBoxMenuItem6 = new javax.swing.JCheckBoxMenuItem();
         jMenu6 = new javax.swing.JMenu();
         jCheckBoxMenuItem7 = new javax.swing.JCheckBoxMenuItem();
@@ -120,9 +120,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMenu4.setText("Reserva");
 
-        jCheckBoxMenuItem5.setSelected(true);
-        jCheckBoxMenuItem5.setText("Registrar uma reserva");
-        jMenu4.add(jCheckBoxMenuItem5);
+        registrarReservaMenuItem.setSelected(true);
+        registrarReservaMenuItem.setText("Registrar uma reserva");
+        registrarReservaMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                registrarReservaMenuItemActionPerformed(evt);
+            }
+        });
+        jMenu4.add(registrarReservaMenuItem);
 
         jCheckBoxMenuItem6.setSelected(true);
         jCheckBoxMenuItem6.setText("Listar reservas");
@@ -194,6 +199,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
         listarClienteJIF.add(listarClientePane);
         jDesktopPane1.add(listarClienteJIF);
     }//GEN-LAST:event_listarClientesMenuItemActionPerformed
+
+    private void registrarReservaMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarReservaMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_registrarReservaMenuItemActionPerformed
 
     public void ativarEdicaoUsuario(Long id) {
         this.limparTela();
@@ -285,7 +294,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem5;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem6;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem7;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem8;
@@ -301,6 +309,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JCheckBoxMenuItem listarClientesMenuItem;
     private javax.swing.JCheckBoxMenuItem listarUsuariosMenuItemActionPerformed;
     private javax.swing.JCheckBoxMenuItem registrarClienteMenuItem;
+    private javax.swing.JCheckBoxMenuItem registrarReservaMenuItem;
     private javax.swing.JCheckBoxMenuItem registrarUsuarioMenuItem;
     // End of variables declaration//GEN-END:variables
 }
