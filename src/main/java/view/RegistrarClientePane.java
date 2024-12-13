@@ -3,6 +3,7 @@ package view;
 import java.awt.Dimension;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import model.dao.ClienteDAOImpl;
 import model.dao.GenericDAOImpl;
 import model.dao.UsuarioDAOImpl;
 import model.entity.Cliente;
@@ -21,6 +22,7 @@ public class RegistrarClientePane extends javax.swing.JPanel {
     
     public RegistrarClientePane(Long id) {
         initComponents();
+        System.out.println("EDITANDO...");
     }
 
     /**
@@ -155,11 +157,21 @@ public class RegistrarClientePane extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        Cliente c =  new Cliente();
-        c.setNome(inputNomeCliente.getText());
-        c.setCpf(inputCpfCliente.getText());
-        c.setTelefone(inputTelefoneCliente.getText());
-        System.out.printf("Nome: %s%nCpf: %s%nTelefone: %s%n", c.getNome(), c.getCpf(), c.getTelefone());
+        if (c != null) {
+            System.out.println("ATUALIZAR");
+        } else {
+            ClienteDAOImpl clienteDAOImpl = new ClienteDAOImpl();
+            Cliente c =  new Cliente();
+            c.setNome(inputNomeCliente.getText());
+            c.setCpf(inputCpfCliente.getText());
+            c.setTelefone(inputTelefoneCliente.getText());
+            
+            clienteDAOImpl.save(c);
+            
+            JOptionPane.showMessageDialog(this, "Cliente salvo com sucesso!", "SUCESSO: Cliente salvo", JOptionPane.INFORMATION_MESSAGE);
+            // limpar os campos
+            this.limparCampos();
+        }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
