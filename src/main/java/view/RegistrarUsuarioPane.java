@@ -226,8 +226,8 @@ public class RegistrarUsuarioPane extends javax.swing.JPanel {
     }//GEN-LAST:event_btnLimparActionPerformed
 
     private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
-        if(JOptionPane.showConfirmDialog(this, "Tem certeza que deseja deletar este usuário?",
-        "Deletar usuário", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+        if(JOptionPane.showConfirmDialog(this, String.format("Tem ceteza que deseja deletar o usuário %s?", u.getNome()),
+        "Deletar usuário", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) == 0) {
             if (u != null) {
                 UsuarioDAOImpl usuarioDAOImpl = new UsuarioDAOImpl();
                 usuarioDAOImpl.delete(u);
