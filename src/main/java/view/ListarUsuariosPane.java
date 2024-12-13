@@ -14,16 +14,16 @@ import model.dao.UsuarioDAOImpl;
  *
  * @author ander
  */
-public class ListarUsuarioPane extends javax.swing.JPanel {
+public class ListarUsuariosPane extends javax.swing.JPanel {
 
     private TelaPrincipal telaPrincipal;
     
-    public ListarUsuarioPane(TelaPrincipal telaPrincipal) {
+    public ListarUsuariosPane(TelaPrincipal telaPrincipal) {
         initComponents();
         this.telaPrincipal = telaPrincipal;
         DefaultTableModel model = (DefaultTableModel) tabelaUsuarios.getModel();
-        List<Usuario> listaUsuario = usuarioDAOImpl.findAll();
-        for(Usuario usuario: listaUsuario) {
+        List<Usuario> listaUsuarios = usuarioDAOImpl.findAll();
+        for(Usuario usuario: listaUsuarios) {
             model.addRow(new Object[]{usuario.getId(), usuario.getLogin(), usuario.getNome()});
         }
         
@@ -93,7 +93,7 @@ public class ListarUsuarioPane extends javax.swing.JPanel {
             int linhaSelecionada = tabelaUsuarios.getSelectedRow();
             if (linhaSelecionada != -1) {
                 Long idSelecionado = (Long) tabelaUsuarios.getValueAt(linhaSelecionada, 0);
-                telaPrincipal.formularioEdicao(idSelecionado);
+                telaPrincipal.ativarEdicaoUsuario(idSelecionado);
             }
             
         }

@@ -1,8 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model.entity;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,13 +11,13 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "Usuario")
-public class Usuario {
+@Table(name = "Cliente")
+public class Cliente {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
-    private String login;
-    private String senha;
+    private String cpf;
+    private String telefone;
 }

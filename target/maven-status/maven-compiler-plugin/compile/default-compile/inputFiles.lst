@@ -1,8 +1,12 @@
 C:\Users\ander\Desktop\arenaCampos\src\main\java\model\dao\GenericDAOImpl.java
+C:\Users\ander\Desktop\arenaCampos\src\main\java\model\dao\ClienteDAOImpl.java
 C:\Users\ander\Desktop\arenaCampos\src\main\java\view\TelaPrincipal.java
+C:\Users\ander\Desktop\arenaCampos\src\main\java\model\dao\ClienteDAO.java
 C:\Users\ander\Desktop\arenaCampos\src\main\java\model\dao\GenericDAO.java
 C:\Users\ander\Desktop\arenaCampos\src\main\java\view\ListarUsuarioPane.java
+C:\Users\ander\Desktop\arenaCampos\src\main\java\model\entity\Cliente.java
 C:\Users\ander\Desktop\arenaCampos\src\main\java\model\dao\UsuarioDAOImpl.java
+C:\Users\ander\Desktop\arenaCampos\src\main\java\view\RegistrarClientePane.java
 C:\Users\ander\Desktop\arenaCampos\src\main\java\view\RegistrarUsuarioPane.java
 C:\Users\ander\Desktop\arenaCampos\src\main\java\model\dao\UsuarioDAO.java
 C:\Users\ander\Desktop\arenaCampos\src\main\java\model\entity\Usuario.java

@@ -1,6 +1,7 @@
 <persistence xmlns="https://jakarta.ee/xml/ns/persistence" version="3.0">
     <persistence-unit name="default">
         <class>Usuario</class>
+        <class>Cliente</class>
         <properties>
             <!-- Configuração do Banco de Dados -->
             <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/arena_campos?useSSL=false&amp;allowPublicKeyRetrieval=true&amp;serverTimezone=UTC" />

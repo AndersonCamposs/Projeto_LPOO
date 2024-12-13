@@ -29,10 +29,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
         registrarUsuarioMenuItem = new javax.swing.JCheckBoxMenuItem();
-        listarUsuarioMenuItemActionPerformed = new javax.swing.JCheckBoxMenuItem();
+        listarUsuariosMenuItemActionPerformed = new javax.swing.JCheckBoxMenuItem();
         jMenu5 = new javax.swing.JMenu();
-        jCheckBoxMenuItem2 = new javax.swing.JCheckBoxMenuItem();
-        jCheckBoxMenuItem4 = new javax.swing.JCheckBoxMenuItem();
+        registrarClienteMenuItem = new javax.swing.JCheckBoxMenuItem();
+        listarClientesMenuItem = new javax.swing.JCheckBoxMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jCheckBoxMenuItem5 = new javax.swing.JCheckBoxMenuItem();
         jCheckBoxMenuItem6 = new javax.swing.JCheckBoxMenuItem();
@@ -82,32 +82,39 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         jMenu3.add(registrarUsuarioMenuItem);
 
-        listarUsuarioMenuItemActionPerformed.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        listarUsuarioMenuItemActionPerformed.setSelected(true);
-        listarUsuarioMenuItemActionPerformed.setText("Listar usuários");
-        listarUsuarioMenuItemActionPerformed.addActionListener(new java.awt.event.ActionListener() {
+        listarUsuariosMenuItemActionPerformed.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        listarUsuariosMenuItemActionPerformed.setSelected(true);
+        listarUsuariosMenuItemActionPerformed.setText("Listar usuários");
+        listarUsuariosMenuItemActionPerformed.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                listarUsuarioMenuItemActionPerformedActionPerformed(evt);
+                listarUsuariosMenuItemActionPerformedActionPerformed(evt);
             }
         });
-        jMenu3.add(listarUsuarioMenuItemActionPerformed);
+        jMenu3.add(listarUsuariosMenuItemActionPerformed);
 
         jMenu1.add(jMenu3);
 
         jMenu5.setText("Cliente");
 
-        jCheckBoxMenuItem2.setSelected(true);
-        jCheckBoxMenuItem2.setText("Registrar cliente");
-        jCheckBoxMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        registrarClienteMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        registrarClienteMenuItem.setSelected(true);
+        registrarClienteMenuItem.setText("Registrar cliente");
+        registrarClienteMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBoxMenuItem2ActionPerformed(evt);
+                registrarClienteMenuItemActionPerformed(evt);
             }
         });
-        jMenu5.add(jCheckBoxMenuItem2);
+        jMenu5.add(registrarClienteMenuItem);
 
-        jCheckBoxMenuItem4.setSelected(true);
-        jCheckBoxMenuItem4.setText("Listar clientes");
-        jMenu5.add(jCheckBoxMenuItem4);
+        listarClientesMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        listarClientesMenuItem.setSelected(true);
+        listarClientesMenuItem.setText("Listar clientes");
+        listarClientesMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                listarClientesMenuItemActionPerformed(evt);
+            }
+        });
+        jMenu5.add(listarClientesMenuItem);
 
         jMenu1.add(jMenu5);
 
@@ -161,13 +168,45 @@ public class TelaPrincipal extends javax.swing.JFrame {
         montarFormularioUsuarioJIF(Optional.empty());
     }//GEN-LAST:event_registrarUsuarioMenuItemActionPerformed
 
-    public void formularioEdicao(Long id) {
+    private void listarUsuariosMenuItemActionPerformedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listarUsuariosMenuItemActionPerformedActionPerformed
+        JInternalFrame listarUsuarioJIF = new JInternalFrame("Lista de Usuários");
+        listarUsuarioJIF.setBounds(100, 100, 410, 330);
+        listarUsuarioJIF.setVisible(true);
+        listarUsuarioJIF.setClosable(true);
+        listarUsuarioJIF.setResizable(true);
+        ListarUsuariosPane listarUsuarioPane = new ListarUsuariosPane(this);
+        listarUsuarioJIF.add(listarUsuarioPane);
+        jDesktopPane1.add(listarUsuarioJIF);
+    }//GEN-LAST:event_listarUsuariosMenuItemActionPerformedActionPerformed
+ 
+    private void registrarClienteMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarClienteMenuItemActionPerformed
+        this.limparTela();
+        montarFormularioClienteJIF(Optional.empty());
+    }//GEN-LAST:event_registrarClienteMenuItemActionPerformed
+
+    private void listarClientesMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listarClientesMenuItemActionPerformed
+        JInternalFrame listarClienteJIF = new JInternalFrame("Lista de clientes");
+        listarClienteJIF.setBounds(100, 100, 500, 330);
+        listarClienteJIF.setVisible(true);
+        listarClienteJIF.setClosable(true);
+        listarClienteJIF.setResizable(true);
+        ListarClientesPane listarClientePane = new ListarClientesPane(this);
+        listarClienteJIF.add(listarClientePane);
+        jDesktopPane1.add(listarClienteJIF);
+    }//GEN-LAST:event_listarClientesMenuItemActionPerformed
+
+    public void ativarEdicaoUsuario(Long id) {
         this.limparTela();
         montarFormularioUsuarioJIF(Optional.of(id));
     }
     
+    public void ativarEdicaoCliente(Long id) {
+        this.limparTela();
+        montarFormularioClienteJIF(Optional.of(id));
+    }
+    
     private void montarFormularioUsuarioJIF(Optional<Long> id) {
-        formularioUsuarioJIF = new JInternalFrame("Formulário de usuário");
+        JInternalFrame formularioUsuarioJIF = new JInternalFrame("Formulário de usuário");
         formularioUsuarioJIF.setBounds(100, 100, 410, 370);
         formularioUsuarioJIF.setVisible(true);
         formularioUsuarioJIF.setClosable(true);
@@ -183,17 +222,23 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jDesktopPane1.add(formularioUsuarioJIF);
     }
     
-    private void listarUsuarioMenuItemActionPerformedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listarUsuarioMenuItemActionPerformedActionPerformed
-        JInternalFrame janelaInterna = new JInternalFrame("Lista de clientes");
-        janelaInterna.setBounds(100, 100, 410, 330);
-        janelaInterna.setVisible(true);
-        janelaInterna.setClosable(true);
-        janelaInterna.setResizable(true);
-        ListarUsuarioPane listarUsuarioPane = new ListarUsuarioPane(this);
-        janelaInterna.add(listarUsuarioPane);
-        jDesktopPane1.add(janelaInterna);
-    }//GEN-LAST:event_listarUsuarioMenuItemActionPerformedActionPerformed
- 
+    private void montarFormularioClienteJIF(Optional<Long> id) {
+        JInternalFrame formularioClienteJIF = new JInternalFrame("Formulário de cliente");
+        formularioClienteJIF.setBounds(100, 100, 410, 370);
+        formularioClienteJIF.setVisible(true);
+        formularioClienteJIF.setClosable(true);
+        formularioClienteJIF.setResizable(true);
+        
+        RegistrarClientePane formulario;
+        if(id.isEmpty()) {
+            formulario = new RegistrarClientePane();
+        } else {
+            formulario = new RegistrarClientePane(id.get());
+        }
+        formularioClienteJIF.add(formulario);
+        jDesktopPane1.add(formularioClienteJIF);
+    }
+    
     private void limparTela() {
         for(Component component: jDesktopPane1.getComponents()) {
             if(component instanceof JInternalFrame) {
@@ -204,10 +249,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         this.repaint();
     }
     
-    private void jCheckBoxMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItem2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBoxMenuItem2ActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -244,8 +285,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem2;
-    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem4;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem5;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem6;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem7;
@@ -259,9 +298,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JCheckBoxMenuItem listarUsuarioMenuItemActionPerformed;
+    private javax.swing.JCheckBoxMenuItem listarClientesMenuItem;
+    private javax.swing.JCheckBoxMenuItem listarUsuariosMenuItemActionPerformed;
+    private javax.swing.JCheckBoxMenuItem registrarClienteMenuItem;
     private javax.swing.JCheckBoxMenuItem registrarUsuarioMenuItem;
     // End of variables declaration//GEN-END:variables
-    JInternalFrame formularioUsuarioJIF;
-    JInternalFrame listarUsuarioJIF;
 }
