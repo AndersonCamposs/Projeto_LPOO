@@ -56,11 +56,11 @@ public class RegistrarUsuarioPane extends javax.swing.JPanel {
         inputSenhaUsuario = new javax.swing.JPasswordField();
         jLabel5 = new javax.swing.JLabel();
         inputRepetirSenhaUsuario = new javax.swing.JPasswordField();
-        btnSalvarUsuario = new javax.swing.JButton();
-        btnLimparUsuarioForm = new javax.swing.JButton();
+        btnSalvar = new javax.swing.JButton();
+        btnLimpar = new javax.swing.JButton();
         btnDeletar = new javax.swing.JButton();
 
-        setPreferredSize(new java.awt.Dimension(0, 0));
+        setPreferredSize(new java.awt.Dimension(394, 322));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
 
@@ -88,17 +88,17 @@ public class RegistrarUsuarioPane extends javax.swing.JPanel {
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel5.setText("Repetir senha:");
 
-        btnSalvarUsuario.setText("Salvar");
-        btnSalvarUsuario.addActionListener(new java.awt.event.ActionListener() {
+        btnSalvar.setText("Salvar");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSalvarUsuarioActionPerformed(evt);
+                btnSalvarActionPerformed(evt);
             }
         });
 
-        btnLimparUsuarioForm.setText("Limpar");
-        btnLimparUsuarioForm.addActionListener(new java.awt.event.ActionListener() {
+        btnLimpar.setText("Limpar");
+        btnLimpar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLimparUsuarioFormActionPerformed(evt);
+                btnLimparActionPerformed(evt);
             }
         });
 
@@ -139,13 +139,13 @@ public class RegistrarUsuarioPane extends javax.swing.JPanel {
                                         .addGap(0, 0, Short.MAX_VALUE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(btnSalvarUsuario)
+                                            .addComponent(btnSalvar)
                                             .addComponent(inputSenhaUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGap(14, 14, 14)))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(inputRepetirSenhaUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel5)
-                                    .addComponent(btnLimparUsuarioForm))))))
+                                    .addComponent(btnLimpar))))))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -175,11 +175,11 @@ public class RegistrarUsuarioPane extends javax.swing.JPanel {
                     .addComponent(inputRepetirSenhaUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSalvarUsuario)
-                    .addComponent(btnLimparUsuarioForm))
+                    .addComponent(btnSalvar)
+                    .addComponent(btnLimpar))
                 .addGap(18, 18, 18)
                 .addComponent(btnDeletar)
-                .addContainerGap(61, Short.MAX_VALUE))
+                .addContainerGap(112, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -191,7 +191,7 @@ public class RegistrarUsuarioPane extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_inputSenhaUsuarioActionPerformed
 
-    private void btnSalvarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarUsuarioActionPerformed
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         if(!new String(inputSenhaUsuario.getPassword()).equals(new String(inputRepetirSenhaUsuario.getPassword()))) {
             inputSenhaUsuario.setText("");
             inputRepetirSenhaUsuario.setText("");
@@ -219,11 +219,11 @@ public class RegistrarUsuarioPane extends javax.swing.JPanel {
                 // limpar os campos
                 this.limparCampos();
         }
-    }//GEN-LAST:event_btnSalvarUsuarioActionPerformed
+    }//GEN-LAST:event_btnSalvarActionPerformed
 
-    private void btnLimparUsuarioFormActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparUsuarioFormActionPerformed
+    private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
         this.limparCampos();
-    }//GEN-LAST:event_btnLimparUsuarioFormActionPerformed
+    }//GEN-LAST:event_btnLimparActionPerformed
 
     private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
         if(JOptionPane.showConfirmDialog(this, "Tem certeza que deseja deletar este usuário?",
@@ -249,8 +249,8 @@ public class RegistrarUsuarioPane extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDeletar;
-    private javax.swing.JButton btnLimparUsuarioForm;
-    private javax.swing.JButton btnSalvarUsuario;
+    private javax.swing.JButton btnLimpar;
+    private javax.swing.JButton btnSalvar;
     private javax.swing.JTextField inputLoginUsuario;
     private javax.swing.JTextField inputNomeUsuario;
     private javax.swing.JPasswordField inputRepetirSenhaUsuario;
