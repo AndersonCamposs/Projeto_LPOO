@@ -16,8 +16,9 @@ import lombok.Setter;
 @Entity
 @Table(name = "Usuario")
 public class Usuario {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
     private String login;

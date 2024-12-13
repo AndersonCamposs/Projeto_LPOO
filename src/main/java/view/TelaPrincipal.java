@@ -31,7 +31,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         registrarUsuarioMenuItem = new javax.swing.JCheckBoxMenuItem();
         listarUsuarioMenuItemActionPerformed = new javax.swing.JCheckBoxMenuItem();
         jMenu5 = new javax.swing.JMenu();
-        jCheckBoxMenuItem2 = new javax.swing.JCheckBoxMenuItem();
+        registrarClienteMenuItem = new javax.swing.JCheckBoxMenuItem();
         jCheckBoxMenuItem4 = new javax.swing.JCheckBoxMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jCheckBoxMenuItem5 = new javax.swing.JCheckBoxMenuItem();
@@ -96,14 +96,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMenu5.setText("Cliente");
 
-        jCheckBoxMenuItem2.setSelected(true);
-        jCheckBoxMenuItem2.setText("Registrar cliente");
-        jCheckBoxMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        registrarClienteMenuItem.setSelected(true);
+        registrarClienteMenuItem.setText("Registrar cliente");
+        registrarClienteMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBoxMenuItem2ActionPerformed(evt);
+                registrarClienteMenuItemActionPerformed(evt);
             }
         });
-        jMenu5.add(jCheckBoxMenuItem2);
+        jMenu5.add(registrarClienteMenuItem);
 
         jCheckBoxMenuItem4.setSelected(true);
         jCheckBoxMenuItem4.setText("Listar clientes");
@@ -204,10 +204,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
         this.repaint();
     }
     
-    private void jCheckBoxMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItem2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBoxMenuItem2ActionPerformed
+    private void registrarClienteMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarClienteMenuItemActionPerformed
+        this.limparTela();
+        montarFormularioClienteJIF();
+    }//GEN-LAST:event_registrarClienteMenuItemActionPerformed
 
+    private void montarFormularioClienteJIF() {
+        System.out.println("MONTAR FORMULARIO REGISTRO/EDICAO DE CLIENTE");
+    }
     /**
      * @param args the command line arguments
      */
@@ -244,7 +248,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem2;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem4;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem5;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem6;
@@ -260,6 +263,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JCheckBoxMenuItem listarUsuarioMenuItemActionPerformed;
+    private javax.swing.JCheckBoxMenuItem registrarClienteMenuItem;
     private javax.swing.JCheckBoxMenuItem registrarUsuarioMenuItem;
     // End of variables declaration//GEN-END:variables
     JInternalFrame formularioUsuarioJIF;
