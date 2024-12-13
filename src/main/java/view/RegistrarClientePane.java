@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package view;
 
 import java.awt.Dimension;
@@ -9,12 +5,9 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import model.dao.GenericDAOImpl;
 import model.dao.UsuarioDAOImpl;
+import model.entity.Cliente;
 import model.entity.Usuario;
 
-/**
- *
- * @author ander
- */
 public class RegistrarClientePane extends javax.swing.JPanel {
 
     /**
@@ -22,20 +15,12 @@ public class RegistrarClientePane extends javax.swing.JPanel {
      */
     public RegistrarClientePane() {
         initComponents();
-        jLabel1.setText("Registrar usuário");
+        jLabel1.setText("Registrar cliente");
         btnDeletar.setVisible(false);
     }
     
     public RegistrarClientePane(Long id) {
         initComponents();
-        UsuarioDAOImpl usuarioDAOImpl = new UsuarioDAOImpl();
-        this.u = usuarioDAOImpl.findById(id);
-        jLabel1.setText("Editar usuário");
-        inputLoginUsuario.setText(u.getLogin());
-        inputNomeUsuario.setText(u.getNome());
-        inputSenhaUsuario.setText(u.getSenha());
-        inputRepetirSenhaUsuario.setText(u.getSenha());
-        btnDeletar.setVisible(true);
     }
 
     /**
@@ -49,14 +34,14 @@ public class RegistrarClientePane extends javax.swing.JPanel {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        inputNomeUsuario = new javax.swing.JTextField();
+        inputNomeCliente = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         btnSalvar = new javax.swing.JButton();
         btnLimpar = new javax.swing.JButton();
         btnDeletar = new javax.swing.JButton();
-        jFormattedTextField2 = new javax.swing.JFormattedTextField();
-        jFormattedTextField3 = new javax.swing.JFormattedTextField();
+        inputTelefoneCliente = new javax.swing.JFormattedTextField();
+        inputCpfCliente = new javax.swing.JFormattedTextField();
 
         setPreferredSize(new java.awt.Dimension(394, 322));
 
@@ -92,9 +77,17 @@ public class RegistrarClientePane extends javax.swing.JPanel {
             }
         });
 
-        jFormattedTextField2.setText("jFormattedTextField1");
+        try {
+            inputTelefoneCliente.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) 9####-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
 
-        jFormattedTextField3.setText("jFormattedTextField1");
+        try {
+            inputCpfCliente.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -108,9 +101,9 @@ public class RegistrarClientePane extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jFormattedTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(inputCpfCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(inputTelefoneCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                             .addContainerGap()
@@ -131,7 +124,7 @@ public class RegistrarClientePane extends javax.swing.JPanel {
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jLabel5)
                                         .addComponent(btnLimpar)))
-                                .addComponent(inputNomeUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(inputNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(12, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -142,15 +135,15 @@ public class RegistrarClientePane extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(inputNomeUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(inputNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jFormattedTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(inputTelefoneCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(inputCpfCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSalvar)
@@ -162,33 +155,11 @@ public class RegistrarClientePane extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        if(!new String(inputSenhaUsuario.getPassword()).equals(new String(inputRepetirSenhaUsuario.getPassword()))) {
-            inputSenhaUsuario.setText("");
-            inputRepetirSenhaUsuario.setText("");
-            JOptionPane.showMessageDialog(this, "As senhas não são iguais. Tente novamente!", "ERRO: Senhas diferentes", JOptionPane.ERROR_MESSAGE);
-        } if(this.u != null) {
-            UsuarioDAOImpl usuarioDAOImpl = new UsuarioDAOImpl();
-            u.setLogin(inputLoginUsuario.getText());
-            u.setNome(inputNomeUsuario.getText());
-            u.setSenha(new String(inputSenhaUsuario.getPassword()));
-            usuarioDAOImpl.update(u);
-            //((GenericDAOImpl<?, ?>) usuarioDAOImpl).close();
-            
-            JOptionPane.showMessageDialog(this, "Usuário atualizado com sucesso!", "SUCESSO: Usuário atualizado", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-                UsuarioDAOImpl usuarioDAOImpl = new UsuarioDAOImpl();
-                Usuario usuario = new Usuario();
-                usuario.setNome(inputNomeUsuario.getText());
-                usuario.setLogin(inputLoginUsuario.getText());
-                usuario.setSenha(new String(inputSenhaUsuario.getPassword()));
-
-                usuarioDAOImpl.save(usuario);
-                //((GenericDAOImpl<?, ?>) usuarioDAOImpl).close();
-                
-                JOptionPane.showMessageDialog(this, "Usuário salvo com sucesso!", "SUCESSO: Usuário salvo", JOptionPane.INFORMATION_MESSAGE);
-                // limpar os campos
-                this.limparCampos();
-        }
+        Cliente c =  new Cliente();
+        c.setNome(inputNomeCliente.getText());
+        c.setCpf(inputCpfCliente.getText());
+        c.setTelefone(inputTelefoneCliente.getText());
+        System.out.printf("Nome: %s%nCpf: %s%nTelefone: %s%n", c.getNome(), c.getCpf(), c.getTelefone());
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
@@ -196,38 +167,26 @@ public class RegistrarClientePane extends javax.swing.JPanel {
     }//GEN-LAST:event_btnLimparActionPerformed
 
     private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
-        if(JOptionPane.showConfirmDialog(this, "Tem certeza que deseja deletar este usuário?",
-        "Deletar usuário", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
-            if (u != null) {
-                UsuarioDAOImpl usuarioDAOImpl = new UsuarioDAOImpl();
-                usuarioDAOImpl.delete(u);
-                JOptionPane.showMessageDialog(this, "Usuário deletado com sucesso!", "SUCESSO: Usuário deletado", JOptionPane.INFORMATION_MESSAGE);  
-                u = null;
-                limparCampos();
-                btnDeletar.setVisible(false);
-            }
-            
-        }
+        
     }//GEN-LAST:event_btnDeletarActionPerformed
 
     private void limparCampos() {
-        inputNomeUsuario.setText("");
-        inputLoginUsuario.setText("");
-        inputSenhaUsuario.setText("");
-        inputRepetirSenhaUsuario.setText("");
+        inputNomeCliente.setText("");
+        inputCpfCliente.setText("");
+        inputTelefoneCliente.setText("");
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDeletar;
     private javax.swing.JButton btnLimpar;
     private javax.swing.JButton btnSalvar;
-    private javax.swing.JTextField inputNomeUsuario;
-    private javax.swing.JFormattedTextField jFormattedTextField2;
-    private javax.swing.JFormattedTextField jFormattedTextField3;
+    private javax.swing.JFormattedTextField inputCpfCliente;
+    private javax.swing.JTextField inputNomeCliente;
+    private javax.swing.JFormattedTextField inputTelefoneCliente;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     // End of variables declaration//GEN-END:variables
-    Usuario u;
+    Cliente c;
 }

@@ -96,6 +96,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMenu5.setText("Cliente");
 
+        registrarClienteMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         registrarClienteMenuItem.setSelected(true);
         registrarClienteMenuItem.setText("Registrar cliente");
         registrarClienteMenuItem.addActionListener(new java.awt.event.ActionListener() {
@@ -167,7 +168,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
     
     private void montarFormularioUsuarioJIF(Optional<Long> id) {
-        formularioUsuarioJIF = new JInternalFrame("Formulário de usuário");
+        JInternalFrame formularioUsuarioJIF = new JInternalFrame("Formulário de usuário");
         formularioUsuarioJIF.setBounds(100, 100, 410, 370);
         formularioUsuarioJIF.setVisible(true);
         formularioUsuarioJIF.setClosable(true);
@@ -184,16 +185,38 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
     
     private void listarUsuarioMenuItemActionPerformedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listarUsuarioMenuItemActionPerformedActionPerformed
-        JInternalFrame janelaInterna = new JInternalFrame("Lista de clientes");
-        janelaInterna.setBounds(100, 100, 410, 330);
-        janelaInterna.setVisible(true);
-        janelaInterna.setClosable(true);
-        janelaInterna.setResizable(true);
+        JInternalFrame listarUsuarioJIF = new JInternalFrame("Lista de clientes");
+        listarUsuarioJIF.setBounds(100, 100, 410, 330);
+        listarUsuarioJIF.setVisible(true);
+        listarUsuarioJIF.setClosable(true);
+        listarUsuarioJIF.setResizable(true);
         ListarUsuarioPane listarUsuarioPane = new ListarUsuarioPane(this);
-        janelaInterna.add(listarUsuarioPane);
-        jDesktopPane1.add(janelaInterna);
+        listarUsuarioJIF.add(listarUsuarioPane);
+        jDesktopPane1.add(listarUsuarioJIF);
     }//GEN-LAST:event_listarUsuarioMenuItemActionPerformedActionPerformed
  
+    private void registrarClienteMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarClienteMenuItemActionPerformed
+        this.limparTela();
+        montarFormularioClienteJIF(Optional.empty());
+    }//GEN-LAST:event_registrarClienteMenuItemActionPerformed
+
+    private void montarFormularioClienteJIF(Optional<Long> id) {
+        JInternalFrame formularioClienteJIF = new JInternalFrame("Formulário de cliente");
+        formularioClienteJIF.setBounds(100, 100, 410, 370);
+        formularioClienteJIF.setVisible(true);
+        formularioClienteJIF.setClosable(true);
+        formularioClienteJIF.setResizable(true);
+        
+        RegistrarClientePane formulario;
+        if(id.isEmpty()) {
+            formulario = new RegistrarClientePane();
+        } else {
+            formulario = new RegistrarClientePane(id.get());
+        }
+        formularioClienteJIF.add(formulario);
+        jDesktopPane1.add(formularioClienteJIF);
+    }
+    
     private void limparTela() {
         for(Component component: jDesktopPane1.getComponents()) {
             if(component instanceof JInternalFrame) {
@@ -204,14 +227,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         this.repaint();
     }
     
-    private void registrarClienteMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarClienteMenuItemActionPerformed
-        this.limparTela();
-        montarFormularioClienteJIF();
-    }//GEN-LAST:event_registrarClienteMenuItemActionPerformed
-
-    private void montarFormularioClienteJIF() {
-        System.out.println("MONTAR FORMULARIO REGISTRO/EDICAO DE CLIENTE");
-    }
     /**
      * @param args the command line arguments
      */
@@ -266,6 +281,4 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JCheckBoxMenuItem registrarClienteMenuItem;
     private javax.swing.JCheckBoxMenuItem registrarUsuarioMenuItem;
     // End of variables declaration//GEN-END:variables
-    JInternalFrame formularioUsuarioJIF;
-    JInternalFrame listarUsuarioJIF;
 }
