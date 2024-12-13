@@ -1,5 +1,6 @@
 model\dao\UsuarioDAO.class
 view\TelaPrincipal.class
+view\ListarUsuarioPane.class
 view\RegistrarUsuarioPane$1.class
 view\RegistrarUsuarioPane$2.class
 view\TelaPrincipal$2.class
@@ -7,9 +8,11 @@ model\entity\Usuario.class
 view\RegistrarUsuarioPane.class
 view\TelaPrincipal$1.class
 model\dao\GenericDAOImpl.class
+view\ListarUsuarioPane$1.class
 view\TelaPrincipal$4.class
 view\RegistrarUsuarioPane$4.class
 model\dao\UsuarioDAOImpl.class
+view\RegistrarUsuarioPane$5.class
 view\RegistrarUsuarioPane$3.class
 model\dao\GenericDAO.class
 view\TelaPrincipal$3.class

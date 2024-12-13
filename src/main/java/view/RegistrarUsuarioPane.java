@@ -4,7 +4,10 @@
  */
 package view;
 
+import java.awt.Dimension;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import model.dao.GenericDAOImpl;
 import model.dao.UsuarioDAOImpl;
 import model.entity.Usuario;
 
@@ -19,6 +22,20 @@ public class RegistrarUsuarioPane extends javax.swing.JPanel {
      */
     public RegistrarUsuarioPane() {
         initComponents();
+        jLabel1.setText("Registrar usuário");
+        btnDeletar.setVisible(false);
+    }
+    
+    public RegistrarUsuarioPane(Long id) {
+        initComponents();
+        UsuarioDAOImpl usuarioDAOImpl = new UsuarioDAOImpl();
+        this.u = usuarioDAOImpl.findById(id);
+        jLabel1.setText("Editar usuário");
+        inputLoginUsuario.setText(u.getLogin());
+        inputNomeUsuario.setText(u.getNome());
+        inputSenhaUsuario.setText(u.getSenha());
+        inputRepetirSenhaUsuario.setText(u.getSenha());
+        btnDeletar.setVisible(true);
     }
 
     /**
@@ -41,9 +58,11 @@ public class RegistrarUsuarioPane extends javax.swing.JPanel {
         inputRepetirSenhaUsuario = new javax.swing.JPasswordField();
         btnSalvarUsuario = new javax.swing.JButton();
         btnLimparUsuarioForm = new javax.swing.JButton();
+        btnDeletar = new javax.swing.JButton();
+
+        setPreferredSize(new java.awt.Dimension(0, 0));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel1.setText("Registrar usuário");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setText("Nome:");
@@ -80,6 +99,13 @@ public class RegistrarUsuarioPane extends javax.swing.JPanel {
         btnLimparUsuarioForm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLimparUsuarioFormActionPerformed(evt);
+            }
+        });
+
+        btnDeletar.setText("Deletar");
+        btnDeletar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeletarActionPerformed(evt);
             }
         });
 
@@ -121,6 +147,10 @@ public class RegistrarUsuarioPane extends javax.swing.JPanel {
                                     .addComponent(jLabel5)
                                     .addComponent(btnLimparUsuarioForm))))))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btnDeletar)
+                .addGap(158, 158, 158))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -147,7 +177,9 @@ public class RegistrarUsuarioPane extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSalvarUsuario)
                     .addComponent(btnLimparUsuarioForm))
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(btnDeletar)
+                .addContainerGap(61, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -160,35 +192,63 @@ public class RegistrarUsuarioPane extends javax.swing.JPanel {
     }//GEN-LAST:event_inputSenhaUsuarioActionPerformed
 
     private void btnSalvarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarUsuarioActionPerformed
-       
-        
-        String nomeUsuario = inputNomeUsuario.getText();
-        String loginUsuario = inputLoginUsuario.getText();
-        String senhaUsuario = new String(inputSenhaUsuario.getPassword());
-        String repetirSenhaUsuario = new String(inputRepetirSenhaUsuario.getPassword());
-        
-        if(!senhaUsuario.equals(repetirSenhaUsuario)) {
+        if(!new String(inputSenhaUsuario.getPassword()).equals(new String(inputRepetirSenhaUsuario.getPassword()))) {
+            inputSenhaUsuario.setText("");
+            inputRepetirSenhaUsuario.setText("");
             JOptionPane.showMessageDialog(this, "As senhas não são iguais. Tente novamente!", "ERRO: Senhas diferentes", JOptionPane.ERROR_MESSAGE);
-        } else {
-            Usuario usuario = new Usuario();
+        } if(this.u != null) {
             UsuarioDAOImpl usuarioDAOImpl = new UsuarioDAOImpl();
-            usuario.setNome(nomeUsuario);
-            usuario.setLogin(loginUsuario);
-            usuario.setSenha(senhaUsuario);
+            u.setLogin(inputLoginUsuario.getText());
+            u.setNome(inputNomeUsuario.getText());
+            u.setSenha(new String(inputSenhaUsuario.getPassword()));
+            usuarioDAOImpl.update(u);
+            //((GenericDAOImpl<?, ?>) usuarioDAOImpl).close();
+            
+            JOptionPane.showMessageDialog(this, "Usuário atualizado com sucesso!", "SUCESSO: Usuário atualizado", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+                UsuarioDAOImpl usuarioDAOImpl = new UsuarioDAOImpl();
+                Usuario usuario = new Usuario();
+                usuario.setNome(inputNomeUsuario.getText());
+                usuario.setLogin(inputLoginUsuario.getText());
+                usuario.setSenha(new String(inputSenhaUsuario.getPassword()));
 
-            usuarioDAOImpl.save(usuario);
+                usuarioDAOImpl.save(usuario);
+                //((GenericDAOImpl<?, ?>) usuarioDAOImpl).close();
+                
+                JOptionPane.showMessageDialog(this, "Usuário salvo com sucesso!", "SUCESSO: Usuário salvo", JOptionPane.INFORMATION_MESSAGE);
+                // limpar os campos
+                this.limparCampos();
         }
     }//GEN-LAST:event_btnSalvarUsuarioActionPerformed
 
     private void btnLimparUsuarioFormActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparUsuarioFormActionPerformed
+        this.limparCampos();
+    }//GEN-LAST:event_btnLimparUsuarioFormActionPerformed
+
+    private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
+        if(JOptionPane.showConfirmDialog(this, "Tem certeza que deseja deletar este usuário?",
+        "Deletar usuário", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+            if (u != null) {
+                UsuarioDAOImpl usuarioDAOImpl = new UsuarioDAOImpl();
+                usuarioDAOImpl.delete(u);
+                JOptionPane.showMessageDialog(this, "Usuário deletado com sucesso!", "SUCESSO: Usuário deletado", JOptionPane.INFORMATION_MESSAGE);  
+                u = null;
+                limparCampos();
+                btnDeletar.setVisible(false);
+            }
+            
+        }
+    }//GEN-LAST:event_btnDeletarActionPerformed
+
+    private void limparCampos() {
         inputNomeUsuario.setText("");
         inputLoginUsuario.setText("");
         inputSenhaUsuario.setText("");
         inputRepetirSenhaUsuario.setText("");
-    }//GEN-LAST:event_btnLimparUsuarioFormActionPerformed
-
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnDeletar;
     private javax.swing.JButton btnLimparUsuarioForm;
     private javax.swing.JButton btnSalvarUsuario;
     private javax.swing.JTextField inputLoginUsuario;
@@ -201,4 +261,5 @@ public class RegistrarUsuarioPane extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     // End of variables declaration//GEN-END:variables
+    Usuario u;
 }
