@@ -2,6 +2,9 @@
 package view;
 
 import java.awt.Component;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import javax.swing.JInternalFrame;
 
@@ -201,9 +204,25 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_listarClientesMenuItemActionPerformed
 
     private void registrarReservaMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarReservaMenuItemActionPerformed
-        // TODO add your handling code here:
+        LocalTime inicio = LocalTime.of(6, 0);
+        LocalTime fim = LocalTime.of(23, 0);
+        
+        List<LocalTime> listaHorarios = gerarHoras(inicio, fim);
+        
     }//GEN-LAST:event_registrarReservaMenuItemActionPerformed
-
+    private List<LocalTime> gerarHoras(LocalTime inicio, LocalTime fim) {
+        List<LocalTime> horas = new ArrayList<>();
+        
+        LocalTime horarioAtual = inicio;
+        while(horarioAtual.isBefore(fim)) {
+            horas.add(horarioAtual);
+            horarioAtual = horarioAtual.plusHours(1);
+        }
+        
+        return horas;
+    }
+    
+    
     public void ativarEdicaoUsuario(Long id) {
         this.limparTela();
         montarFormularioUsuarioJIF(Optional.of(id));
