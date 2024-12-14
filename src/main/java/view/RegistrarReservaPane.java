@@ -45,13 +45,14 @@ public class RegistrarReservaPane extends javax.swing.JPanel {
         for(Quadra quadra: listaQuadras) {
             comboBoxQuadra.addItem(quadra);
         }
-        comboBoxQuadra.setSelectedIndex(-1);
     }
     
-    private void loadComboBoxHorarioContent() {
-        HorarioDAOImpl horarioDAOImpl = new HorarioDAOImpl();
-        List<Horario> listaHorarios = horarioDAOImpl.findAll();
-        
+    private void loadComboBoxHorarioContent(List<Horario> lista) {
+        comboBoxHorario.removeAllItems();
+        for(Horario horario: lista) {
+            comboBoxHorario.addItem(horario);
+        }
+        comboBoxHorario.setEnabled(true);
     }
 
     @SuppressWarnings("unchecked")
@@ -205,14 +206,21 @@ public class RegistrarReservaPane extends javax.swing.JPanel {
 
     private void btnVerificarDispobibilidadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerificarDispobibilidadesActionPerformed
         painelAgendamento.setVisible(true);
-        ReservaDAOImpl reservaDAOImpl = new ReservaDAOImpl();
-        this.listaReservas = reservaDAOImpl.getByDate(getDateObject(inputDataReserva.getText()));
-        
+        loadComboBoxQuadraContent();
     }//GEN-LAST:event_btnVerificarDispobibilidadesActionPerformed
 
     private void comboBoxQuadraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxQuadraActionPerformed
+        ReservaDAOImpl reservaDAOImpl = new ReservaDAOImpl();
+        List<Reserva> reservasRegistradas = reservaDAOImpl.getByDataAndQuadra(getDateObject(inputDataReserva.getText()), (Quadra) comboBoxQuadra.getSelectedItem());
+        HorarioDAOImpl horarioDAOImpl = new HorarioDAOImpl();
+        List<Horario> listaHorarios = horarioDAOImpl.findAll();
         
-        System.out.println("Vai carregar os horários diponíveis");
+        for (Reserva reserva: reservasRegistradas) {
+            if(listaHorarios.contains(reserva.getHorario())) {
+                listaHorarios.remove(reserva.getHorario());
+            }
+        }
+        loadComboBoxHorarioContent(listaHorarios);
     }//GEN-LAST:event_comboBoxQuadraActionPerformed
 
     private void comboBoxHorarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxHorarioActionPerformed
@@ -248,5 +256,4 @@ public class RegistrarReservaPane extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel painelAgendamento;
     // End of variables declaration//GEN-END:variables
-    List<Reserva> listaReservas;
 }
