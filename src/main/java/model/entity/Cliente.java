@@ -25,5 +25,5 @@ public class Cliente {
     
     
     @OneToMany(mappedBy = "cliente")
-    Collection<Cliente> reservas;
+    Collection<Reserva> reservas;
 }
