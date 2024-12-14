@@ -2,6 +2,7 @@ package view;
 
 import java.awt.Dimension;
 import java.sql.SQLException;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -43,11 +44,12 @@ public class RegistrarReservaPane extends javax.swing.JPanel {
             comboBoxQuadra.addItem(quadra);
         }
         
-        /*DiaSemanaDAOImpl diaSemanaDAOImpl = new DiaSemanaDAOImpl();
+        comboBoxDiaSemana.setVisible(false);
+        DiaSemanaDAOImpl diaSemanaDAOImpl = new DiaSemanaDAOImpl();
         List<DiaSemana> listaDiasSemana = diaSemanaDAOImpl.findAll();
         for(DiaSemana diaSemana: listaDiasSemana) {
             comboBoxDiaSemana.addItem(diaSemana);
-        }*/
+        }
         
         HorarioDAOImpl horarioDAOImpl = new HorarioDAOImpl();
         List<Horario> listaHorarios = horarioDAOImpl.findAll();
@@ -60,6 +62,7 @@ public class RegistrarReservaPane extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -72,6 +75,18 @@ public class RegistrarReservaPane extends javax.swing.JPanel {
         jLabel7 = new javax.swing.JLabel();
         comboBoxQuadra = new javax.swing.JComboBox<>();
         inputDataReserva = new javax.swing.JFormattedTextField();
+        comboBoxDiaSemana = new javax.swing.JComboBox<>();
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
 
         setPreferredSize(new java.awt.Dimension(394, 322));
 
@@ -168,6 +183,10 @@ public class RegistrarReservaPane extends javax.swing.JPanel {
                                         .addGap(0, 0, Short.MAX_VALUE))
                                     .addComponent(inputDataReserva, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE))))))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(comboBoxDiaSemana, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -196,21 +215,39 @@ public class RegistrarReservaPane extends javax.swing.JPanel {
                     .addComponent(btnLimpar))
                 .addGap(18, 18, 18)
                 .addComponent(btnDeletar)
-                .addContainerGap(114, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(comboBoxDiaSemana, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(74, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         ReservaDAOImpl reservaDAOImpl = new ReservaDAOImpl();
         ClienteDAOImpl clienteDAOImpl = new ClienteDAOImpl();
-        //Cliente cliente = clienteDAOImpl.getByCpf(inputCpfCliente.getText()).get(0);
-        //System.out.println("Nome do cliente: "+cliente.getNome());
-        LocalDate dataReserva = getDateObject(inputDataReserva.getText());
-        System.out.println(dataReserva);
-        /*Reserva reserva = new Reserva();
-        reserva.setQuadra((Quadra) comboBoxQuadra.getSelectedItem());
-        reserva.setHorario((Horario) comboBoxHorario.getSelectedItem());
-        reserva.setDiaSemana((DiaSemana) comboBoxDiaSemana.getSelectedItem());*/
+        List<Cliente> lista = clienteDAOImpl.getByCpf(inputCpfCliente.getText());
+        if(!lista.isEmpty()) {
+            Cliente cliente = lista.get(0);
+            Reserva reserva = new Reserva();
+            reserva.setDataReserva(getDateObject(inputDataReserva.getText()));
+            for(int i = 0; i < comboBoxDiaSemana.getItemCount(); i++) {
+                DiaSemana diaSemana = comboBoxDiaSemana.getItemAt(i);
+                if(diaSemana.getNome().equalsIgnoreCase(reserva.getDataReserva().getDayOfWeek().name())) {
+                    reserva.setDiaSemana(diaSemana);
+                    break;
+                }
+            }
+            reserva.setHorario((Horario) comboBoxHorario.getSelectedItem());
+            reserva.setCliente(cliente);
+            reserva.setValor(50f);
+            
+            reservaDAOImpl.save(reserva);
+            
+            JOptionPane.showMessageDialog(this, "Reserva salva com sucesso!", "SUCESSO: Reserva salva", JOptionPane.INFORMATION_MESSAGE);
+            this.limparCampos();
+        } else {
+            JOptionPane.showMessageDialog(this, "Cliente não encontrado", "ERRO: Cliente não encontrado", JOptionPane.WARNING_MESSAGE);
+        }
+        
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private LocalDate getDateObject(String date) {
@@ -231,12 +268,17 @@ public class RegistrarReservaPane extends javax.swing.JPanel {
 
     private void limparCampos() {
         inputCpfCliente.setText("");
+        inputDataReserva.setText("");
+        comboBoxQuadra.setSelectedIndex(0);
+        comboBoxHorario.setSelectedIndex(0);
+        comboBoxDiaSemana.setSelectedIndex(0);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDeletar;
     private javax.swing.JButton btnLimpar;
     private javax.swing.JButton btnSalvar;
+    private javax.swing.JComboBox<DiaSemana> comboBoxDiaSemana;
     private javax.swing.JComboBox<Horario> comboBoxHorario;
     private javax.swing.JComboBox<Quadra> comboBoxQuadra;
     private javax.swing.JFormattedTextField inputCpfCliente;
@@ -246,5 +288,6 @@ public class RegistrarReservaPane extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }
