@@ -204,23 +204,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_listarClientesMenuItemActionPerformed
 
     private void registrarReservaMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarReservaMenuItemActionPerformed
-        LocalTime inicio = LocalTime.of(6, 0);
-        LocalTime fim = LocalTime.of(23, 0);
-        
-        List<LocalTime> listaHorarios = gerarHoras(inicio, fim);
-        
+        this.limparTela();
+        montarFormularioReservaJIF(Optional.empty());
     }//GEN-LAST:event_registrarReservaMenuItemActionPerformed
-    private List<LocalTime> gerarHoras(LocalTime inicio, LocalTime fim) {
-        List<LocalTime> horas = new ArrayList<>();
-        
-        LocalTime horarioAtual = inicio;
-        while(horarioAtual.isBefore(fim)) {
-            horas.add(horarioAtual);
-            horarioAtual = horarioAtual.plusHours(1);
-        }
-        
-        return horas;
-    }
+
     
     
     public void ativarEdicaoUsuario(Long id) {
@@ -265,6 +252,19 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
         formularioClienteJIF.add(formulario);
         jDesktopPane1.add(formularioClienteJIF);
+    }
+    
+    private void montarFormularioReservaJIF(Optional<Long> id) {
+        JInternalFrame formularioReservaJIF = new JInternalFrame("Formulário de Reserva");
+        formularioReservaJIF.setBounds(100, 100, 410, 370);
+        formularioReservaJIF.setVisible(true);
+        formularioReservaJIF.setClosable(true);
+        formularioReservaJIF.setResizable(true);
+        
+        RegistrarReservaPane formulario = new RegistrarReservaPane();
+        
+        formularioReservaJIF.add(formulario);
+        jDesktopPane1.add(formularioReservaJIF);
     }
     
     private void limparTela() {
