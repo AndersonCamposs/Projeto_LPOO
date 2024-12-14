@@ -9,11 +9,13 @@ import model.dao.DiaSemanaDAOImpl;
 import model.dao.GenericDAOImpl;
 import model.dao.HorarioDAOImpl;
 import model.dao.QuadraDAOImpl;
+import model.dao.ReservaDAOImpl;
 import model.dao.UsuarioDAOImpl;
 import model.entity.Cliente;
 import model.entity.DiaSemana;
 import model.entity.Horario;
 import model.entity.Quadra;
+import model.entity.Reserva;
 import model.entity.Usuario;
 
 public class RegistrarReservaPane extends javax.swing.JPanel {
@@ -37,19 +39,19 @@ public class RegistrarReservaPane extends javax.swing.JPanel {
         QuadraDAOImpl quadraDAOImpl = new QuadraDAOImpl();
         List<Quadra> listaQuadras = quadraDAOImpl.findAll();
         for(Quadra quadra: listaQuadras) {
-            comboBoxQuadra.addItem(quadra.getNome());
+            comboBoxQuadra.addItem(quadra);
         }
         
         DiaSemanaDAOImpl diaSemanaDAOImpl = new DiaSemanaDAOImpl();
         List<DiaSemana> listaDiasSemana = diaSemanaDAOImpl.findAll();
         for(DiaSemana diaSemana: listaDiasSemana) {
-            comboBoxDiaSemana.addItem(diaSemana.getNome());
+            comboBoxDiaSemana.addItem(diaSemana);
         }
         
         HorarioDAOImpl horarioDAOImpl = new HorarioDAOImpl();
         List<Horario> listaHorarios = horarioDAOImpl.findAll();
         for (Horario horario: listaHorarios) {
-            comboBoxHorario.addItem(horario.getHora().toString());
+            comboBoxHorario.addItem(horario);
         }
     }
 
@@ -188,7 +190,14 @@ public class RegistrarReservaPane extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        
+        ReservaDAOImpl reservaDAOImpl = new ReservaDAOImpl();
+        ClienteDAOImpl clienteDAOImpl = new ClienteDAOImpl();
+        Cliente cliente = clienteDAOImpl.getByCpf(inputCpfCliente.getText()).get(0);
+        System.out.println("Nome do cliente: "+cliente.getNome());
+        /*Reserva reserva = new Reserva();
+        reserva.setQuadra((Quadra) comboBoxQuadra.getSelectedItem());
+        reserva.setHorario((Horario) comboBoxHorario.getSelectedItem());
+        reserva.setDiaSemana((DiaSemana) comboBoxDiaSemana.getSelectedItem());*/
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
@@ -207,9 +216,9 @@ public class RegistrarReservaPane extends javax.swing.JPanel {
     private javax.swing.JButton btnDeletar;
     private javax.swing.JButton btnLimpar;
     private javax.swing.JButton btnSalvar;
-    private javax.swing.JComboBox<String> comboBoxDiaSemana;
-    private javax.swing.JComboBox<String> comboBoxHorario;
-    private javax.swing.JComboBox<String> comboBoxQuadra;
+    private javax.swing.JComboBox<DiaSemana> comboBoxDiaSemana;
+    private javax.swing.JComboBox<Horario> comboBoxHorario;
+    private javax.swing.JComboBox<Quadra> comboBoxQuadra;
     private javax.swing.JFormattedTextField inputCpfCliente;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;

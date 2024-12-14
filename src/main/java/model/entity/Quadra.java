@@ -4,7 +4,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.Collection;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,4 +19,12 @@ public class Quadra {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
+    
+    @OneToMany(mappedBy = "quadra")
+    Collection<Reserva> reservas;
+    
+    @Override
+    public String toString() {
+        return nome;
+    }
 }
