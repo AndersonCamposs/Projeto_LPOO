@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.List;
+import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import model.dao.ClienteDAOImpl;
 import model.dao.DiaSemanaDAOImpl;
@@ -22,13 +23,15 @@ import model.entity.Usuario;
 
 public class RegistrarReservaPane extends javax.swing.JPanel {
 
+        JInternalFrame formularioReservaJIF;
     /**
      * Creates new form RegistrarUsuario
      */
-    public RegistrarReservaPane() {
+    public RegistrarReservaPane(JInternalFrame formularioReservaJIF) {
         initComponents();
         painelAgendamento.setVisible(false);
         comboBoxHorario.setEnabled(false);
+        this.formularioReservaJIF = formularioReservaJIF;
         /*loadComboBoxContent();
         jLabel1.setText("Registrar reserva");
         btnDeletar.setVisible(false);*/
@@ -45,6 +48,7 @@ public class RegistrarReservaPane extends javax.swing.JPanel {
         for(Quadra quadra: listaQuadras) {
             comboBoxQuadra.addItem(quadra);
         }
+        comboBoxQuadra.setSelectedIndex(0);
     }
     
     private void loadComboBoxHorarioContent(List<Horario> lista) {
@@ -206,6 +210,7 @@ public class RegistrarReservaPane extends javax.swing.JPanel {
 
     private void btnVerificarDispobibilidadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerificarDispobibilidadesActionPerformed
         painelAgendamento.setVisible(true);
+        this.formularioReservaJIF.setBounds(100, 100, 350, 350);
         loadComboBoxQuadraContent();
     }//GEN-LAST:event_btnVerificarDispobibilidadesActionPerformed
 
@@ -219,6 +224,9 @@ public class RegistrarReservaPane extends javax.swing.JPanel {
             if(listaHorarios.contains(reserva.getHorario())) {
                 listaHorarios.remove(reserva.getHorario());
             }
+        }
+        for(Horario horario: listaHorarios) {
+            System.out.println(horario);
         }
         loadComboBoxHorarioContent(listaHorarios);
     }//GEN-LAST:event_comboBoxQuadraActionPerformed
