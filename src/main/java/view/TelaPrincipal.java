@@ -123,6 +123,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMenu4.setText("Reserva");
 
+        registrarReservaMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         registrarReservaMenuItem.setSelected(true);
         registrarReservaMenuItem.setText("Registrar uma reserva");
         registrarReservaMenuItem.addActionListener(new java.awt.event.ActionListener() {
