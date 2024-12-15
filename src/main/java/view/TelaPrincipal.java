@@ -38,7 +38,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         listarClientesMenuItem = new javax.swing.JCheckBoxMenuItem();
         jMenu4 = new javax.swing.JMenu();
         registrarReservaMenuItem = new javax.swing.JCheckBoxMenuItem();
-        jCheckBoxMenuItem6 = new javax.swing.JCheckBoxMenuItem();
+        listarReservasMenuItem = new javax.swing.JCheckBoxMenuItem();
         jMenu6 = new javax.swing.JMenu();
         jCheckBoxMenuItem7 = new javax.swing.JCheckBoxMenuItem();
         jCheckBoxMenuItem8 = new javax.swing.JCheckBoxMenuItem();
@@ -64,11 +64,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jDesktopPane1.setLayout(jDesktopPane1Layout);
         jDesktopPane1Layout.setHorizontalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 713, Short.MAX_VALUE)
+            .addGap(0, 760, Short.MAX_VALUE)
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 503, Short.MAX_VALUE)
+            .addGap(0, 580, Short.MAX_VALUE)
         );
 
         jMenu1.setText("Cadastros");
@@ -133,9 +133,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         jMenu4.add(registrarReservaMenuItem);
 
-        jCheckBoxMenuItem6.setSelected(true);
-        jCheckBoxMenuItem6.setText("Listar reservas");
-        jMenu4.add(jCheckBoxMenuItem6);
+        listarReservasMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        listarReservasMenuItem.setSelected(true);
+        listarReservasMenuItem.setText("Listar reservas");
+        listarReservasMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                listarReservasMenuItemActionPerformed(evt);
+            }
+        });
+        jMenu4.add(listarReservasMenuItem);
 
         jMenu1.add(jMenu4);
 
@@ -208,6 +214,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
         this.limparTela();
         montarFormularioReservaJIF(Optional.empty());
     }//GEN-LAST:event_registrarReservaMenuItemActionPerformed
+
+    private void listarReservasMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listarReservasMenuItemActionPerformed
+        JInternalFrame listarReservasJIF = new JInternalFrame();
+        listarReservasJIF.setBounds(30, 100, 700, 430);
+        listarReservasJIF.setVisible(true);
+        listarReservasJIF.setClosable(true);
+        listarReservasJIF.setResizable(true);
+        ListarReservasPane listarReservasPane = new ListarReservasPane(this);
+        listarReservasJIF.add(listarReservasPane);
+        jDesktopPane1.add(listarReservasJIF);
+    }//GEN-LAST:event_listarReservasMenuItemActionPerformed
 
     
     
@@ -314,7 +331,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem6;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem7;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem8;
     private javax.swing.JDesktopPane jDesktopPane1;
@@ -327,6 +343,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JCheckBoxMenuItem listarClientesMenuItem;
+    private javax.swing.JCheckBoxMenuItem listarReservasMenuItem;
     private javax.swing.JCheckBoxMenuItem listarUsuariosMenuItemActionPerformed;
     private javax.swing.JCheckBoxMenuItem registrarClienteMenuItem;
     private javax.swing.JCheckBoxMenuItem registrarReservaMenuItem;
