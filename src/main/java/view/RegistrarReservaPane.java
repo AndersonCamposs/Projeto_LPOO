@@ -225,9 +225,6 @@ public class RegistrarReservaPane extends javax.swing.JPanel {
                 listaHorarios.remove(reserva.getHorario());
             }
         }
-        for(Horario horario: listaHorarios) {
-            System.out.println(horario);
-        }
         loadComboBoxHorarioContent(listaHorarios);
     }//GEN-LAST:event_comboBoxQuadraActionPerformed
 
