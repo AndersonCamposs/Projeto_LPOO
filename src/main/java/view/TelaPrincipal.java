@@ -257,7 +257,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     
     private void montarFormularioReservaJIF(Optional<Long> id) {
         JInternalFrame formularioReservaJIF = new JInternalFrame("Formulário de Reserva");
-        formularioReservaJIF.setBounds(100, 100, 350, 180);
+        formularioReservaJIF.setBounds(100, 100, 360, 180);
         formularioReservaJIF.setVisible(true);
         formularioReservaJIF.setClosable(true);
         formularioReservaJIF.setResizable(true);

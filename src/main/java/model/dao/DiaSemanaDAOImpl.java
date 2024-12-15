@@ -10,10 +10,10 @@ public class DiaSemanaDAOImpl extends GenericDAOImpl<DiaSemana, Serializable>{
         super(DiaSemana.class);
     }
     
-    public List<DiaSemana> getByNome(DayOfWeek nome) {
+    public List<DiaSemana> findByNome(DayOfWeek dia) {
         return entityManager
                 .createQuery("FROM DiaSemana ds WHERE ds.nome = :nome", DiaSemana.class)
-                .setParameter("nome", nome)
+                .setParameter("nome", dia.name())
                 .getResultList();
     }
 }
