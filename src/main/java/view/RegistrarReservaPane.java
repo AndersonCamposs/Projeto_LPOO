@@ -40,13 +40,18 @@ public class RegistrarReservaPane extends javax.swing.JPanel {
         initComponents();
         this.formularioReservaJIF = formularioReservaJIF;
         ReservaDAOImpl reservaDAOImpl = new ReservaDAOImpl();
-        this.reserva = reservaDAOImpl.findById(id);
+        this.r = reservaDAOImpl.findById(id);
         jLabel1.setText("Informações da reserva");
         this.formularioReservaJIF.setBounds(100, 100, 410, 300);
-        btnDeletar.setVisible(true);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        inputDataReserva.setValue(reserva.getDataReserva().format(formatter));
-        inputCpfCliente.setText(reserva.getCliente().getCpf());
+        inputDataReserva.setValue(r.getDataReserva().format(formatter));
+        inputCpfCliente.setText(r.getCliente().getCpf());
+        inputCpfCliente.setEnabled(false);
+        inputDataReserva.setEnabled(false);
+        btnSalvar.setVisible(false);
+        btnVerificarDispobibilidades.setEnabled(false);
+        
+        btnDeletar.setVisible(true);
         loadComboBoxQuadraContent();
     }
     
@@ -56,9 +61,9 @@ public class RegistrarReservaPane extends javax.swing.JPanel {
         for(Quadra quadra: listaQuadras) {
             comboBoxQuadra.addItem(quadra);
         }
-        if (reserva != null) {
-            if (listaQuadras.contains(reserva.getQuadra())) {
-                comboBoxQuadra.setSelectedItem(reserva.getQuadra());
+        if (r != null) {
+            if (listaQuadras.contains(r.getQuadra())) {
+                comboBoxQuadra.setSelectedItem(r.getQuadra());
                 comboBoxQuadra.setEnabled(false);
             }
         } else {
@@ -72,7 +77,14 @@ public class RegistrarReservaPane extends javax.swing.JPanel {
         for(Horario horario: lista) {
             comboBoxHorario.addItem(horario);
         }
-        comboBoxHorario.setEnabled(true);
+        if (r != null) {
+            comboBoxHorario.setSelectedItem(r.getHorario());
+            comboBoxHorario.setEnabled(false);
+        } else {
+            comboBoxHorario.setSelectedIndex(0);
+            comboBoxHorario.setEnabled(true);
+        }
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -93,8 +105,8 @@ public class RegistrarReservaPane extends javax.swing.JPanel {
         inputCpfCliente = new javax.swing.JFormattedTextField();
         jLabel4 = new javax.swing.JLabel();
         jSpinner1 = new javax.swing.JSpinner();
-        btnSalvar = new javax.swing.JButton();
         btnDeletar = new javax.swing.JButton();
+        btnSalvar = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -172,14 +184,19 @@ public class RegistrarReservaPane extends javax.swing.JPanel {
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel4.setText("CPF do Cliente");
 
+        btnDeletar.setText("Deletar");
+        btnDeletar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeletarActionPerformed(evt);
+            }
+        });
+
         btnSalvar.setText("Salvar");
         btnSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSalvarActionPerformed(evt);
             }
         });
-
-        btnDeletar.setText("Deletar");
 
         javax.swing.GroupLayout painelAgendamentoLayout = new javax.swing.GroupLayout(painelAgendamento);
         painelAgendamento.setLayout(painelAgendamentoLayout);
@@ -206,11 +223,12 @@ public class RegistrarReservaPane extends javax.swing.JPanel {
                                         .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(jLabel3))
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(painelAgendamentoLayout.createSequentialGroup()
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelAgendamentoLayout.createSequentialGroup()
+                                .addGap(3, 3, 3)
                                 .addComponent(btnSalvar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnDeletar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(14, 14, 14))))))
+                                .addContainerGap())))))
         );
         painelAgendamentoLayout.setVerticalGroup(
             painelAgendamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -241,20 +259,23 @@ public class RegistrarReservaPane extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(inputDataReserva)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnVerificarDispobibilidades)
-                        .addGap(162, 162, 162))))
+                        .addGap(18, 18, 18))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addGap(112, 112, 112)))
+                .addComponent(btnVerificarDispobibilidades)
+                .addGap(162, 162, 162))
             .addGroup(layout.createSequentialGroup()
-                .addGap(121, 121, 121)
-                .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(121, 121, 121)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(painelAgendamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(painelAgendamento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -286,7 +307,9 @@ public class RegistrarReservaPane extends javax.swing.JPanel {
         List<Horario> listaHorarios = horarioDAOImpl.findAll();
         
         for (Reserva reserva: reservasRegistradas) {
-            if(listaHorarios.contains(reserva.getHorario())) {
+            if(this.r != null && listaHorarios.contains(this.r.getHorario())) {
+                continue;
+            } else if(listaHorarios.contains(reserva.getHorario())) {
                 listaHorarios.remove(reserva.getHorario());
             }
         }
@@ -323,6 +346,21 @@ public class RegistrarReservaPane extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
+    private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
+        if(JOptionPane.showConfirmDialog(this, "Tem ceteza que deseja deletar esta reserva?",
+        "Deletar cliente", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) == 0) {
+            if (r != null) {
+                ReservaDAOImpl resevaAOImpl = new ReservaDAOImpl();
+                resevaAOImpl.delete(r);
+                JOptionPane.showMessageDialog(this, "Reserva deletada com sucesso!", "SUCESSO: Reserva deletado", JOptionPane.INFORMATION_MESSAGE);  
+                r = null;
+                limparCampos();
+                btnDeletar.setEnabled(false);
+            }
+            
+        }
+    }//GEN-LAST:event_btnDeletarActionPerformed
+
     private LocalDate getDateObject(String date) {
         String[] arrayDate = date.split("/");
         int y = Integer.parseInt(arrayDate[2]);
@@ -354,5 +392,5 @@ public class RegistrarReservaPane extends javax.swing.JPanel {
     private javax.swing.JSpinner jSpinner1;
     private javax.swing.JPanel painelAgendamento;
     // End of variables declaration//GEN-END:variables
-    Reserva reserva;
+    Reserva r;
 }
