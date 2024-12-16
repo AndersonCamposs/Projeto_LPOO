@@ -238,6 +238,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         montarFormularioClienteJIF(Optional.of(id));
     }
     
+    public void ativarEdicaoReserva(Long id) {
+        this.limparTela();
+        montarFormularioReservaJIF(Optional.of(id));
+    }
+    
     private void montarFormularioUsuarioJIF(Optional<Long> id) {
         JInternalFrame formularioUsuarioJIF = new JInternalFrame("Formulário de usuário");
         formularioUsuarioJIF.setBounds(100, 100, 410, 370);
@@ -278,9 +283,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
         formularioReservaJIF.setVisible(true);
         formularioReservaJIF.setClosable(true);
         formularioReservaJIF.setResizable(true);
-        
-        RegistrarReservaPane formulario = new RegistrarReservaPane(formularioReservaJIF);
-        
+        RegistrarReservaPane formulario;
+        if(id.isEmpty()) {
+             formulario = new RegistrarReservaPane(formularioReservaJIF);
+        } else {
+            formulario = new RegistrarReservaPane(formularioReservaJIF, id.get());
+        }
         formularioReservaJIF.add(formulario);
         jDesktopPane1.add(formularioReservaJIF);
     }

@@ -32,6 +32,7 @@ model\dao\QuadraoDAO.class
 view\TelaPrincipal$6.class
 view\RegistrarUsuarioPane.class
 model\dao\GenericDAOImpl.class
+view\ListarReservasPane$2.class
 view\RegistrarUsuarioPane$4.class
 view\TelaPrincipal$3.class
 model\entity\Horario.class

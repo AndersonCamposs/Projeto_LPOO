@@ -3,6 +3,7 @@ package view;
 import java.awt.Dimension;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
@@ -32,12 +33,20 @@ public class RegistrarReservaPane extends javax.swing.JPanel {
         comboBoxHorario.setEnabled(false);
         this.formularioReservaJIF = formularioReservaJIF;
         jLabel1.setText("Registrar reserva");
-        //btnDeletar.setVisible(false);
+        btnDeletar.setVisible(false);
     }
     
-    public RegistrarReservaPane(Long id) {
+    public RegistrarReservaPane(JInternalFrame formularioReservaJIF, Long id) {
         initComponents();
-        
+        this.formularioReservaJIF = formularioReservaJIF;
+        ReservaDAOImpl reservaDAOImpl = new ReservaDAOImpl();
+        this.reserva = reservaDAOImpl.findById(id);
+        jLabel1.setText("Informações da reserva");
+        this.formularioReservaJIF.setBounds(100, 100, 410, 300);
+        btnDeletar.setVisible(true);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        inputDataReserva.setValue(reserva.getDataReserva().format(formatter));
+        inputCpfCliente.setText(reserva.getCliente().getCpf());
     }
     
     private void loadComboBoxQuadraContent() {
@@ -76,6 +85,7 @@ public class RegistrarReservaPane extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         jSpinner1 = new javax.swing.JSpinner();
         btnSalvar = new javax.swing.JButton();
+        btnDeletar = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -160,6 +170,8 @@ public class RegistrarReservaPane extends javax.swing.JPanel {
             }
         });
 
+        btnDeletar.setText("Deletar");
+
         javax.swing.GroupLayout painelAgendamentoLayout = new javax.swing.GroupLayout(painelAgendamento);
         painelAgendamento.setLayout(painelAgendamentoLayout);
         painelAgendamentoLayout.setHorizontalGroup(
@@ -187,7 +199,9 @@ public class RegistrarReservaPane extends javax.swing.JPanel {
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(painelAgendamentoLayout.createSequentialGroup()
                                 .addComponent(btnSalvar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(132, 132, 132))))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnDeletar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(14, 14, 14))))))
         );
         painelAgendamentoLayout.setVerticalGroup(
             painelAgendamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -206,7 +220,8 @@ public class RegistrarReservaPane extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(painelAgendamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(inputCpfCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSalvar))
+                    .addComponent(btnSalvar)
+                    .addComponent(btnDeletar))
                 .addGap(82, 82, 82))
         );
 
@@ -313,6 +328,7 @@ public class RegistrarReservaPane extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnDeletar;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JButton btnVerificarDispobibilidades;
     private javax.swing.JComboBox<Horario> comboBoxHorario;
@@ -329,4 +345,5 @@ public class RegistrarReservaPane extends javax.swing.JPanel {
     private javax.swing.JSpinner jSpinner1;
     private javax.swing.JPanel painelAgendamento;
     // End of variables declaration//GEN-END:variables
+    Reserva reserva;
 }

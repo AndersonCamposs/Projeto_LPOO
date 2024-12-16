@@ -163,7 +163,9 @@
                               </Group>
                               <Group type="102" attributes="0">
                                   <Component id="btnSalvar" max="32767" attributes="0"/>
-                                  <EmptySpace min="-2" pref="132" max="-2" attributes="0"/>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Component id="btnDeletar" max="32767" attributes="0"/>
+                                  <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -191,6 +193,7 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="inputCpfCliente" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnSalvar" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnDeletar" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="82" max="-2" attributes="0"/>
               </Group>
@@ -270,6 +273,11 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSalvarActionPerformed"/>
           </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnDeletar">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Deletar"/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>

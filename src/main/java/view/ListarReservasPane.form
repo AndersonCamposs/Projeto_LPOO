@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
+<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
@@ -42,7 +42,7 @@
               <Table columnCount="6" rowCount="0">
                 <Column editable="false" title="ID" type="java.lang.Long"/>
                 <Column editable="false" title="NOME" type="java.lang.String"/>
-                <Column editable="true" title="CPF" type="java.lang.String"/>
+                <Column editable="false" title="CPF" type="java.lang.String"/>
                 <Column editable="false" title="QUADRA" type="java.lang.String"/>
                 <Column editable="false" title="HOR&#xc1;RIO" type="java.lang.String"/>
                 <Column editable="false" title="DATA" type="java.lang.String"/>
@@ -86,6 +86,9 @@
               <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tabelaReservasMouseClicked"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

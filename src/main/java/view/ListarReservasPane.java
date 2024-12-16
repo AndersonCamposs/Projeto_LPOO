@@ -58,7 +58,7 @@ public class ListarReservasPane extends javax.swing.JPanel {
                 java.lang.Long.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, true, false, false, false
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -67,6 +67,11 @@ public class ListarReservasPane extends javax.swing.JPanel {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        tabelaReservas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelaReservasMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(tabelaReservas);
@@ -88,6 +93,16 @@ public class ListarReservasPane extends javax.swing.JPanel {
                 .addGap(0, 160, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void tabelaReservasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaReservasMouseClicked
+        if(evt.getClickCount() == 2) {
+            int linhaSelecionada = tabelaReservas.getSelectedRow();
+            if (linhaSelecionada != -1) {
+                Long idSelecionado = (Long) tabelaReservas.getValueAt(linhaSelecionada, 0);
+                telaPrincipal.ativarEdicaoReserva(idSelecionado);
+            }
+        }
+    }//GEN-LAST:event_tabelaReservasMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
