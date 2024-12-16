@@ -22,6 +22,7 @@ public class RegistrarClientePane extends javax.swing.JPanel {
     
     public RegistrarClientePane(Long id) {
         initComponents();
+        jLabel1.setText("Editar cliente");
         ClienteDAOImpl clienteDAOImpl = new ClienteDAOImpl();
         c = clienteDAOImpl.findById(id);
         inputNomeCliente.setText(c.getNome());
