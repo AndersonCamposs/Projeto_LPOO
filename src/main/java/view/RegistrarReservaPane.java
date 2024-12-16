@@ -47,6 +47,7 @@ public class RegistrarReservaPane extends javax.swing.JPanel {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         inputDataReserva.setValue(reserva.getDataReserva().format(formatter));
         inputCpfCliente.setText(reserva.getCliente().getCpf());
+        loadComboBoxQuadraContent();
     }
     
     private void loadComboBoxQuadraContent() {
@@ -55,7 +56,15 @@ public class RegistrarReservaPane extends javax.swing.JPanel {
         for(Quadra quadra: listaQuadras) {
             comboBoxQuadra.addItem(quadra);
         }
-        comboBoxQuadra.setSelectedIndex(0);
+        if (reserva != null) {
+            if (listaQuadras.contains(reserva.getQuadra())) {
+                comboBoxQuadra.setSelectedItem(reserva.getQuadra());
+                comboBoxQuadra.setEnabled(false);
+            }
+        } else {
+          comboBoxQuadra.setSelectedIndex(0);  
+        }
+        
     }
     
     private void loadComboBoxHorarioContent(List<Horario> lista) {
