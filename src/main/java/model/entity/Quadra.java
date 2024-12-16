@@ -7,23 +7,27 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.util.Collection;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-@Table(name = "Cliente")
-public class Cliente {
-    
+@Table(name = "Quadra")
+public class Quadra {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private Long id;
     private String nome;
-    private String cpf;
-    private String telefone;
     
-    
-    @OneToMany(mappedBy = "cliente")
+    @OneToMany(mappedBy = "quadra")
     Collection<Reserva> reservas;
+    
+    @Override
+    public String toString() {
+        return nome;
+    }
 }

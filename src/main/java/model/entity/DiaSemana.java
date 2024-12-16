@@ -13,17 +13,18 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "Cliente")
-public class Cliente {
-    
+@Table(name = "DiaSemana")
+public class DiaSemana {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
-    private String cpf;
-    private String telefone;
     
+    @OneToMany(mappedBy = "diaSemana")
+    Collection<Reserva> reservas; 
     
-    @OneToMany(mappedBy = "cliente")
-    Collection<Reserva> reservas;
+    @Override
+    public String toString() {
+        return nome;
+    }
 }

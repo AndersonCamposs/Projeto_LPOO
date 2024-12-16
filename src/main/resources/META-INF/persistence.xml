@@ -2,6 +2,10 @@
     <persistence-unit name="default">
         <class>Usuario</class>
         <class>Cliente</class>
+        <class>Quadra</class>
+        <class>Horario</class>
+        <class>DiaSemana</class>
+        <class>Reserva</class>
         <properties>
             <!-- Configuração do Banco de Dados -->
             <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/arena_campos?useSSL=false&amp;allowPublicKeyRetrieval=true&amp;serverTimezone=UTC" />
