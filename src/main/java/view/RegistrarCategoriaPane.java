@@ -3,9 +3,11 @@ package view;
 import java.awt.Dimension;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import model.dao.CategoriaDAOImpl;
 import model.dao.ClienteDAOImpl;
 import model.dao.GenericDAOImpl;
 import model.dao.UsuarioDAOImpl;
+import model.entity.Categoria;
 import model.entity.Cliente;
 import model.entity.Usuario;
 
@@ -13,13 +15,13 @@ public class RegistrarCategoriaPane extends javax.swing.JPanel {
 
     public RegistrarCategoriaPane() {
         initComponents();
-        jLabel1.setText("Registrar cliente");
+        jLabel1.setText("Registrar categoria");
         btnDeletar.setVisible(false);
     }
     
     public RegistrarCategoriaPane(Long id) {
         initComponents();
-        jLabel1.setText("Registrar categoria");
+        jLabel1.setText("Editar categoria");
         
     }
 
@@ -36,6 +38,7 @@ public class RegistrarCategoriaPane extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(394, 322));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setText("Nome:");
@@ -68,16 +71,15 @@ public class RegistrarCategoriaPane extends javax.swing.JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(121, 121, 121)
                                 .addComponent(jLabel1)))
-                        .addGap(155, 155, 155))
+                        .addGap(151, 151, 151))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(inputNomeCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnSalvar)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(btnSalvar)))
                 .addGap(18, 18, 18)
                 .addComponent(btnDeletar)
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap(52, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -91,7 +93,7 @@ public class RegistrarCategoriaPane extends javax.swing.JPanel {
                     .addComponent(inputNomeCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSalvar)
                     .addComponent(btnDeletar))
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -99,7 +101,12 @@ public class RegistrarCategoriaPane extends javax.swing.JPanel {
         if (c != null) {
             
         } else {
-            
+            CategoriaDAOImpl categoriaDAOImpl = new CategoriaDAOImpl();
+            Categoria categoria = new Categoria();
+            categoria.setNome(inputNomeCategoria.getText().toUpperCase());
+            categoriaDAOImpl.save(categoria);
+            JOptionPane.showMessageDialog(this, "Categoria salva com sucesso!", "SUCESSO: Categoria salva", JOptionPane.INFORMATION_MESSAGE);
+            this.limparCampos();
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
