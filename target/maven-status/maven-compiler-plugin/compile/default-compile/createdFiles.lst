@@ -1,6 +1,7 @@
 model\dao\CategoriaDAOImpl.class
 view\RegistrarReservaPane$6.class
 view\RegistrarCategoriaPane.class
+view\ListarProdutosPane$2.class
 view\RegistrarReservaPane.class
 view\RegistrarProdutoPane$2.class
 model\entity\Quadra.class

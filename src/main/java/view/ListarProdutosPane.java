@@ -5,6 +5,7 @@
 package view;
 
 import java.util.List;
+import java.util.Optional;
 import javax.swing.table.DefaultTableModel;
 import model.dao.ProdutoDAOImpl;
 import model.entity.Produto;
@@ -25,7 +26,7 @@ public class ListarProdutosPane extends javax.swing.JPanel {
         DefaultTableModel model = (DefaultTableModel) tabelaProdutos.getModel();
         List<Produto> listaProdutos = produtoDAOImpl.findAll();
         for(Produto produto: listaProdutos) {
-            model.addRow(new Object[] {produto.getId(), produto.getNome(), produto.getCategoria(), produto.getQtd_estoque()});
+            model.addRow(new Object[] {produto.getId(), produto.getNome(), produto.getValor(), produto.getCategoria(), produto.getQtd_estoque()});
         }
     }
 
@@ -46,14 +47,14 @@ public class ListarProdutosPane extends javax.swing.JPanel {
 
             },
             new String [] {
-                "ID", "NOME", "CATEGORIA", "ESTOQUE"
+                "ID", "NOME", "VALOR", "CATEGORIA", "ESTOQUE"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Long.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+                java.lang.Long.class, java.lang.String.class, java.lang.Float.class, java.lang.String.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, true, true
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -64,11 +65,17 @@ public class ListarProdutosPane extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        tabelaProdutos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelaProdutosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tabelaProdutos);
         if (tabelaProdutos.getColumnModel().getColumnCount() > 0) {
             tabelaProdutos.getColumnModel().getColumn(0).setMaxWidth(60);
             tabelaProdutos.getColumnModel().getColumn(1).setMinWidth(130);
-            tabelaProdutos.getColumnModel().getColumn(3).setMaxWidth(100);
+            tabelaProdutos.getColumnModel().getColumn(2).setMaxWidth(80);
+            tabelaProdutos.getColumnModel().getColumn(4).setMinWidth(100);
         }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -82,6 +89,16 @@ public class ListarProdutosPane extends javax.swing.JPanel {
             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void tabelaProdutosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaProdutosMouseClicked
+        if(evt.getClickCount() == 2) {
+            int linhaSelecionada = tabelaProdutos.getSelectedRow();
+            if(linhaSelecionada != -1) {
+                Long idSelecionado = (Long) tabelaProdutos.getValueAt(linhaSelecionada, 0);
+                telaPrincipal.ativarEdicaoProduto(idSelecionado);
+            }
+        }
+    }//GEN-LAST:event_tabelaProdutosMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

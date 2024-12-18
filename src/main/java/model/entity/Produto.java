@@ -20,6 +20,8 @@ public class Produto {
     
     private String nome;
     
+    private float valor;
+    
     private int qtd_estoque;
     
     @ManyToOne

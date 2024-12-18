@@ -275,7 +275,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void listarProdutosMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listarProdutosMenuItemActionPerformed
        JInternalFrame listarProdutosJIF = new JInternalFrame("Lista de produtos");
-       listarProdutosJIF.setBounds(100, 100, 410, 330);
+       listarProdutosJIF.setBounds(100, 100, 470, 330);
        listarProdutosJIF.setVisible(true);
        listarProdutosJIF.setClosable(true);
        listarProdutosJIF.setResizable(true);
@@ -304,6 +304,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
     public void ativarEdicaoCategoria(Long id) {
         this.limparTela();
         montarFormularioCategoriaJIF(Optional.of(id));
+    }
+    
+    public void ativarEdicaoProduto(Long id) {
+        this.limparTela();
+        montarFormularioProdutoJIF(Optional.of(id));
     }
     
     private void montarFormularioUsuarioJIF(Optional<Long> id) {
