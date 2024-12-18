@@ -24,4 +24,9 @@ public class Categoria {
     
     @OneToMany(mappedBy = "categoria")
     Collection<Produto> produtos;
+    
+    @Override
+    public String toString() {
+        return this.nome;
+    }
 }

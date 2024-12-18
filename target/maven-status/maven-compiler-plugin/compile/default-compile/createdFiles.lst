@@ -2,15 +2,18 @@ model\dao\CategoriaDAOImpl.class
 view\RegistrarReservaPane$6.class
 view\RegistrarCategoriaPane.class
 view\RegistrarReservaPane.class
+view\RegistrarProdutoPane$2.class
 model\entity\Quadra.class
 view\TelaPrincipal$1.class
 view\RegistrarClientePane$3.class
 view\ListarClientesPane.class
+view\RegistrarProdutoPane.class
 view\ListarUsuariosPane$1.class
 view\RegistrarReservaPane$3.class
 view\ListarCategoriasPane.class
 model\dao\DiaSemanaDAO.class
 view\TelaPrincipal$8.class
+view\RegistrarProdutoPane$1.class
 view\TelaPrincipal.class
 model\dao\QuadraDAOImpl.class
 view\RegistrarCategoriaPane$1.class
@@ -26,6 +29,7 @@ model\dao\UsuarioDAOImpl.class
 view\RegistrarClientePane$2.class
 view\ListarClientesPane$2.class
 view\RegistrarUsuarioPane$3.class
+model\dao\ProdutoDAOImpl.class
 model\dao\ClienteDAO.class
 view\RegistrarUsuarioPane$1.class
 model\dao\ClienteDAOImpl.class
