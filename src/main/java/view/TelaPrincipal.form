@@ -125,17 +125,23 @@
                 <Property name="text" type="java.lang.String" value="Produtos"/>
               </Properties>
               <SubComponents>
-                <MenuItem class="javax.swing.JCheckBoxMenuItem" name="jCheckBoxMenuItem7">
+                <MenuItem class="javax.swing.JCheckBoxMenuItem" name="registrarProdutoMenuItem">
                   <Properties>
                     <Property name="selected" type="boolean" value="true"/>
                     <Property name="text" type="java.lang.String" value="Registrar um produto"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="registrarProdutoMenuItemActionPerformed"/>
+                  </Events>
                 </MenuItem>
-                <MenuItem class="javax.swing.JCheckBoxMenuItem" name="jCheckBoxMenuItem8">
+                <MenuItem class="javax.swing.JCheckBoxMenuItem" name="listarProdutosMenuItem">
                   <Properties>
                     <Property name="selected" type="boolean" value="true"/>
                     <Property name="text" type="java.lang.String" value="Listar produtos"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="listarProdutosMenuItemActionPerformed"/>
+                  </Events>
                 </MenuItem>
                 <Menu class="javax.swing.JMenu" name="jMenu9">
                   <Properties>

@@ -136,9 +136,14 @@ public class RegistrarProdutoPane extends javax.swing.JPanel {
         if (p != null) {
             
         } else {
+            ProdutoDAOImpl produtoDAOImpl = new ProdutoDAOImpl();
+            Produto produto = new Produto();
+            produto.setNome(inputNomeProduto.getText().toUpperCase());
+            produto.setCategoria((Categoria) comboBoxCategoria.getSelectedItem());
+            produto.setQtd_estoque((int) qtdEstoqueSpinner.getValue());
+            produtoDAOImpl.save(produto);
             
             JOptionPane.showMessageDialog(this, "Produto salvo com sucesso!", "SUCESSO: Produto salvo", JOptionPane.INFORMATION_MESSAGE);
-            // limpar os campos
             this.limparCampos();
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
@@ -160,6 +165,7 @@ public class RegistrarProdutoPane extends javax.swing.JPanel {
 
     private void limparCampos() {
         inputNomeProduto.setText("");
+        qtdEstoqueSpinner.setValue(0);
     }
     
     private void loadComboBoxCategoriaContent() {
