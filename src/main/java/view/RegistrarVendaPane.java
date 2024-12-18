@@ -2,11 +2,16 @@ package view;
 
 import java.awt.Dimension;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.event.DocumentEvent;
 import model.dao.VendaDAOImpl;
 import model.dao.ClienteDAOImpl;
 import model.dao.GenericDAOImpl;
+import model.dao.ProdutoDAOImpl;
 import model.dao.UsuarioDAOImpl;
 import model.entity.Venda;
 import model.entity.Cliente;
@@ -17,15 +22,14 @@ public class RegistrarVendaPane extends javax.swing.JPanel {
 
     public RegistrarVendaPane() {
         initComponents();
+        inputNomeProdutoAddListener();
+        qtdProdutoSpinner.setModel(new SpinnerNumberModel(1, 1, 100, 1));
         jLabel1.setText("Registrar Venda");
+        ProdutoDAOImpl produtoDAOImpl = new ProdutoDAOImpl();
+        listaProdutos = produtoDAOImpl.findAll();
         //btnDeletar.setVisible(false);
     }
     
-    public RegistrarVendaPane(Long id) {
-        initComponents();
-        jLabel1.setText("Editar venda");
-        
-    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -39,6 +43,8 @@ public class RegistrarVendaPane extends javax.swing.JPanel {
         comboBoxProduto = new javax.swing.JComboBox<>();
         qtdProdutoSpinner = new javax.swing.JSpinner();
         jLabel4 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        btnVerCarrinho = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(394, 322));
 
@@ -62,6 +68,10 @@ public class RegistrarVendaPane extends javax.swing.JPanel {
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel4.setText("QTD:");
 
+        jButton1.setText("Adicionar ao carrinho");
+
+        btnVerCarrinho.setText("Ver carrinho");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -69,27 +79,33 @@ public class RegistrarVendaPane extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(inputNomeProduto, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(inputNomeProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(20, 20, 20)
-                                .addComponent(comboBoxProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(comboBoxProduto, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(24, 24, 24)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4)
+                                    .addComponent(qtdProdutoSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(71, 71, 71)
-                                .addComponent(jLabel3)))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(qtdProdutoSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(80, 80, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnSalvar)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                                .addGap(18, 18, 18)
+                                .addComponent(btnVerCarrinho)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 88, Short.MAX_VALUE)))
+                        .addGap(36, 36, 36)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -106,33 +122,76 @@ public class RegistrarVendaPane extends javax.swing.JPanel {
                     .addComponent(inputNomeProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(comboBoxProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(qtdProdutoSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12)
-                .addComponent(btnSalvar)
-                .addContainerGap(190, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(btnVerCarrinho)
+                    .addComponent(btnSalvar))
+                .addContainerGap(184, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        if (v != null) {
-            
-        } else {
-            
-        }
+        
     }//GEN-LAST:event_btnSalvarActionPerformed
 
+    private void inputNomeProdutoAddListener() {
+        this.inputNomeProduto.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                inputNomeProdutoOnChange();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                inputNomeProdutoOnChange();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                inputNomeProdutoOnChange();
+            }
+            
+        });
+    }
+    
+    private void inputNomeProdutoOnChange() {
+        comboBoxProduto.removeAllItems();
+        List<Produto> listaFiltrada = filtrarProdutos(inputNomeProduto.getText());
+        loadComboBoxProdutoContent(listaFiltrada);
+    }
+    
+    private List<Produto> filtrarProdutos(String texto) {
+        List<Produto> listaFiltrada = this.listaProdutos
+                .stream()
+                .filter(produto -> produto.getNome().toUpperCase().contains(texto.toUpperCase()))
+                .collect(Collectors.toList());
+        
+        return listaFiltrada;
+                
+    }
+    
+    private void loadComboBoxProdutoContent(List<Produto> listaFiltrada) {
+        for (Produto produto: listaFiltrada) {
+            comboBoxProduto.addItem(produto);
+        }
+    }
+    
     private void limparCampos() {
         inputNomeProduto.setText("");
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSalvar;
+    private javax.swing.JButton btnVerCarrinho;
     private javax.swing.JComboBox<Produto> comboBoxProduto;
     private javax.swing.JTextField inputNomeProduto;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JSpinner qtdProdutoSpinner;
     // End of variables declaration//GEN-END:variables
-    Venda v;
+    List<Produto> listaProdutos;
 }

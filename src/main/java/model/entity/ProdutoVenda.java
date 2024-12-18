@@ -5,35 +5,22 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import java.util.Collection;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "Produto")
+@Table(name = "ProdutoVenda")
 @Getter
 @Setter
-public class Produto {
+public class ProdutoVenda {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
     
-    private String nome;
-    
-    private float valor;
-    
-    private int qtd_estoque;
+    @ManyToOne
+    Produto produto;
     
     @ManyToOne
-    private Categoria categoria;
-    
-    @OneToMany(mappedBy = "produto")
-    Collection<ProdutoVenda> produtoVendas;
-    
-    @Override
-    public String toString() {
-        return this.nome;
-    }
+    Venda venda;
 }

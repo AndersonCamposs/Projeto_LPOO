@@ -21,10 +21,12 @@ model\dao\QuadraDAOImpl.class
 view\RegistrarCategoriaPane$1.class
 view\TelaPrincipal$7.class
 view\RegistrarReservaPane$5.class
+view\TelaPrincipal$12.class
 model\dao\HorarioDAO.class
 model\entity\Produto.class
 view\RegistrarReservaPane$2.class
 view\ListarReservasPane$1.class
+model\dao\VendaDAO.class
 model\entity\Cliente.class
 view\TelaPrincipal$4.class
 model\dao\UsuarioDAOImpl.class
@@ -49,8 +51,11 @@ model\dao\GenericDAOImpl.class
 view\ListarReservasPane$2.class
 view\RegistrarUsuarioPane$4.class
 model\dao\CategoriaDAO.class
+model\entity\Venda.class
+view\RegistrarVendaPane$1.class
 view\ListarCategoriasPane$2.class
 view\TelaPrincipal$3.class
+view\RegistrarVendaPane.class
 model\entity\Horario.class
 model\dao\ReservaDAO.class
 view\ListarClientesPane$1.class
@@ -61,6 +66,7 @@ model\entity\Categoria.class
 view\RegistrarUsuarioPane$2.class
 view\TelaPrincipal$2.class
 model\entity\Usuario.class
+model\dao\VendaDAOImpl.class
 view\TelaPrincipal$9.class
 view\TelaPrincipal$5.class
 view\RegistrarUsuarioPane$5.class
@@ -71,5 +77,6 @@ model\dao\GenericDAO.class
 view\RegistrarCategoriaPane$2.class
 view\RegistrarClientePane.class
 model\dao\DiaSemanaDAOImpl.class
+view\RegistrarVendaPane$2.class
 view\ListarCategoriasPane$1.class
 view\RegistrarReservaPane$4.class

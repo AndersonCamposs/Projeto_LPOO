@@ -198,6 +198,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenu7.setText("Vendas");
 
         registrarVendaMenuItem.setText("Registrar venda");
+        registrarVendaMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                registrarVendaMenuItemActionPerformed(evt);
+            }
+        });
         jMenu7.add(registrarVendaMenuItem);
 
         listarVendasMenuItem.setText("Listar vendas");
@@ -296,6 +301,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
        listarProdutosJIF.add(listarProdutosPane);
        jDesktopPane1.add(listarProdutosJIF);
     }//GEN-LAST:event_listarProdutosMenuItemActionPerformed
+
+    private void registrarVendaMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarVendaMenuItemActionPerformed
+       montarFormularioVendaJIF();
+    }//GEN-LAST:event_registrarVendaMenuItemActionPerformed
 
     
     
@@ -408,6 +417,19 @@ public class TelaPrincipal extends javax.swing.JFrame {
         formularioProdutoJIF.add(formulario);
         jDesktopPane1.add(formularioProdutoJIF);
     }
+    
+    private void montarFormularioVendaJIF() {
+        JInternalFrame formularioVendaJIF = new JInternalFrame("Formulário de venda");
+        formularioVendaJIF.setBounds(100, 100, 500, 200);
+        formularioVendaJIF.setVisible(true);
+        formularioVendaJIF.setClosable(true);
+        formularioVendaJIF.setResizable(true);
+        
+        RegistrarVendaPane formulario = new RegistrarVendaPane();
+        formularioVendaJIF.add(formulario);  
+        jDesktopPane1.add(formularioVendaJIF);
+    }
+        
     
     private void limparTela() {
         for(Component component: jDesktopPane1.getComponents()) {
