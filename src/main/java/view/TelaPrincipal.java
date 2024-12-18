@@ -6,6 +6,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 
 public class TelaPrincipal extends javax.swing.JFrame {
@@ -425,7 +426,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         formularioVendaJIF.setClosable(true);
         formularioVendaJIF.setResizable(true);
         
-        RegistrarVendaPane formulario = new RegistrarVendaPane();
+        RegistrarVendaPane formulario = new RegistrarVendaPane(this);
         formularioVendaJIF.add(formulario);  
         jDesktopPane1.add(formularioVendaJIF);
     }
@@ -439,6 +440,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
         this.revalidate();
         this.repaint();
+    }
+    
+    public JDesktopPane getJDesktopPane() {
+        return this.jDesktopPane1;
     }
     
     /**

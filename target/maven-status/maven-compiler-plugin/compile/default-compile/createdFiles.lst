@@ -47,7 +47,9 @@ view\RegistrarReservaPane$1.class
 model\dao\QuadraoDAO.class
 view\TelaPrincipal$6.class
 view\RegistrarUsuarioPane.class
+view\RegistrarVendaPane$4.class
 model\dao\GenericDAOImpl.class
+view\ListarCarrinhoPane$1.class
 view\ListarReservasPane$2.class
 view\RegistrarUsuarioPane$4.class
 model\dao\CategoriaDAO.class
@@ -75,6 +77,7 @@ model\dao\HorarioDAOImpl.class
 model\entity\Reserva.class
 model\dao\GenericDAO.class
 view\RegistrarCategoriaPane$2.class
+view\ListarCarrinhoPane.class
 view\RegistrarClientePane.class
 model\dao\DiaSemanaDAOImpl.class
 view\RegistrarVendaPane$2.class

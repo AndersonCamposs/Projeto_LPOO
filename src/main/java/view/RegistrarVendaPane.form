@@ -54,7 +54,7 @@
                               <Component id="btnVerCarrinho" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="btnSalvar" min="-2" pref="94" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="88" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
@@ -134,6 +134,9 @@
           <StringArray count="0"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="comboBoxProdutoMouseClicked"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Produto&gt;"/>
       </AuxValues>
@@ -157,6 +160,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Ver carrinho"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnVerCarrinhoActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

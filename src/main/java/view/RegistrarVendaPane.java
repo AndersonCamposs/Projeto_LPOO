@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SpinnerNumberModel;
@@ -16,13 +17,17 @@ import model.dao.UsuarioDAOImpl;
 import model.entity.Venda;
 import model.entity.Cliente;
 import model.entity.Produto;
+import model.entity.ProdutoVenda;
 import model.entity.Usuario;
 
 public class RegistrarVendaPane extends javax.swing.JPanel {
 
-    public RegistrarVendaPane() {
+    TelaPrincipal telaPrincipal;
+    
+    public RegistrarVendaPane(TelaPrincipal telaPrincipal) {
         initComponents();
         inputNomeProdutoAddListener();
+        this.telaPrincipal = telaPrincipal;
         qtdProdutoSpinner.setModel(new SpinnerNumberModel(1, 1, 100, 1));
         jLabel1.setText("Registrar Venda");
         ProdutoDAOImpl produtoDAOImpl = new ProdutoDAOImpl();
@@ -65,12 +70,23 @@ public class RegistrarVendaPane extends javax.swing.JPanel {
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setText("Produto:");
 
+        comboBoxProduto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                comboBoxProdutoMouseClicked(evt);
+            }
+        });
+
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel4.setText("QTD:");
 
         jButton1.setText("Adicionar ao carrinho");
 
         btnVerCarrinho.setText("Ver carrinho");
+        btnVerCarrinho.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVerCarrinhoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -103,7 +119,7 @@ public class RegistrarVendaPane extends javax.swing.JPanel {
                                 .addComponent(btnVerCarrinho)
                                 .addGap(18, 18, 18)
                                 .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 88, Short.MAX_VALUE)))
+                                .addGap(0, 0, Short.MAX_VALUE)))
                         .addGap(36, 36, 36)))
                 .addContainerGap())
         );
@@ -134,6 +150,24 @@ public class RegistrarVendaPane extends javax.swing.JPanel {
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         
     }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void comboBoxProdutoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_comboBoxProdutoMouseClicked
+        if(comboBoxProduto.getSelectedItem() != null) {
+            carrinhoCompras.add((ProdutoVenda) comboBoxProduto.getSelectedItem());
+        }
+    }//GEN-LAST:event_comboBoxProdutoMouseClicked
+
+    private void btnVerCarrinhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerCarrinhoActionPerformed
+        JInternalFrame carrinhoComprasJIF = new JInternalFrame("Carrinho de compras");
+        carrinhoComprasJIF.setBounds(200, 310, 350, 250);
+        carrinhoComprasJIF.setVisible(true);
+        carrinhoComprasJIF.setClosable(true);
+        carrinhoComprasJIF.setResizable(true);
+        ListarCarrinhoPane listarCarrinhoPane = new ListarCarrinhoPane(this);
+        
+        carrinhoComprasJIF.add(listarCarrinhoPane);
+        telaPrincipal.getJDesktopPane().add(carrinhoComprasJIF);
+    }//GEN-LAST:event_btnVerCarrinhoActionPerformed
 
     private void inputNomeProdutoAddListener() {
         this.inputNomeProduto.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
@@ -194,4 +228,5 @@ public class RegistrarVendaPane extends javax.swing.JPanel {
     private javax.swing.JSpinner qtdProdutoSpinner;
     // End of variables declaration//GEN-END:variables
     List<Produto> listaProdutos;
+    List<ProdutoVenda> carrinhoCompras;
 }
