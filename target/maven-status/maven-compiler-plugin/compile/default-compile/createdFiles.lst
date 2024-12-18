@@ -8,6 +8,7 @@ view\RegistrarClientePane$3.class
 view\ListarClientesPane.class
 view\ListarUsuariosPane$1.class
 view\RegistrarReservaPane$3.class
+view\ListarCategoriasPane.class
 model\dao\DiaSemanaDAO.class
 view\TelaPrincipal$8.class
 view\TelaPrincipal.class
@@ -41,6 +42,7 @@ model\dao\GenericDAOImpl.class
 view\ListarReservasPane$2.class
 view\RegistrarUsuarioPane$4.class
 model\dao\CategoriaDAO.class
+view\ListarCategoriasPane$2.class
 view\TelaPrincipal$3.class
 model\entity\Horario.class
 model\dao\ReservaDAO.class
@@ -60,4 +62,5 @@ model\dao\GenericDAO.class
 view\RegistrarCategoriaPane$2.class
 view\RegistrarClientePane.class
 model\dao\DiaSemanaDAOImpl.class
+view\ListarCategoriasPane$1.class
 view\RegistrarReservaPane$4.class
