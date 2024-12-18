@@ -2,6 +2,7 @@ package view;
 
 import java.awt.Dimension;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.swing.JInternalFrame;
@@ -153,7 +154,13 @@ public class RegistrarVendaPane extends javax.swing.JPanel {
 
     private void comboBoxProdutoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_comboBoxProdutoMouseClicked
         if(comboBoxProduto.getSelectedItem() != null) {
-            carrinhoCompras.add((ProdutoVenda) comboBoxProduto.getSelectedItem());
+            ProdutoVenda produtoVenda = new ProdutoVenda();
+            produtoVenda.setProduto((Produto) comboBoxProduto.getSelectedItem());
+            produtoVenda.setQtdProduto((Integer) qtdProdutoSpinner.getValue());
+            carrinhoCompras.add(produtoVenda); 
+            
+            comboBoxProduto.removeAllItems();
+            this.limparCampos();
         }
     }//GEN-LAST:event_comboBoxProdutoMouseClicked
 
@@ -163,7 +170,7 @@ public class RegistrarVendaPane extends javax.swing.JPanel {
         carrinhoComprasJIF.setVisible(true);
         carrinhoComprasJIF.setClosable(true);
         carrinhoComprasJIF.setResizable(true);
-        ListarCarrinhoPane listarCarrinhoPane = new ListarCarrinhoPane(this);
+        ListarCarrinhoPane listarCarrinhoPane = new ListarCarrinhoPane(this, carrinhoCompras);
         
         carrinhoComprasJIF.add(listarCarrinhoPane);
         telaPrincipal.getJDesktopPane().add(carrinhoComprasJIF);
@@ -213,6 +220,7 @@ public class RegistrarVendaPane extends javax.swing.JPanel {
     
     private void limparCampos() {
         inputNomeProduto.setText("");
+        qtdProdutoSpinner.setValue(1);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -228,5 +236,5 @@ public class RegistrarVendaPane extends javax.swing.JPanel {
     private javax.swing.JSpinner qtdProdutoSpinner;
     // End of variables declaration//GEN-END:variables
     List<Produto> listaProdutos;
-    List<ProdutoVenda> carrinhoCompras;
+    List<ProdutoVenda> carrinhoCompras = new ArrayList<>();
 }

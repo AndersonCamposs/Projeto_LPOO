@@ -4,7 +4,10 @@
  */
 package view;
 
+import java.util.List;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+import model.entity.ProdutoVenda;
 
 /**
  *
@@ -13,10 +16,16 @@ import javax.swing.JPanel;
 public class ListarCarrinhoPane extends javax.swing.JPanel {
 
     JPanel panel;
+    List<ProdutoVenda> listaCarrinho;
     
-    public ListarCarrinhoPane(JPanel panel) {
+    public ListarCarrinhoPane(JPanel panel, List<ProdutoVenda> listaCarrinho) {
         initComponents();
         this.panel = panel;
+        this.listaCarrinho = listaCarrinho;
+        DefaultTableModel model = (DefaultTableModel) tabelaCarrinho.getModel();
+        for(ProdutoVenda produtoVenda: listaCarrinho) {
+            model.addRow(new Object[] {produtoVenda.getProduto().getNome(), produtoVenda.getQtdProduto(), produtoVenda.getProduto().getValor()});
+        }
     }
 
     /**
@@ -33,10 +42,7 @@ public class ListarCarrinhoPane extends javax.swing.JPanel {
 
         tabelaCarrinho.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
                 "NOME", "QTD.", "VALOR UNI."

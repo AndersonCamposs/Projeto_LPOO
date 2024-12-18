@@ -21,6 +21,8 @@ public class ProdutoVenda {
     @ManyToOne
     Produto produto;
     
+    private Integer qtdProduto;
+    
     @ManyToOne
     Venda venda;
 }
