@@ -45,6 +45,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenu9 = new javax.swing.JMenu();
         registrarCategoriaMenuItem = new javax.swing.JCheckBoxMenuItem();
         listarCategoriasMenuItem = new javax.swing.JCheckBoxMenuItem();
+        jMenu7 = new javax.swing.JMenu();
+        registrarVendaMenuItem = new javax.swing.JMenuItem();
+        listarVendasMenuItem = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
         jInternalFrame1.setVisible(true);
@@ -191,6 +194,16 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenu6.add(jMenu9);
 
         jMenu1.add(jMenu6);
+
+        jMenu7.setText("Vendas");
+
+        registrarVendaMenuItem.setText("Registrar venda");
+        jMenu7.add(registrarVendaMenuItem);
+
+        listarVendasMenuItem.setText("Listar vendas");
+        jMenu7.add(listarVendasMenuItem);
+
+        jMenu1.add(jMenu7);
 
         jMenuBar1.add(jMenu1);
 
@@ -450,6 +463,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
+    private javax.swing.JMenu jMenu7;
     private javax.swing.JMenu jMenu9;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JCheckBoxMenuItem listarCategoriasMenuItem;
@@ -457,10 +471,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JCheckBoxMenuItem listarProdutosMenuItem;
     private javax.swing.JCheckBoxMenuItem listarReservasMenuItem;
     private javax.swing.JCheckBoxMenuItem listarUsuariosMenuItemActionPerformed;
+    private javax.swing.JMenuItem listarVendasMenuItem;
     private javax.swing.JCheckBoxMenuItem registrarCategoriaMenuItem;
     private javax.swing.JCheckBoxMenuItem registrarClienteMenuItem;
     private javax.swing.JCheckBoxMenuItem registrarProdutoMenuItem;
     private javax.swing.JCheckBoxMenuItem registrarReservaMenuItem;
     private javax.swing.JCheckBoxMenuItem registrarUsuarioMenuItem;
+    private javax.swing.JMenuItem registrarVendaMenuItem;
     // End of variables declaration//GEN-END:variables
 }
