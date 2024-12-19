@@ -49,7 +49,7 @@ public class RegistrarVendaPane extends javax.swing.JPanel {
         comboBoxProduto = new javax.swing.JComboBox<>();
         qtdProdutoSpinner = new javax.swing.JSpinner();
         jLabel4 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnAddCarrinho = new javax.swing.JButton();
         btnVerCarrinho = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(394, 322));
@@ -80,7 +80,12 @@ public class RegistrarVendaPane extends javax.swing.JPanel {
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel4.setText("QTD:");
 
-        jButton1.setText("Adicionar ao carrinho");
+        btnAddCarrinho.setText("Adicionar ao carrinho");
+        btnAddCarrinho.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddCarrinhoActionPerformed(evt);
+            }
+        });
 
         btnVerCarrinho.setText("Ver carrinho");
         btnVerCarrinho.addActionListener(new java.awt.event.ActionListener() {
@@ -99,7 +104,7 @@ public class RegistrarVendaPane extends javax.swing.JPanel {
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnAddCarrinho, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(inputNomeProduto, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -120,7 +125,7 @@ public class RegistrarVendaPane extends javax.swing.JPanel {
                                 .addComponent(btnVerCarrinho)
                                 .addGap(18, 18, 18)
                                 .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))
+                                .addGap(0, 11, Short.MAX_VALUE)))
                         .addGap(36, 36, 36)))
                 .addContainerGap())
         );
@@ -141,7 +146,7 @@ public class RegistrarVendaPane extends javax.swing.JPanel {
                     .addComponent(qtdProdutoSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
+                    .addComponent(btnAddCarrinho)
                     .addComponent(btnVerCarrinho)
                     .addComponent(btnSalvar))
                 .addContainerGap(184, Short.MAX_VALUE))
@@ -153,15 +158,7 @@ public class RegistrarVendaPane extends javax.swing.JPanel {
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void comboBoxProdutoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_comboBoxProdutoMouseClicked
-        if(comboBoxProduto.getSelectedItem() != null) {
-            ProdutoVenda produtoVenda = new ProdutoVenda();
-            produtoVenda.setProduto((Produto) comboBoxProduto.getSelectedItem());
-            produtoVenda.setQtdProduto((Integer) qtdProdutoSpinner.getValue());
-            carrinhoCompras.add(produtoVenda); 
-            
-            comboBoxProduto.removeAllItems();
-            this.limparCampos();
-        }
+        
     }//GEN-LAST:event_comboBoxProdutoMouseClicked
 
     private void btnVerCarrinhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerCarrinhoActionPerformed
@@ -175,6 +172,25 @@ public class RegistrarVendaPane extends javax.swing.JPanel {
         carrinhoComprasJIF.add(listarCarrinhoPane);
         telaPrincipal.getJDesktopPane().add(carrinhoComprasJIF);
     }//GEN-LAST:event_btnVerCarrinhoActionPerformed
+
+    private void btnAddCarrinhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddCarrinhoActionPerformed
+        if(comboBoxProduto.getSelectedItem() != null) {
+            for(ProdutoVenda produtoVenda: carrinhoCompras) {
+                if(produtoVenda.getProduto().equals((Produto) comboBoxProduto.getSelectedItem())) {
+                    produtoVenda.setQtdProduto(produtoVenda.getQtdProduto() + (Integer) qtdProdutoSpinner.getValue());
+                    comboBoxProduto.removeAllItems();
+                    this.limparCampos();
+                    return;
+                }
+            }
+            ProdutoVenda produtoVenda = new ProdutoVenda();
+            produtoVenda.setProduto((Produto) comboBoxProduto.getSelectedItem());
+            produtoVenda.setQtdProduto((Integer) qtdProdutoSpinner.getValue());
+            carrinhoCompras.add(produtoVenda); 
+            comboBoxProduto.removeAllItems();
+            this.limparCampos();
+        }
+    }//GEN-LAST:event_btnAddCarrinhoActionPerformed
 
     private void inputNomeProdutoAddListener() {
         this.inputNomeProduto.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
@@ -224,11 +240,11 @@ public class RegistrarVendaPane extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAddCarrinho;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JButton btnVerCarrinho;
     private javax.swing.JComboBox<Produto> comboBoxProduto;
     private javax.swing.JTextField inputNomeProduto;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
