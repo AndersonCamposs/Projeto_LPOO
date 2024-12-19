@@ -53,7 +53,6 @@ model\dao\ProdutoVendaDAO.class
 view\RegistrarUsuarioPane.class
 view\RegistrarVendaPane$4.class
 model\dao\GenericDAOImpl.class
-view\ListarCarrinhoPane$1.class
 view\ListarReservasPane$2.class
 view\RegistrarUsuarioPane$4.class
 model\dao\CategoriaDAO.class
@@ -85,7 +84,6 @@ model\entity\Reserva.class
 model\dao\GenericDAO.class
 model\entity\ProdutoVenda.class
 view\RegistrarCategoriaPane$2.class
-view\ListarCarrinhoPane.class
 view\RegistrarClientePane.class
 model\dao\DiaSemanaDAOImpl.class
 view\ListarCarrinhoDialog.class

@@ -175,9 +175,14 @@ public class RegistrarVendaPane extends javax.swing.JPanel {
             }
             
             JOptionPane.showMessageDialog(this, "Venda registrada com sucesso!", "SUCESSO: Venda registrada", JOptionPane.INFORMATION_MESSAGE);
+            atualizarEstoque();
         }
     }//GEN-LAST:event_btnVenderActionPerformed
 
+    public void atualizarEstoque() {
+        this.listaProdutos = new ProdutoDAOImpl().findAll();
+    }
+    
     private void comboBoxProdutoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_comboBoxProdutoMouseClicked
         
     }//GEN-LAST:event_comboBoxProdutoMouseClicked
@@ -190,20 +195,33 @@ public class RegistrarVendaPane extends javax.swing.JPanel {
 
     private void btnAddCarrinhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddCarrinhoActionPerformed
         if(comboBoxProduto.getSelectedItem() != null) {
-            for(ProdutoVenda produtoVenda: carrinhoCompras) {
-                if(produtoVenda.getProduto().equals((Produto) comboBoxProduto.getSelectedItem())) {
-                    produtoVenda.setQtdProduto(produtoVenda.getQtdProduto() + (Integer) qtdProdutoSpinner.getValue());
-                    comboBoxProduto.removeAllItems();
-                    this.limparCampos();
-                    return;
+            Produto produto = (Produto) comboBoxProduto.getSelectedItem();
+            Integer qtdProduto = (Integer) qtdProdutoSpinner.getValue();
+            if (qtdProduto > produto.getQtd_estoque()) {
+                JOptionPane.showMessageDialog(this, 
+                String.format("Não foi possível adicionar o produto %s ao carrinho. A quantidade atual no estoque é: %d", produto.getNome(), produto.getQtd_estoque()), 
+                "ERRO: Não foi possível adicionar ao carrinho", 
+                JOptionPane.ERROR_MESSAGE);
+            } else {
+                for(ProdutoVenda produtoVenda: carrinhoCompras) {
+                    if(produtoVenda.getProduto().equals((Produto) comboBoxProduto.getSelectedItem())) {
+                        produtoVenda.setQtdProduto(produtoVenda.getQtdProduto() + (Integer) qtdProdutoSpinner.getValue());
+                        comboBoxProduto.removeAllItems();
+                        this.limparCampos();
+                        return;
+                    }
                 }
+                ProdutoVenda produtoVenda = new ProdutoVenda();
+                produtoVenda.setProduto(produto);
+                produtoVenda.setQtdProduto(qtdProduto);
+                carrinhoCompras.add(produtoVenda); 
+                comboBoxProduto.removeAllItems();
+                JOptionPane.showMessageDialog(this, 
+                "Item adicionado ao carrinho com sucesso!", 
+                "SUCESSO: Item adicionado", 
+                JOptionPane.INFORMATION_MESSAGE);
+                this.limparCampos();
             }
-            ProdutoVenda produtoVenda = new ProdutoVenda();
-            produtoVenda.setProduto((Produto) comboBoxProduto.getSelectedItem());
-            produtoVenda.setQtdProduto((Integer) qtdProdutoSpinner.getValue());
-            carrinhoCompras.add(produtoVenda); 
-            comboBoxProduto.removeAllItems();
-            this.limparCampos();
         }
     }//GEN-LAST:event_btnAddCarrinhoActionPerformed
 
