@@ -2,6 +2,7 @@ package view;
 
 import java.awt.Dimension;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,6 +15,7 @@ import model.dao.VendaDAOImpl;
 import model.dao.ClienteDAOImpl;
 import model.dao.GenericDAOImpl;
 import model.dao.ProdutoDAOImpl;
+import model.dao.ProdutoVendaDAOImpl;
 import model.dao.UsuarioDAOImpl;
 import model.entity.Venda;
 import model.entity.Cliente;
@@ -44,7 +46,7 @@ public class RegistrarVendaPane extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         inputNomeProduto = new javax.swing.JTextField();
-        btnSalvar = new javax.swing.JButton();
+        btnVender = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         comboBoxProduto = new javax.swing.JComboBox<>();
         qtdProdutoSpinner = new javax.swing.JSpinner();
@@ -61,10 +63,10 @@ public class RegistrarVendaPane extends javax.swing.JPanel {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setText("Nome do produto:");
 
-        btnSalvar.setText("Salvar");
-        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+        btnVender.setText("Vender");
+        btnVender.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSalvarActionPerformed(evt);
+                btnVenderActionPerformed(evt);
             }
         });
 
@@ -124,8 +126,8 @@ public class RegistrarVendaPane extends javax.swing.JPanel {
                                 .addGap(18, 18, 18)
                                 .addComponent(btnVerCarrinho)
                                 .addGap(18, 18, 18)
-                                .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 11, Short.MAX_VALUE)))
+                                .addComponent(btnVender, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 8, Short.MAX_VALUE)))
                         .addGap(36, 36, 36)))
                 .addContainerGap())
         );
@@ -148,14 +150,33 @@ public class RegistrarVendaPane extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAddCarrinho)
                     .addComponent(btnVerCarrinho)
-                    .addComponent(btnSalvar))
+                    .addComponent(btnVender))
                 .addContainerGap(184, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+    private void btnVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVenderActionPerformed
+        float valorTotal = carrinhoCompras.stream()
+                            .map(produtoVenda -> produtoVenda.getProduto().getValor() * produtoVenda.getQtdProduto())
+                            .reduce(0.0f, Float::sum);
         
-    }//GEN-LAST:event_btnSalvarActionPerformed
+        if(JOptionPane.showConfirmDialog(this, String.format("Tem ceteza que deseja registrar a venda no valor de %.2f?", valorTotal),
+        "Registrar venda", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+            VendaDAOImpl vendaDAOImpl = new VendaDAOImpl();
+            Venda venda = new Venda();
+            venda.setDataVenda(LocalDate.now());
+            venda.setValor(valorTotal);
+            vendaDAOImpl.save(venda);
+            
+            ProdutoVendaDAOImpl produtoVendaDAOImpl = new ProdutoVendaDAOImpl();
+            for(ProdutoVenda produtoVenda: carrinhoCompras) {
+                produtoVenda.setVenda(venda);
+                produtoVendaDAOImpl.saveProdutoVendaAndDecrementStock(produtoVenda);
+            }
+            
+            JOptionPane.showMessageDialog(this, "Venda registrada com sucesso!", "SUCESSO: Venda registrada", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_btnVenderActionPerformed
 
     private void comboBoxProdutoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_comboBoxProdutoMouseClicked
         
@@ -241,7 +262,7 @@ public class RegistrarVendaPane extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddCarrinho;
-    private javax.swing.JButton btnSalvar;
+    private javax.swing.JButton btnVender;
     private javax.swing.JButton btnVerCarrinho;
     private javax.swing.JComboBox<Produto> comboBoxProduto;
     private javax.swing.JTextField inputNomeProduto;
