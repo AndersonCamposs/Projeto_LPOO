@@ -205,7 +205,12 @@ public class RegistrarVendaPane extends javax.swing.JPanel {
             } else {
                 for(ProdutoVenda produtoVenda: carrinhoCompras) {
                     if(produtoVenda.getProduto().equals((Produto) comboBoxProduto.getSelectedItem())) {
-                        produtoVenda.setQtdProduto(produtoVenda.getQtdProduto() + (Integer) qtdProdutoSpinner.getValue());
+                        Integer somaItensCarrinho = produtoVenda.getQtdProduto() + (Integer) qtdProdutoSpinner.getValue();
+                        if(somaItensCarrinho > produtoVenda.getProduto().getQtd_estoque()) {
+                            produtoVenda.setQtdProduto(produtoVenda.getProduto().getQtd_estoque());
+                        } else {
+                            produtoVenda.setQtdProduto(produtoVenda.getQtdProduto() + (Integer) qtdProdutoSpinner.getValue());
+                        }
                         comboBoxProduto.removeAllItems();
                         this.limparCampos();
                         return;
