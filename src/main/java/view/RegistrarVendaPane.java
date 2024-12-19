@@ -160,7 +160,7 @@ public class RegistrarVendaPane extends javax.swing.JPanel {
                             .map(produtoVenda -> produtoVenda.getProduto().getValor() * produtoVenda.getQtdProduto())
                             .reduce(0.0f, Float::sum);
         
-        if(JOptionPane.showConfirmDialog(this, String.format("Tem ceteza que deseja registrar a venda no valor de %.2f?", valorTotal),
+        if(JOptionPane.showConfirmDialog(this, String.format("Tem certeza que deseja registrar a venda no valor de %.2f?", valorTotal),
         "Registrar venda", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
             VendaDAOImpl vendaDAOImpl = new VendaDAOImpl();
             Venda venda = new Venda();
@@ -183,15 +183,9 @@ public class RegistrarVendaPane extends javax.swing.JPanel {
     }//GEN-LAST:event_comboBoxProdutoMouseClicked
 
     private void btnVerCarrinhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerCarrinhoActionPerformed
-        JInternalFrame carrinhoComprasJIF = new JInternalFrame("Carrinho de compras");
-        carrinhoComprasJIF.setBounds(200, 230, 350, 350);
-        carrinhoComprasJIF.setVisible(true);
-        carrinhoComprasJIF.setClosable(true);
-        carrinhoComprasJIF.setResizable(true);
-        ListarCarrinhoPane listarCarrinhoPane = new ListarCarrinhoPane(this, carrinhoCompras);
-        
-        carrinhoComprasJIF.add(listarCarrinhoPane);
-        telaPrincipal.getJDesktopPane().add(carrinhoComprasJIF);
+        ListarCarrinhoDialog listarCarrinhoDialog = new ListarCarrinhoDialog(null, true, carrinhoCompras);
+        listarCarrinhoDialog.setLocationRelativeTo(this);
+        listarCarrinhoDialog.setVisible(true);
     }//GEN-LAST:event_btnVerCarrinhoActionPerformed
 
     private void btnAddCarrinhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddCarrinhoActionPerformed

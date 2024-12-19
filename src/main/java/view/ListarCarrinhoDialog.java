@@ -1,6 +1,6 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
 package view;
 
@@ -9,33 +9,29 @@ import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 import model.entity.ProdutoVenda;
 
-/**
- *
- * @author Anderson
- */
-public class ListarCarrinhoPane extends javax.swing.JPanel {
 
-    JPanel panel;
-    List<ProdutoVenda> listaCarrinho;
+public class ListarCarrinhoDialog extends javax.swing.JDialog {
+
+    private static List<ProdutoVenda> listaCarrinho;
     
-    public ListarCarrinhoPane(JPanel panel, List<ProdutoVenda> listaCarrinho) {
+    public ListarCarrinhoDialog(java.awt.Frame parent, boolean modal, List<ProdutoVenda> listaCarrinho) {
+        super(parent, modal);
         initComponents();
-        this.panel = panel;
         this.listaCarrinho = listaCarrinho;
         DefaultTableModel model = (DefaultTableModel) tabelaCarrinho.getModel();
         for(ProdutoVenda produtoVenda: listaCarrinho) {
             model.addRow(new Object[] {produtoVenda.getProduto().getNome(), produtoVenda.getQtdProduto(), produtoVenda.getProduto().getValor()});
         }
-        lblTotal.setText(Float.toString(somarCarrinho()));
+        lblValorTotal.setText(Float.toString(somarCarrinho()));
     }
-
+    
     private float somarCarrinho() {
         return listaCarrinho
                 .stream()
                 .map(produtoVenda -> produtoVenda.getProduto().getValor() * produtoVenda.getQtdProduto())
                 .reduce(0.0f, Float::sum);
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -48,7 +44,9 @@ public class ListarCarrinhoPane extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaCarrinho = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        lblTotal = new javax.swing.JLabel();
+        lblValorTotal = new javax.swing.JLabel();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         tabelaCarrinho.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -74,46 +72,86 @@ public class ListarCarrinhoPane extends javax.swing.JPanel {
             }
         });
         jScrollPane1.setViewportView(tabelaCarrinho);
-        if (tabelaCarrinho.getColumnModel().getColumnCount() > 0) {
-            tabelaCarrinho.getColumnModel().getColumn(0).setMinWidth(150);
-        }
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel1.setText("TOTAL:");
 
-        lblTotal.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblTotal.setForeground(new java.awt.Color(255, 0, 0));
+        lblValorTotal.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblValorTotal.setForeground(new java.awt.Color(255, 0, 0));
+        lblValorTotal.setText("TOTAL:");
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblTotal)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblValorTotal)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(lblTotal))
-                .addContainerGap(16, Short.MAX_VALUE))
+                    .addComponent(lblValorTotal))
+                .addGap(0, 11, Short.MAX_VALUE))
         );
+
+        pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(ListarCarrinhoDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(ListarCarrinhoDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(ListarCarrinhoDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(ListarCarrinhoDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the dialog */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                ListarCarrinhoDialog dialog = new ListarCarrinhoDialog(new javax.swing.JFrame(), true, listaCarrinho);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lblTotal;
+    private javax.swing.JLabel lblValorTotal;
     private javax.swing.JTable tabelaCarrinho;
     // End of variables declaration//GEN-END:variables
 }
