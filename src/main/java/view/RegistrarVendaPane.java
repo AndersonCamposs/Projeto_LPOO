@@ -163,7 +163,7 @@ public class RegistrarVendaPane extends javax.swing.JPanel {
 
     private void btnVerCarrinhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerCarrinhoActionPerformed
         JInternalFrame carrinhoComprasJIF = new JInternalFrame("Carrinho de compras");
-        carrinhoComprasJIF.setBounds(200, 310, 350, 250);
+        carrinhoComprasJIF.setBounds(200, 230, 350, 350);
         carrinhoComprasJIF.setVisible(true);
         carrinhoComprasJIF.setClosable(true);
         carrinhoComprasJIF.setResizable(true);
