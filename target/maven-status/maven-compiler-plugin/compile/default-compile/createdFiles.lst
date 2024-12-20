@@ -68,6 +68,7 @@ model\dao\UsuarioDAOImpl.class
 view\ListarCarrinhoDialog$1.class
 model\dao\ProdutoDAOImpl.class
 model\dao\ClienteDAO.class
+view\ListarVendasPane$2.class
 view\TelaPrincipal$13.class
 model\dao\ClienteDAOImpl.class
 view\ListarUsuariosPane.class

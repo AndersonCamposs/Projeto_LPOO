@@ -10,6 +10,7 @@ public class ListarCarrinhoDialog extends javax.swing.JDialog {
 
     private static List<ProdutoVenda> listaCarrinho;
     private static RegistrarVendaPane registrarVendaPane;
+    private static boolean isAddVenda;
     
     public ListarCarrinhoDialog(java.awt.Frame parent, boolean modal, List<ProdutoVenda> listaCarrinho, RegistrarVendaPane registrarVendaPane) {
         super(parent, modal);
@@ -21,6 +22,7 @@ public class ListarCarrinhoDialog extends javax.swing.JDialog {
             model.addRow(new Object[] {produtoVenda.getProduto().getNome(), produtoVenda.getQtdProduto(), produtoVenda.getProduto().getValor()});
         }
         lblValorTotal.setText(String.format("R$ %.2f", somarCarrinho()));
+        isAddVenda = registrarVendaPane != null;
     }
     
     private float somarCarrinho() {
@@ -110,16 +112,18 @@ public class ListarCarrinhoDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tabelaCarrinhoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaCarrinhoMouseClicked
-        if(evt.getClickCount() == 2) {
-            if(JOptionPane.showConfirmDialog(this, "Tem certeza que deseja remover o item do carrinho?",
-            "Remover item", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) == 0) {
-                int linhaSelecionada = tabelaCarrinho.getSelectedRow();
-                if (linhaSelecionada != -1) {
-                    String nomeSelecionado = (String) tabelaCarrinho.getValueAt(linhaSelecionada, 0);
-                    registrarVendaPane.removerItemCarrinho(nomeSelecionado);
-                    DefaultTableModel model = (DefaultTableModel) tabelaCarrinho.getModel();
-                    model.removeRow(linhaSelecionada);
-                    JOptionPane.showMessageDialog(this, "Item removido do carrinho com sucesso!", "SUCESSO: Item removido", JOptionPane.INFORMATION_MESSAGE);
+        if(isAddVenda) {
+            if(evt.getClickCount() == 2) {
+                if(JOptionPane.showConfirmDialog(this, "Tem certeza que deseja remover o item do carrinho?",
+                "Remover item", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) == 0) {
+                    int linhaSelecionada = tabelaCarrinho.getSelectedRow();
+                    if (linhaSelecionada != -1) {
+                        String nomeSelecionado = (String) tabelaCarrinho.getValueAt(linhaSelecionada, 0);
+                        registrarVendaPane.removerItemCarrinho(nomeSelecionado);
+                        DefaultTableModel model = (DefaultTableModel) tabelaCarrinho.getModel();
+                        model.removeRow(linhaSelecionada);
+                        JOptionPane.showMessageDialog(this, "Item removido do carrinho com sucesso!", "SUCESSO: Item removido", JOptionPane.INFORMATION_MESSAGE);
+                    }
                 }
             }
         }
