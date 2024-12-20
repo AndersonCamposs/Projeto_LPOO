@@ -5,6 +5,7 @@ import jakarta.validation.ConstraintViolationException;
 import javax.swing.JOptionPane;
 import model.dao.UsuarioDAOImpl;
 import model.entity.Usuario;
+import utils.ValidationUtils;
 
 public class RegistrarUsuarioPane extends javax.swing.JPanel {
 
@@ -212,12 +213,7 @@ public class RegistrarUsuarioPane extends javax.swing.JPanel {
                     this.limparCampos();
             }
         } catch (ConstraintViolationException e) {
-            StringBuilder violations = new StringBuilder("Erros de validação:\n");
-            for(ConstraintViolation<?> violation: e.getConstraintViolations()) {
-                violations.append("- ").append(violation.getMessage()).append("\n");
-            }
-            
-            JOptionPane.showMessageDialog(this, violations, "ERRO: Violação de restrição", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, ValidationUtils.formatValidationErrors(e.getConstraintViolations()), "ERRO: Violação de restrição", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
