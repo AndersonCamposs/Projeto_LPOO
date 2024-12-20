@@ -1,6 +1,6 @@
 package view;
 
-import jakarta.validation.ConstraintViolation;
+import jakarta.persistence.RollbackException;
 import jakarta.validation.ConstraintViolationException;
 import javax.swing.JOptionPane;
 import model.dao.UsuarioDAOImpl;
@@ -17,7 +17,7 @@ public class RegistrarUsuarioPane extends javax.swing.JPanel {
         jLabel1.setText("Registrar usuário");
         btnDeletar.setVisible(false);
     }
-    
+
     public RegistrarUsuarioPane(Long id) {
         initComponents();
         UsuarioDAOImpl usuarioDAOImpl = new UsuarioDAOImpl();
@@ -184,36 +184,34 @@ public class RegistrarUsuarioPane extends javax.swing.JPanel {
     }//GEN-LAST:event_inputSenhaUsuarioActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        try {
-            if(!new String(inputSenhaUsuario.getPassword()).equals(new String(inputRepetirSenhaUsuario.getPassword()))) {
-                inputSenhaUsuario.setText("");
-                inputRepetirSenhaUsuario.setText("");
-                JOptionPane.showMessageDialog(this, "As senhas não são iguais. Tente novamente!", "ERRO: Senhas diferentes", JOptionPane.ERROR_MESSAGE);
-            } if(this.u != null) {
-                UsuarioDAOImpl usuarioDAOImpl = new UsuarioDAOImpl();
-                u.setLogin(inputLoginUsuario.getText());
-                u.setNome(inputNomeUsuario.getText());
-                u.setSenha(new String(inputSenhaUsuario.getPassword()));
-                usuarioDAOImpl.update(u);
-                //((GenericDAOImpl<?, ?>) usuarioDAOImpl).close();
-
+        if (!new String(inputSenhaUsuario.getPassword()).equals(new String(inputRepetirSenhaUsuario.getPassword()))) {
+            inputSenhaUsuario.setText("");
+            inputRepetirSenhaUsuario.setText("");
+            JOptionPane.showMessageDialog(this, "As senhas não são iguais. Tente novamente!", "ERRO: Senhas diferentes", JOptionPane.ERROR_MESSAGE);
+        }
+        if (this.u != null) {
+            try {
+                this.u = prepareUsuarioObj();
+                atualizarUsuario(u);
                 JOptionPane.showMessageDialog(this, "Usuário atualizado com sucesso!", "SUCESSO: Usuário atualizado", JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                    UsuarioDAOImpl usuarioDAOImpl = new UsuarioDAOImpl();
-                    Usuario usuario = new Usuario();
-                    usuario.setNome(inputNomeUsuario.getText());
-                    usuario.setLogin(inputLoginUsuario.getText());
-                    usuario.setSenha(new String(inputSenhaUsuario.getPassword()));
-
-                    usuarioDAOImpl.save(usuario);
-                    //((GenericDAOImpl<?, ?>) usuarioDAOImpl).close();
-
-                    JOptionPane.showMessageDialog(this, "Usuário salvo com sucesso!", "SUCESSO: Usuário salvo", JOptionPane.INFORMATION_MESSAGE);
-                    // limpar os campos
-                    this.limparCampos();
+                System.out.println("Bloco catch");
+            } catch (RollbackException e) {
+                Throwable cause = e.getCause();
+                if (cause instanceof ConstraintViolationException) {
+                    ConstraintViolationException constraintViolationException = (ConstraintViolationException) e.getCause();
+                    JOptionPane.showMessageDialog(this, ValidationUtils.formatValidationErrors(constraintViolationException.getConstraintViolations()), "ERRO: Violação de restrição", JOptionPane.ERROR_MESSAGE);
+                }
             }
-        } catch (ConstraintViolationException e) {
-            JOptionPane.showMessageDialog(this, ValidationUtils.formatValidationErrors(e.getConstraintViolations()), "ERRO: Violação de restrição", JOptionPane.ERROR_MESSAGE);
+
+        } else {
+            try {
+                Usuario usuario = prepareUsuarioObj();
+                salvarUsuario(usuario);
+                JOptionPane.showMessageDialog(this, "Usuário salvo com sucesso!", "SUCESSO: Usuário salvo", JOptionPane.INFORMATION_MESSAGE);
+                this.limparCampos();
+            } catch (ConstraintViolationException e) {
+                ValidationUtils.formatValidationErrors(e.getConstraintViolations());
+            }
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
@@ -222,17 +220,17 @@ public class RegistrarUsuarioPane extends javax.swing.JPanel {
     }//GEN-LAST:event_btnLimparActionPerformed
 
     private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
-        if(JOptionPane.showConfirmDialog(this, String.format("Tem ceteza que deseja deletar o usuário %s?", u.getNome()),
-        "Deletar usuário", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) == 0) {
+        if (JOptionPane.showConfirmDialog(this, String.format("Tem ceteza que deseja deletar o usuário %s?", u.getNome()),
+                "Deletar usuário", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) == 0) {
             if (u != null) {
                 UsuarioDAOImpl usuarioDAOImpl = new UsuarioDAOImpl();
                 usuarioDAOImpl.delete(u);
-                JOptionPane.showMessageDialog(this, "Usuário deletado com sucesso!", "SUCESSO: Usuário deletado", JOptionPane.INFORMATION_MESSAGE);  
+                JOptionPane.showMessageDialog(this, "Usuário deletado com sucesso!", "SUCESSO: Usuário deletado", JOptionPane.INFORMATION_MESSAGE);
                 u = null;
                 limparCampos();
                 btnDeletar.setVisible(false);
             }
-            
+
         }
     }//GEN-LAST:event_btnDeletarActionPerformed
 
@@ -241,6 +239,27 @@ public class RegistrarUsuarioPane extends javax.swing.JPanel {
         inputLoginUsuario.setText("");
         inputSenhaUsuario.setText("");
         inputRepetirSenhaUsuario.setText("");
+    }
+
+    private void atualizarUsuario(Usuario usuario) throws RollbackException {
+        UsuarioDAOImpl usuarioDAOImpl = new UsuarioDAOImpl();
+        usuarioDAOImpl.update(usuario);
+    }
+    
+    private void salvarUsuario(Usuario usuario) throws ConstraintViolationException {
+        UsuarioDAOImpl usuarioDAOImpl = new UsuarioDAOImpl();
+        usuarioDAOImpl.save(usuario);
+    }
+
+    private Usuario prepareUsuarioObj() {
+        Usuario usuario = new Usuario();
+        if (this.u != null) {
+            usuario.setId(u.getId());
+        }
+        usuario.setNome(inputNomeUsuario.getText());
+        usuario.setLogin(inputLoginUsuario.getText());
+        usuario.setSenha(new String(inputSenhaUsuario.getPassword()));
+        return usuario;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

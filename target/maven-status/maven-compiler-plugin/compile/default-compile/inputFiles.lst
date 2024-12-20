@@ -18,6 +18,7 @@ C:\Users\ander\Desktop\arenaCampos\src\main\java\model\entity\ProdutoVenda.java
 C:\Users\ander\Desktop\arenaCampos\src\main\java\view\RegistrarCategoriaPane.java
 C:\Users\ander\Desktop\arenaCampos\src\main\java\model\dao\DiaSemanaDAO.java
 C:\Users\ander\Desktop\arenaCampos\src\main\java\model\entity\Usuario.java
+C:\Users\ander\Desktop\arenaCampos\src\main\java\utils\ValidationUtils.java
 C:\Users\ander\Desktop\arenaCampos\src\main\java\model\dao\CategoriaDAOImpl.java
 C:\Users\ander\Desktop\arenaCampos\src\main\java\view\RegistrarProdutoPane.java
 C:\Users\ander\Desktop\arenaCampos\src\main\java\view\TelaPrincipal.java
@@ -36,6 +37,7 @@ C:\Users\ander\Desktop\arenaCampos\src\main\java\model\entity\Reserva.java
 C:\Users\ander\Desktop\arenaCampos\src\main\java\model\dao\ClienteDAO.java
 C:\Users\ander\Desktop\arenaCampos\src\main\java\view\ListarProdutosPane.java
 C:\Users\ander\Desktop\arenaCampos\src\main\java\model\dao\VendaDAOImpl.java
+C:\Users\ander\Desktop\arenaCampos\src\main\java\view\LoginFrame.java
 C:\Users\ander\Desktop\arenaCampos\src\main\java\model\entity\Cliente.java
 C:\Users\ander\Desktop\arenaCampos\src\main\java\model\dao\HorarioDAOImpl.java
 C:\Users\ander\Desktop\arenaCampos\src\main\java\view\ListarCarrinhoDialog.java
