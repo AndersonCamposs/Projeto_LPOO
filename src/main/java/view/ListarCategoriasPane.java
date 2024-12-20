@@ -5,13 +5,9 @@ import javax.swing.table.DefaultTableModel;
 import model.dao.CategoriaDAOImpl;
 import model.entity.Categoria;
 
-/**
- *
- * @author Anderson
- */
 public class ListarCategoriasPane extends javax.swing.JPanel {
 
-    TelaPrincipal telaPrincipal;
+    private final TelaPrincipal telaPrincipal;
     /**
      * Creates new form ListarCategoriasPane
      */
@@ -97,5 +93,5 @@ public class ListarCategoriasPane extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tabelaCategorias;
     // End of variables declaration//GEN-END:variables
-    CategoriaDAOImpl categoriaDAOImpl = new CategoriaDAOImpl();
+    private final CategoriaDAOImpl categoriaDAOImpl = new CategoriaDAOImpl();
 }

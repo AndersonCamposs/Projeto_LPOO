@@ -1,16 +1,8 @@
 package view;
 
-import java.awt.Dimension;
-import java.sql.SQLException;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import model.dao.CategoriaDAOImpl;
-import model.dao.ClienteDAOImpl;
-import model.dao.GenericDAOImpl;
-import model.dao.UsuarioDAOImpl;
 import model.entity.Categoria;
-import model.entity.Cliente;
-import model.entity.Usuario;
 
 public class RegistrarCategoriaPane extends javax.swing.JPanel {
 
@@ -143,5 +135,5 @@ public class RegistrarCategoriaPane extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables
-    Categoria c;
+    private Categoria c;
 }

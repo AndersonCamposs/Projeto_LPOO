@@ -1,7 +1,5 @@
 package view;
 
-import java.awt.Dimension;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -9,21 +7,17 @@ import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import model.dao.ClienteDAOImpl;
 import model.dao.DiaSemanaDAOImpl;
-import model.dao.GenericDAOImpl;
 import model.dao.HorarioDAOImpl;
 import model.dao.QuadraDAOImpl;
 import model.dao.ReservaDAOImpl;
-import model.dao.UsuarioDAOImpl;
 import model.entity.Cliente;
-import model.entity.DiaSemana;
 import model.entity.Horario;
 import model.entity.Quadra;
 import model.entity.Reserva;
-import model.entity.Usuario;
 
 public class RegistrarReservaPane extends javax.swing.JPanel {
 
-        JInternalFrame formularioReservaJIF;
+    private JInternalFrame formularioReservaJIF;
     /**
      * Creates new form RegistrarUsuario
      */
@@ -386,5 +380,5 @@ public class RegistrarReservaPane extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel painelAgendamento;
     // End of variables declaration//GEN-END:variables
-    Reserva r;
+    private Reserva r;
 }

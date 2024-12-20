@@ -1,22 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package view;
 
 import java.util.List;
-import java.util.Optional;
 import javax.swing.table.DefaultTableModel;
 import model.dao.ProdutoDAOImpl;
 import model.entity.Produto;
 
-/**
- *
- * @author ander
- */
+
 public class ListarProdutosPane extends javax.swing.JPanel {
 
-    TelaPrincipal telaPrincipal;
+    private final TelaPrincipal telaPrincipal;
     /**
      * Creates new form ListarProdutosPane
      */
@@ -105,5 +97,5 @@ public class ListarProdutosPane extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tabelaProdutos;
     // End of variables declaration//GEN-END:variables
-    ProdutoDAOImpl produtoDAOImpl = new ProdutoDAOImpl();
+    private final ProdutoDAOImpl produtoDAOImpl = new ProdutoDAOImpl();
 }

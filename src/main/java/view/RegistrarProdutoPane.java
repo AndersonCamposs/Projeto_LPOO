@@ -1,16 +1,11 @@
 package view;
 
-import java.awt.Dimension;
-import java.sql.SQLException;
 import java.util.List;
 import javax.swing.JOptionPane;
 import model.dao.CategoriaDAOImpl;
 import model.dao.ProdutoDAOImpl;
-import model.dao.GenericDAOImpl;
-import model.dao.UsuarioDAOImpl;
 import model.entity.Categoria;
 import model.entity.Produto;
-import model.entity.Usuario;
 
 public class RegistrarProdutoPane extends javax.swing.JPanel {
 
@@ -219,5 +214,5 @@ public class RegistrarProdutoPane extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JSpinner qtdEstoqueSpinner;
     // End of variables declaration//GEN-END:variables
-    Produto p;
+    private Produto p;
 }

@@ -1,20 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package view;
 
-import java.awt.Dimension;
-import java.sql.SQLException;
 import javax.swing.JOptionPane;
-import model.dao.GenericDAOImpl;
 import model.dao.UsuarioDAOImpl;
 import model.entity.Usuario;
 
-/**
- *
- * @author ander
- */
 public class RegistrarUsuarioPane extends javax.swing.JPanel {
 
     /**
@@ -261,5 +250,5 @@ public class RegistrarUsuarioPane extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     // End of variables declaration//GEN-END:variables
-    Usuario u;
+    private Usuario u;
 }

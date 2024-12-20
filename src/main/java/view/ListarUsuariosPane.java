@@ -1,22 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package view;
 
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
-import model.dao.GenericDAOImpl;
 import model.entity.Usuario;
 import model.dao.UsuarioDAOImpl;
 
-/**
- *
- * @author ander
- */
+
 public class ListarUsuariosPane extends javax.swing.JPanel {
 
-    private TelaPrincipal telaPrincipal;
+    private final TelaPrincipal telaPrincipal;
     
     public ListarUsuariosPane(TelaPrincipal telaPrincipal) {
         initComponents();
@@ -104,5 +96,5 @@ public class ListarUsuariosPane extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tabelaUsuarios;
     // End of variables declaration//GEN-END:variables
-    private UsuarioDAOImpl usuarioDAOImpl = new UsuarioDAOImpl();
+    private final UsuarioDAOImpl usuarioDAOImpl = new UsuarioDAOImpl();
 }

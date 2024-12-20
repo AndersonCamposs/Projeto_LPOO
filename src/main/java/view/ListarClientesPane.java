@@ -7,7 +7,7 @@ import model.entity.Cliente;
 
 public class ListarClientesPane extends javax.swing.JPanel {
 
-    private TelaPrincipal telaPrincipal;
+    private final TelaPrincipal telaPrincipal;
     
     public ListarClientesPane(TelaPrincipal telaPrincipal) {
         initComponents();
@@ -100,5 +100,5 @@ public class ListarClientesPane extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tabelaClientes;
     // End of variables declaration//GEN-END:variables
-    ClienteDAOImpl clienteDAOImpl = new ClienteDAOImpl();
+    private final ClienteDAOImpl clienteDAOImpl = new ClienteDAOImpl();
 }
