@@ -1,11 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
- */
 package view;
 
 import java.util.List;
-import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 import model.entity.ProdutoVenda;
 
@@ -22,7 +17,7 @@ public class ListarCarrinhoDialog extends javax.swing.JDialog {
         for(ProdutoVenda produtoVenda: listaCarrinho) {
             model.addRow(new Object[] {produtoVenda.getProduto().getNome(), produtoVenda.getQtdProduto(), produtoVenda.getProduto().getValor()});
         }
-        lblValorTotal.setText(Float.toString(somarCarrinho()));
+        lblValorTotal.setText(String.format("%.2f", somarCarrinho()));
     }
     
     private float somarCarrinho() {

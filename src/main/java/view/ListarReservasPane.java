@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package view;
 
 import java.time.format.DateTimeFormatter;
@@ -10,14 +6,9 @@ import javax.swing.table.DefaultTableModel;
 import model.dao.ReservaDAOImpl;
 import model.entity.Reserva;
 
-
-/**
- *
- * @author Anderson
- */
 public class ListarReservasPane extends javax.swing.JPanel {
 
-    TelaPrincipal telaPrincipal;
+    private final TelaPrincipal telaPrincipal;
     /**
      * Creates new form ListarReservasPane
      */
@@ -109,5 +100,5 @@ public class ListarReservasPane extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tabelaReservas;
     // End of variables declaration//GEN-END:variables
-    private ReservaDAOImpl reservaDAOImpl = new ReservaDAOImpl();
+    private final ReservaDAOImpl reservaDAOImpl = new ReservaDAOImpl();
 }

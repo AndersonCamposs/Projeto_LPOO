@@ -1,36 +1,25 @@
 package view;
 
-import java.awt.Dimension;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.DocumentEvent;
 import model.dao.VendaDAOImpl;
-import model.dao.ClienteDAOImpl;
-import model.dao.GenericDAOImpl;
 import model.dao.ProdutoDAOImpl;
 import model.dao.ProdutoVendaDAOImpl;
-import model.dao.UsuarioDAOImpl;
 import model.entity.Venda;
-import model.entity.Cliente;
 import model.entity.Produto;
 import model.entity.ProdutoVenda;
-import model.entity.Usuario;
 
 public class RegistrarVendaPane extends javax.swing.JPanel {
 
-    TelaPrincipal telaPrincipal;
     
-    public RegistrarVendaPane(TelaPrincipal telaPrincipal) {
+    public RegistrarVendaPane() {
         initComponents();
         inputNomeProdutoAddListener();
-        this.telaPrincipal = telaPrincipal;
         qtdProdutoSpinner.setModel(new SpinnerNumberModel(1, 1, 100, 1));
         jLabel1.setText("Registrar Venda");
         ProdutoDAOImpl produtoDAOImpl = new ProdutoDAOImpl();
@@ -289,6 +278,6 @@ public class RegistrarVendaPane extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JSpinner qtdProdutoSpinner;
     // End of variables declaration//GEN-END:variables
-    List<Produto> listaProdutos;
-    List<ProdutoVenda> carrinhoCompras = new ArrayList<>();
+    private List<Produto> listaProdutos;
+    private List<ProdutoVenda> carrinhoCompras = new ArrayList<>();
 }

@@ -426,7 +426,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         formularioVendaJIF.setClosable(true);
         formularioVendaJIF.setResizable(true);
         
-        RegistrarVendaPane formulario = new RegistrarVendaPane(this);
+        RegistrarVendaPane formulario = new RegistrarVendaPane();
         formularioVendaJIF.add(formulario);  
         jDesktopPane1.add(formularioVendaJIF);
     }
