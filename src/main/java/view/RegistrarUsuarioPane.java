@@ -1,5 +1,7 @@
 package view;
 
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
 import javax.swing.JOptionPane;
 import model.dao.UsuarioDAOImpl;
 import model.entity.Usuario;
@@ -181,32 +183,41 @@ public class RegistrarUsuarioPane extends javax.swing.JPanel {
     }//GEN-LAST:event_inputSenhaUsuarioActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        if(!new String(inputSenhaUsuario.getPassword()).equals(new String(inputRepetirSenhaUsuario.getPassword()))) {
-            inputSenhaUsuario.setText("");
-            inputRepetirSenhaUsuario.setText("");
-            JOptionPane.showMessageDialog(this, "As senhas não são iguais. Tente novamente!", "ERRO: Senhas diferentes", JOptionPane.ERROR_MESSAGE);
-        } if(this.u != null) {
-            UsuarioDAOImpl usuarioDAOImpl = new UsuarioDAOImpl();
-            u.setLogin(inputLoginUsuario.getText());
-            u.setNome(inputNomeUsuario.getText());
-            u.setSenha(new String(inputSenhaUsuario.getPassword()));
-            usuarioDAOImpl.update(u);
-            //((GenericDAOImpl<?, ?>) usuarioDAOImpl).close();
-            
-            JOptionPane.showMessageDialog(this, "Usuário atualizado com sucesso!", "SUCESSO: Usuário atualizado", JOptionPane.INFORMATION_MESSAGE);
-        } else {
+        try {
+            if(!new String(inputSenhaUsuario.getPassword()).equals(new String(inputRepetirSenhaUsuario.getPassword()))) {
+                inputSenhaUsuario.setText("");
+                inputRepetirSenhaUsuario.setText("");
+                JOptionPane.showMessageDialog(this, "As senhas não são iguais. Tente novamente!", "ERRO: Senhas diferentes", JOptionPane.ERROR_MESSAGE);
+            } if(this.u != null) {
                 UsuarioDAOImpl usuarioDAOImpl = new UsuarioDAOImpl();
-                Usuario usuario = new Usuario();
-                usuario.setNome(inputNomeUsuario.getText());
-                usuario.setLogin(inputLoginUsuario.getText());
-                usuario.setSenha(new String(inputSenhaUsuario.getPassword()));
-
-                usuarioDAOImpl.save(usuario);
+                u.setLogin(inputLoginUsuario.getText());
+                u.setNome(inputNomeUsuario.getText());
+                u.setSenha(new String(inputSenhaUsuario.getPassword()));
+                usuarioDAOImpl.update(u);
                 //((GenericDAOImpl<?, ?>) usuarioDAOImpl).close();
-                
-                JOptionPane.showMessageDialog(this, "Usuário salvo com sucesso!", "SUCESSO: Usuário salvo", JOptionPane.INFORMATION_MESSAGE);
-                // limpar os campos
-                this.limparCampos();
+
+                JOptionPane.showMessageDialog(this, "Usuário atualizado com sucesso!", "SUCESSO: Usuário atualizado", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                    UsuarioDAOImpl usuarioDAOImpl = new UsuarioDAOImpl();
+                    Usuario usuario = new Usuario();
+                    usuario.setNome(inputNomeUsuario.getText());
+                    usuario.setLogin(inputLoginUsuario.getText());
+                    usuario.setSenha(new String(inputSenhaUsuario.getPassword()));
+
+                    usuarioDAOImpl.save(usuario);
+                    //((GenericDAOImpl<?, ?>) usuarioDAOImpl).close();
+
+                    JOptionPane.showMessageDialog(this, "Usuário salvo com sucesso!", "SUCESSO: Usuário salvo", JOptionPane.INFORMATION_MESSAGE);
+                    // limpar os campos
+                    this.limparCampos();
+            }
+        } catch (ConstraintViolationException e) {
+            StringBuilder violations = new StringBuilder("Erros de validação:\n");
+            for(ConstraintViolation<?> violation: e.getConstraintViolations()) {
+                violations.append("- ").append(violation.getMessage()).append("\n");
+            }
+            
+            JOptionPane.showMessageDialog(this, violations, "ERRO: Violação de restrição", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
