@@ -5,6 +5,7 @@ view\ListarProdutosPane$2.class
 view\RegistrarReservaPane.class
 view\RegistrarProdutoPane$2.class
 model\entity\Quadra.class
+view\ListarCarrinhoDialog$3$1.class
 view\TelaPrincipal$11.class
 view\TelaPrincipal$1.class
 view\RegistrarClientePane$3.class
@@ -48,7 +49,6 @@ view\RegistrarClientePane$1.class
 view\RegistrarReservaPane$1.class
 model\dao\QuadraoDAO.class
 view\TelaPrincipal$6.class
-view\ListarCarrinhoDialog$2$1.class
 model\dao\ProdutoVendaDAO.class
 view\RegistrarUsuarioPane.class
 view\RegistrarVendaPane$4.class
@@ -58,6 +58,7 @@ view\RegistrarUsuarioPane$4.class
 model\dao\CategoriaDAO.class
 model\entity\Venda.class
 view\RegistrarVendaPane$1.class
+view\ListarCarrinhoDialog$3.class
 view\ListarCategoriasPane$2.class
 view\TelaPrincipal$3.class
 view\RegistrarVendaPane.class
