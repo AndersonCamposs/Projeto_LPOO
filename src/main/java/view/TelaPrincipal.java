@@ -2,9 +2,6 @@
 package view;
 
 import java.awt.Component;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
@@ -207,6 +204,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenu7.add(registrarVendaMenuItem);
 
         listarVendasMenuItem.setText("Listar vendas");
+        listarVendasMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                listarVendasMenuItemActionPerformed(evt);
+            }
+        });
         jMenu7.add(listarVendasMenuItem);
 
         jMenu1.add(jMenu7);
@@ -306,6 +308,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void registrarVendaMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarVendaMenuItemActionPerformed
        montarFormularioVendaJIF();
     }//GEN-LAST:event_registrarVendaMenuItemActionPerformed
+
+    private void listarVendasMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listarVendasMenuItemActionPerformed
+        JInternalFrame listarVendasJIF = new JInternalFrame("Lista de vendas");
+        listarVendasJIF.setBounds(100, 100, 450, 330);
+        listarVendasJIF.setVisible(true);
+        listarVendasJIF.setClosable(true);
+        listarVendasJIF.setResizable(true);
+        ListarVendasPane listarVendasPane = new ListarVendasPane(this);
+        listarVendasJIF.add(listarVendasPane);
+        jDesktopPane1.add(listarVendasJIF);
+    }//GEN-LAST:event_listarVendasMenuItemActionPerformed
 
     
     
