@@ -1,6 +1,7 @@
 package view;
 
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.entity.ProdutoVenda;
 
@@ -8,16 +9,18 @@ import model.entity.ProdutoVenda;
 public class ListarCarrinhoDialog extends javax.swing.JDialog {
 
     private static List<ProdutoVenda> listaCarrinho;
+    private static RegistrarVendaPane registrarVendaPane;
     
-    public ListarCarrinhoDialog(java.awt.Frame parent, boolean modal, List<ProdutoVenda> listaCarrinho) {
+    public ListarCarrinhoDialog(java.awt.Frame parent, boolean modal, List<ProdutoVenda> listaCarrinho, RegistrarVendaPane registrarVendaPane) {
         super(parent, modal);
         initComponents();
         this.listaCarrinho = listaCarrinho;
+        this.registrarVendaPane = registrarVendaPane;
         DefaultTableModel model = (DefaultTableModel) tabelaCarrinho.getModel();
         for(ProdutoVenda produtoVenda: listaCarrinho) {
             model.addRow(new Object[] {produtoVenda.getProduto().getNome(), produtoVenda.getQtdProduto(), produtoVenda.getProduto().getValor()});
         }
-        lblValorTotal.setText(String.format("%.2f", somarCarrinho()));
+        lblValorTotal.setText(String.format("R$ %.2f", somarCarrinho()));
     }
     
     private float somarCarrinho() {
@@ -66,6 +69,11 @@ public class ListarCarrinhoDialog extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
+        tabelaCarrinho.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelaCarrinhoMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tabelaCarrinho);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -101,6 +109,22 @@ public class ListarCarrinhoDialog extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void tabelaCarrinhoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaCarrinhoMouseClicked
+        if(evt.getClickCount() == 2) {
+            if(JOptionPane.showConfirmDialog(this, "Tem certeza que deseja remover o item do carrinho?",
+            "Remover item", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) == 0) {
+                int linhaSelecionada = tabelaCarrinho.getSelectedRow();
+                if (linhaSelecionada != -1) {
+                    String nomeSelecionado = (String) tabelaCarrinho.getValueAt(linhaSelecionada, 0);
+                    registrarVendaPane.removerItemCarrinho(nomeSelecionado);
+                    DefaultTableModel model = (DefaultTableModel) tabelaCarrinho.getModel();
+                    model.removeRow(linhaSelecionada);
+                    JOptionPane.showMessageDialog(this, "Item removido do carrinho com sucesso!", "SUCESSO: Item removido", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+        }
+    }//GEN-LAST:event_tabelaCarrinhoMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -131,7 +155,7 @@ public class ListarCarrinhoDialog extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                ListarCarrinhoDialog dialog = new ListarCarrinhoDialog(new javax.swing.JFrame(), true, listaCarrinho);
+                ListarCarrinhoDialog dialog = new ListarCarrinhoDialog(new javax.swing.JFrame(), true, listaCarrinho, registrarVendaPane);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

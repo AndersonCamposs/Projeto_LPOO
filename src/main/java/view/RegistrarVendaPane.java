@@ -172,12 +172,16 @@ public class RegistrarVendaPane extends javax.swing.JPanel {
         this.listaProdutos = new ProdutoDAOImpl().findAll();
     }
     
+    public void removerItemCarrinho(String nome) {
+        carrinhoCompras.removeIf(item -> item.getProduto().getNome().equalsIgnoreCase(nome));
+    }
+    
     private void comboBoxProdutoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_comboBoxProdutoMouseClicked
         
     }//GEN-LAST:event_comboBoxProdutoMouseClicked
 
     private void btnVerCarrinhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerCarrinhoActionPerformed
-        ListarCarrinhoDialog listarCarrinhoDialog = new ListarCarrinhoDialog(null, true, carrinhoCompras);
+        ListarCarrinhoDialog listarCarrinhoDialog = new ListarCarrinhoDialog(null, true, carrinhoCompras, this);
         listarCarrinhoDialog.setLocationRelativeTo(this);
         listarCarrinhoDialog.setVisible(true);
     }//GEN-LAST:event_btnVerCarrinhoActionPerformed
