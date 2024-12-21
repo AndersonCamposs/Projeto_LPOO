@@ -317,15 +317,8 @@ public class RegistrarReservaPane extends javax.swing.JPanel {
         ClienteDAOImpl clienteDAOImpl = new ClienteDAOImpl();
         List<Cliente> listaClientes = clienteDAOImpl.findByCpf(inputCpfCliente.getText());
         if (!listaClientes.isEmpty()) {
-            ReservaDAOImpl reservaDAOImpl = new ReservaDAOImpl();
-            Reserva reserva = new Reserva();
-            reserva.setCliente(listaClientes.get(0));
-            reserva.setDataReserva(getDateObject(inputDataReserva.getText()));
-            reserva.setDiaSemana(new DiaSemanaDAOImpl().findByNome(reserva.getDataReserva().getDayOfWeek()).get(0));
-            reserva.setHorario((Horario) comboBoxHorario.getSelectedItem());
-            reserva.setQuadra((Quadra) comboBoxQuadra.getSelectedItem());
-            reserva.setValor(50.0f);
-            reservaDAOImpl.save(reserva);
+            Reserva reserva = prepareReservaObj(listaClientes.get(0));
+            salvarReserva(reserva);
             JOptionPane.showMessageDialog(this, "Reserva cadastrada com sucesso.", "SUCESSO: Reserva cadastrada", JOptionPane.INFORMATION_MESSAGE);
             this.limparCampos();
             painelAgendamento.setVisible(false);
@@ -339,8 +332,8 @@ public class RegistrarReservaPane extends javax.swing.JPanel {
         if(JOptionPane.showConfirmDialog(this, "Tem ceteza que deseja deletar esta reserva?",
         "Deletar cliente", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) == 0) {
             if (r != null) {
-                ReservaDAOImpl resevaAOImpl = new ReservaDAOImpl();
-                resevaAOImpl.delete(r);
+                ReservaDAOImpl resevaDAOImpl = new ReservaDAOImpl();
+                resevaDAOImpl.delete(r);
                 JOptionPane.showMessageDialog(this, "Reserva deletada com sucesso!", "SUCESSO: Reserva deletado", JOptionPane.INFORMATION_MESSAGE);  
                 r = null;
                 limparCampos();
@@ -356,6 +349,26 @@ public class RegistrarReservaPane extends javax.swing.JPanel {
         int m = Integer.parseInt(arrayDate[1]);
         int d = Integer.parseInt(arrayDate[0]);
         return LocalDate.of(y, m, d);
+    }
+    
+    private void salvarReserva(Reserva reserva) {
+        ReservaDAOImpl reservaDAOImpl = new ReservaDAOImpl();
+        reservaDAOImpl.save(reserva);
+    }
+    
+    private Reserva prepareReservaObj(Cliente cliente) {
+        Reserva reserva = new Reserva();
+        if (r != null) {
+            reserva.setId(r.getId());
+        }
+        reserva.setCliente(cliente);
+        reserva.setDataReserva(getDateObject(inputDataReserva.getText()));
+        reserva.setDiaSemana(new DiaSemanaDAOImpl().findByNome(reserva.getDataReserva().getDayOfWeek()).get(0));
+        reserva.setHorario((Horario) comboBoxHorario.getSelectedItem());
+        reserva.setQuadra((Quadra) comboBoxQuadra.getSelectedItem());
+        reserva.setValor(50.0f);
+        
+        return reserva;
     }
     
     private void limparCampos() {
