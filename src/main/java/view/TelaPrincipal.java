@@ -272,7 +272,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_registrarReservaMenuItemActionPerformed
 
     private void listarReservasMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listarReservasMenuItemActionPerformed
-        montarFormularioReservaJIF(Optional.empty());
+        JInternalFrame listarReservaJIF = new JInternalFrame("Lista de Reservas");
+        listarReservaJIF.setBounds(100, 100, 500, 330);
+        listarReservaJIF.setVisible(true);
+        listarReservaJIF.setClosable(true);
+        listarReservaJIF.setResizable(true);
+        ListarReservasPane listarReservasPane = new ListarReservasPane(this);
+        listarReservaJIF.add(listarReservasPane);
+        jDesktopPane1.add(listarReservaJIF);
     }//GEN-LAST:event_listarReservasMenuItemActionPerformed
 
     private void listarCategoriasMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listarCategoriasMenuItemActionPerformed

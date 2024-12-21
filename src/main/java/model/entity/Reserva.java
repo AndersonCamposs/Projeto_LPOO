@@ -5,9 +5,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,16 +24,16 @@ public class Reserva {
     private Long id;
     
     @Column(name = "dataReserva", nullable = false)
-    @NotBlank(message = "A data da reserva é obrigatória.")
+    @NotNull(message = "A data da reserva é obrigatória.")
     private LocalDate dataReserva;
     
     @Column(name = "valor", nullable = false)
-    @NotBlank(message = "O valor da reserva é obrigatório.")
+    @NotNull(message = "O valor da reserva é obrigatório.")
     private float valor;
     
     @ManyToOne
-    @Column(name = "cliente_id", nullable = false)
-    @NotBlank(message = "informe o CPF do cliente.")
+    @JoinColumn(name = "cliente_id", nullable = false)
+    @NotNull(message = "Informe o CPF do cliente.")
     Cliente cliente;
     
     @ManyToOne
