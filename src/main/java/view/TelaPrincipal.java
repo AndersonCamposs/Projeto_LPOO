@@ -441,10 +441,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
     
     private void montarFormularioVendaJIF() {
         JInternalFrame formularioVendaJIF = new JInternalFrame("Formulário de venda");
-        formularioVendaJIF.setBounds(100, 100, 500, 200);
+        formularioVendaJIF.setBounds(100, 50, 500, 500);
         formularioVendaJIF.setVisible(true);
         formularioVendaJIF.setClosable(true);
-        formularioVendaJIF.setResizable(true);
+        formularioVendaJIF.setResizable(false);
         
         RegistrarVendaPane formulario = new RegistrarVendaPane();
         formularioVendaJIF.add(formulario);  

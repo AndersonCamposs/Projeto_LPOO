@@ -58,6 +58,7 @@ view\ListarClientesPane.class
 view\ListarUsuariosPane$1.class
 view\RegistrarReservaPane$3.class
 view\ListarCategoriasPane.class
+view\RegistrarVendaPane$6.class
 view\RegistrarProdutoPane$1.class
 view\TelaPrincipal.class
 model\dao\QuadraDAOImpl.class

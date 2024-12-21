@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.DocumentEvent;
+import javax.swing.table.DefaultTableModel;
 import model.dao.VendaDAOImpl;
 import model.dao.ProdutoDAOImpl;
 import model.dao.ProdutoVendaDAOImpl;
@@ -32,6 +33,8 @@ public class RegistrarVendaPane extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         inputNomeProduto = new javax.swing.JTextField();
@@ -41,7 +44,24 @@ public class RegistrarVendaPane extends javax.swing.JPanel {
         qtdProdutoSpinner = new javax.swing.JSpinner();
         jLabel4 = new javax.swing.JLabel();
         btnAddCarrinho = new javax.swing.JButton();
-        btnVerCarrinho = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tabelaCarrinho = new javax.swing.JTable();
+        lblValorTotal = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
 
         setPreferredSize(new java.awt.Dimension(394, 322));
 
@@ -78,17 +98,51 @@ public class RegistrarVendaPane extends javax.swing.JPanel {
             }
         });
 
-        btnVerCarrinho.setText("Ver carrinho");
-        btnVerCarrinho.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVerCarrinhoActionPerformed(evt);
+        tabelaCarrinho.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "NOME", "QTD.", "VALOR UNI."
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Integer.class, java.lang.Float.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
+        tabelaCarrinho.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelaCarrinhoMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tabelaCarrinho);
+
+        lblValorTotal.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblValorTotal.setForeground(new java.awt.Color(255, 0, 0));
+        lblValorTotal.setText("R$ 0.0");
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel6.setText("Carrinho de compras:");
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel7.setText("Valor total:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -106,18 +160,24 @@ public class RegistrarVendaPane extends javax.swing.JPanel {
                                         .addComponent(jLabel3)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(comboBoxProduto, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(comboBoxProduto, 0, 116, Short.MAX_VALUE)
                                         .addGap(24, 24, 24)))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel4)
-                                    .addComponent(qtdProdutoSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(qtdProdutoSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(36, 36, 36))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
-                                .addComponent(btnVerCarrinho)
-                                .addGap(18, 18, 18)
                                 .addComponent(btnVender, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 8, Short.MAX_VALUE)))
-                        .addGap(36, 36, 36)))
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(lblValorTotal)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -138,16 +198,23 @@ public class RegistrarVendaPane extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAddCarrinho)
-                    .addComponent(btnVerCarrinho)
                     .addComponent(btnVender))
-                .addContainerGap(184, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblValorTotal)
+                    .addComponent(jLabel7))
+                .addGap(11, 11, 11))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVenderActionPerformed
         float valorTotal = carrinhoCompras.stream()
-                            .map(produtoVenda -> produtoVenda.getProduto().getValor() * produtoVenda.getQtdProduto())
-                            .reduce(0.0f, Float::sum);
+            .map(produtoVenda -> produtoVenda.getProduto().getValor() * produtoVenda.getQtdProduto())
+            .reduce(0.0f, Float::sum);
         
         if(JOptionPane.showConfirmDialog(this, String.format("Tem certeza que deseja registrar a venda no valor de %.2f?", valorTotal),
         "Registrar venda", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
@@ -165,6 +232,7 @@ public class RegistrarVendaPane extends javax.swing.JPanel {
             
             JOptionPane.showMessageDialog(this, "Venda registrada com sucesso!", "SUCESSO: Venda registrada", JOptionPane.INFORMATION_MESSAGE);
             atualizarEstoque();
+            esvaziarCarrinho();
         }
     }//GEN-LAST:event_btnVenderActionPerformed
 
@@ -179,12 +247,6 @@ public class RegistrarVendaPane extends javax.swing.JPanel {
     private void comboBoxProdutoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_comboBoxProdutoMouseClicked
         
     }//GEN-LAST:event_comboBoxProdutoMouseClicked
-
-    private void btnVerCarrinhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerCarrinhoActionPerformed
-        ListarCarrinhoDialog listarCarrinhoDialog = new ListarCarrinhoDialog(null, true, carrinhoCompras, this);
-        listarCarrinhoDialog.setLocationRelativeTo(this);
-        listarCarrinhoDialog.setVisible(true);
-    }//GEN-LAST:event_btnVerCarrinhoActionPerformed
 
     private void btnAddCarrinhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddCarrinhoActionPerformed
         if(comboBoxProduto.getSelectedItem() != null) {
@@ -204,6 +266,8 @@ public class RegistrarVendaPane extends javax.swing.JPanel {
                         } else {
                             produtoVenda.setQtdProduto(produtoVenda.getQtdProduto() + (Integer) qtdProdutoSpinner.getValue());
                         }
+                        atualizarItensCarrinho();
+                        lblValorTotal.setText(Float.toString(somarCarrinho()));
                         comboBoxProduto.removeAllItems();
                         this.limparCampos();
                         return;
@@ -218,11 +282,61 @@ public class RegistrarVendaPane extends javax.swing.JPanel {
                 "Item adicionado ao carrinho com sucesso!", 
                 "SUCESSO: Item adicionado", 
                 JOptionPane.INFORMATION_MESSAGE);
+                addItemCarrinho(produtoVenda);
+                lblValorTotal.setText(Float.toString(somarCarrinho()));
                 this.limparCampos();
             }
         }
     }//GEN-LAST:event_btnAddCarrinhoActionPerformed
 
+    private void tabelaCarrinhoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaCarrinhoMouseClicked
+        if(evt.getClickCount() == 2) {
+            if(JOptionPane.showConfirmDialog(this, "Tem certeza que deseja remover o item do carrinho?",
+            "Remover item", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) == 0) {
+                int linhaSelecionada = tabelaCarrinho.getSelectedRow();
+                if (linhaSelecionada != -1) {
+                    String nomeSelecionado = (String) tabelaCarrinho.getValueAt(linhaSelecionada, 0);
+                    this.removerItemCarrinho(nomeSelecionado);
+                    DefaultTableModel model = (DefaultTableModel) tabelaCarrinho.getModel();
+                    model.removeRow(linhaSelecionada);
+                    JOptionPane.showMessageDialog(this, "Item removido do carrinho com sucesso!", "SUCESSO: Item removido", JOptionPane.INFORMATION_MESSAGE);
+                    lblValorTotal.setText(Float.toString(somarCarrinho()));
+                }
+            }
+        }
+    }//GEN-LAST:event_tabelaCarrinhoMouseClicked
+
+    private void addItemCarrinho(ProdutoVenda produtoVenda) {
+        DefaultTableModel model = (DefaultTableModel) tabelaCarrinho.getModel();
+        model.addRow(new Object[] {produtoVenda.getProduto().getNome(), produtoVenda.getQtdProduto(), produtoVenda.getProduto().getValor()});
+    }
+    
+    private void atualizarItensCarrinho() {
+        DefaultTableModel model = (DefaultTableModel) tabelaCarrinho.getModel();
+        model.setRowCount(0);
+        for(ProdutoVenda produtoVenda: carrinhoCompras) {
+            model.addRow(new Object[] {produtoVenda.getProduto().getNome(), produtoVenda.getQtdProduto(), produtoVenda.getProduto().getValor()});
+        }
+    }
+    
+    private float somarCarrinho() {
+        if (carrinhoCompras.isEmpty()) {
+            return 0.0f;
+        } else {
+            return carrinhoCompras
+                .stream()
+                .map(produtoVenda -> produtoVenda.getProduto().getValor() * produtoVenda.getQtdProduto())
+                .reduce(0.0f, Float::sum);
+        }
+    }
+    
+    private void esvaziarCarrinho() {
+        DefaultTableModel model = (DefaultTableModel) tabelaCarrinho.getModel();
+        model.setRowCount(0);
+        this.carrinhoCompras.clear();
+        lblValorTotal.setText(Float.toString(somarCarrinho()));
+    }
+    
     private void inputNomeProdutoAddListener() {
         this.inputNomeProduto.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
             @Override
@@ -273,14 +387,20 @@ public class RegistrarVendaPane extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddCarrinho;
     private javax.swing.JButton btnVender;
-    private javax.swing.JButton btnVerCarrinho;
     private javax.swing.JComboBox<Produto> comboBoxProduto;
     private javax.swing.JTextField inputNomeProduto;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JLabel lblValorTotal;
     private javax.swing.JSpinner qtdProdutoSpinner;
+    private javax.swing.JTable tabelaCarrinho;
     // End of variables declaration//GEN-END:variables
     private List<Produto> listaProdutos;
     private List<ProdutoVenda> carrinhoCompras = new ArrayList<>();
