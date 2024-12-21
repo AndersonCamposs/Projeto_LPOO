@@ -42,10 +42,10 @@ public class Produto {
     
     @ManyToOne
     @JoinColumn(name = "categoria_id")
+    @NotNull(message = "A categoria do produto é obrigatória.")
     private Categoria categoria;
     
     @OneToMany(mappedBy = "produto")
-    @NotNull(message = "A categoria do produto é obrigatória.")
     Collection<ProdutoVenda> produtoVendas;
     
     @Override

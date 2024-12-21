@@ -155,7 +155,6 @@ public class RegistrarProdutoPane extends javax.swing.JPanel {
                 Throwable cause = e.getCause();
                 if (cause instanceof ConstraintViolationException) {
                     ConstraintViolationException constraintViolationException = (ConstraintViolationException) e.getCause();
-                    JOptionPane.showMessageDialog(this, ValidationUtils.formatValidationErrors(constraintViolationException.getConstraintViolations()), "ERRO: Violação de restrição", JOptionPane.ERROR_MESSAGE);
                 }
             }
             
@@ -166,7 +165,7 @@ public class RegistrarProdutoPane extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Produto salvo com sucesso!", "SUCESSO: Produto salvo", JOptionPane.INFORMATION_MESSAGE);
                 this.limparCampos();
             } catch (ConstraintViolationException e) {
-                ValidationUtils.formatValidationErrors(e.getConstraintViolations());
+                JOptionPane.showMessageDialog(this, ValidationUtils.formatValidationErrors(e.getConstraintViolations()), "ERRO: Violação de restrição", JOptionPane.ERROR_MESSAGE);
             }
         }
             
@@ -208,7 +207,7 @@ public class RegistrarProdutoPane extends javax.swing.JPanel {
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Informe um número válido como valor do produto.", "ERRO: Número inválido", JOptionPane.ERROR_MESSAGE);
         }
-        
+        System.out.println(produto.getCategoria());
         return produto;
     }
     
