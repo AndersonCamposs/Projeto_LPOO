@@ -155,6 +155,7 @@ public class RegistrarProdutoPane extends javax.swing.JPanel {
                 Throwable cause = e.getCause();
                 if (cause instanceof ConstraintViolationException) {
                     ConstraintViolationException constraintViolationException = (ConstraintViolationException) e.getCause();
+                    JOptionPane.showMessageDialog(this, ValidationUtils.formatValidationErrors(constraintViolationException.getConstraintViolations()), "ERRO: Violação de restrição", JOptionPane.ERROR_MESSAGE);
                 }
             }
             

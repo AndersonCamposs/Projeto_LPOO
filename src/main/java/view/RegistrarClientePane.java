@@ -1,8 +1,11 @@
 package view;
 
+import jakarta.persistence.RollbackException;
+import jakarta.validation.ConstraintViolationException;
 import javax.swing.JOptionPane;
 import model.dao.ClienteDAOImpl;
 import model.entity.Cliente;
+import utils.ValidationUtils;
 
 public class RegistrarClientePane extends javax.swing.JPanel {
 
@@ -154,25 +157,28 @@ public class RegistrarClientePane extends javax.swing.JPanel {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         if (c != null) {
-            ClienteDAOImpl clienteDAOImpl = new ClienteDAOImpl();
-            c.setNome(inputNomeCliente.getText());
-            c.setCpf(inputCpfCliente.getText());
-            c.setTelefone(inputTelefoneCliente.getText());
-            
-            clienteDAOImpl.update(c);
-            JOptionPane.showMessageDialog(this, "Cliente atualizado com sucesso!", "SUCESSO: Cliente atualizado", JOptionPane.INFORMATION_MESSAGE);
+            try {
+                Cliente cliente = prepareClienteObj();
+                atualizarCliente(cliente);
+                JOptionPane.showMessageDialog(this, "Cliente atualizado com sucesso!", "SUCESSO: Cliente atualizado", JOptionPane.INFORMATION_MESSAGE);
+            } catch (RollbackException e) {
+                Throwable cause = e.getCause();
+                if (cause instanceof ConstraintViolationException) {
+                    ConstraintViolationException constraintViolationException = (ConstraintViolationException) e.getCause();
+                    JOptionPane.showMessageDialog(this, ValidationUtils.formatValidationErrors(constraintViolationException.getConstraintViolations()), "ERRO: Violação de restrição", JOptionPane.ERROR_MESSAGE);
+                }
+            }
         } else {
-            ClienteDAOImpl clienteDAOImpl = new ClienteDAOImpl();
-            Cliente cliente =  new Cliente();
-            cliente.setNome(inputNomeCliente.getText());
-            cliente.setCpf(inputCpfCliente.getText());
-            cliente.setTelefone(inputTelefoneCliente.getText());
+            try {
+                Cliente cliente =  prepareClienteObj();
+                salvarCliente(cliente);
+                JOptionPane.showMessageDialog(this, "Cliente salvo com sucesso!", "SUCESSO: Cliente salvo", JOptionPane.INFORMATION_MESSAGE);
+                // limpar os campos
+                this.limparCampos();
+            } catch (ConstraintViolationException e) {
+                JOptionPane.showMessageDialog(this, ValidationUtils.formatValidationErrors(e.getConstraintViolations()), "ERRO: Violação de restrição", JOptionPane.ERROR_MESSAGE);
+            }
             
-            clienteDAOImpl.save(cliente);
-            
-            JOptionPane.showMessageDialog(this, "Cliente salvo com sucesso!", "SUCESSO: Cliente salvo", JOptionPane.INFORMATION_MESSAGE);
-            // limpar os campos
-            this.limparCampos();
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
@@ -195,6 +201,26 @@ public class RegistrarClientePane extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnDeletarActionPerformed
 
+    private void atualizarCliente(Cliente cliente) {
+        new ClienteDAOImpl().update(cliente);
+    }
+    
+    private void salvarCliente(Cliente cliente) {
+        new ClienteDAOImpl().save(cliente);
+    }
+    
+    private Cliente prepareClienteObj() {
+        Cliente cliente = new Cliente();
+        if(c != null) {
+            cliente.setId(c.getId());
+        }
+        cliente.setNome(inputNomeCliente.getText());
+        cliente.setCpf(inputCpfCliente.getText());
+        cliente.setTelefone(inputTelefoneCliente.getText());
+        
+        return cliente;
+    }
+    
     private void limparCampos() {
         inputNomeCliente.setText("");
         inputCpfCliente.setText("");
