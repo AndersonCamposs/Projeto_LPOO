@@ -201,11 +201,11 @@ public class RegistrarClientePane extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnDeletarActionPerformed
 
-    private void atualizarCliente(Cliente cliente) {
+    private void atualizarCliente(Cliente cliente) throws RollbackException {
         new ClienteDAOImpl().update(cliente);
     }
     
-    private void salvarCliente(Cliente cliente) {
+    private void salvarCliente(Cliente cliente) throws ConstraintViolationException {
         new ClienteDAOImpl().save(cliente);
     }
     
