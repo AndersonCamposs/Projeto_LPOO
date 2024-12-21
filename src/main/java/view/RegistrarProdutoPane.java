@@ -1,11 +1,14 @@
 package view;
 
+import jakarta.persistence.RollbackException;
+import jakarta.validation.ConstraintViolationException;
 import java.util.List;
 import javax.swing.JOptionPane;
 import model.dao.CategoriaDAOImpl;
 import model.dao.ProdutoDAOImpl;
 import model.entity.Categoria;
 import model.entity.Produto;
+import utils.ValidationUtils;
 
 public class RegistrarProdutoPane extends javax.swing.JPanel {
 
@@ -144,26 +147,29 @@ public class RegistrarProdutoPane extends javax.swing.JPanel {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         if (p != null) {
-            ProdutoDAOImpl produtoDAOImpl = new ProdutoDAOImpl();
-            p.setNome(inputNomeProduto.getText().toUpperCase());
-            p.setCategoria((Categoria) comboBoxCategoria.getSelectedItem());
-            p.setValor(Float.parseFloat(inputValorProduto.getText().replace(",", ".")));
-            p.setQtd_estoque((int) qtdEstoqueSpinner.getValue());
+            try {
+                Produto produto = prepareProdutoObj();
+                atualizarProduto(produto);
+                JOptionPane.showMessageDialog(this, "Produto atualizado com sucesso!", "SUCESSO: Produto atualizado", JOptionPane.INFORMATION_MESSAGE);
+            } catch (RollbackException e) {
+                Throwable cause = e.getCause();
+                if (cause instanceof ConstraintViolationException) {
+                    ConstraintViolationException constraintViolationException = (ConstraintViolationException) e.getCause();
+                    JOptionPane.showMessageDialog(this, ValidationUtils.formatValidationErrors(constraintViolationException.getConstraintViolations()), "ERRO: Violação de restrição", JOptionPane.ERROR_MESSAGE);
+                }
+            }
             
-            produtoDAOImpl.update(p);
-            JOptionPane.showMessageDialog(this, "Produto atualizado com sucesso!", "SUCESSO: Produto atualizado", JOptionPane.INFORMATION_MESSAGE);
         } else {
-            ProdutoDAOImpl produtoDAOImpl = new ProdutoDAOImpl();
-            Produto produto = new Produto();
-            produto.setNome(inputNomeProduto.getText().toUpperCase());
-            produto.setCategoria((Categoria) comboBoxCategoria.getSelectedItem());
-            produto.setValor(Float.parseFloat(inputValorProduto.getText().replace(",", ".")));
-            produto.setQtd_estoque((int) qtdEstoqueSpinner.getValue());
-            produtoDAOImpl.save(produto);
-            
-            JOptionPane.showMessageDialog(this, "Produto salvo com sucesso!", "SUCESSO: Produto salvo", JOptionPane.INFORMATION_MESSAGE);
-            this.limparCampos();
+            try {
+                Produto produto = prepareProdutoObj();
+                salvarProduto(produto);
+                JOptionPane.showMessageDialog(this, "Produto salvo com sucesso!", "SUCESSO: Produto salvo", JOptionPane.INFORMATION_MESSAGE);
+                this.limparCampos();
+            } catch (ConstraintViolationException e) {
+                ValidationUtils.formatValidationErrors(e.getConstraintViolations());
+            }
         }
+            
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
@@ -180,7 +186,32 @@ public class RegistrarProdutoPane extends javax.swing.JPanel {
             
         }
     }//GEN-LAST:event_btnDeletarActionPerformed
-
+    
+    private void atualizarProduto(Produto produto) throws RollbackException {
+        new ProdutoDAOImpl().update(produto);
+    }
+    
+    private void salvarProduto(Produto produto) throws ConstraintViolationException {
+        new ProdutoDAOImpl().save(produto);
+    }
+    
+    private Produto prepareProdutoObj() {
+        Produto produto = new Produto();
+        if (p != null) {
+            produto.setId(p.getId());
+        } 
+        try {
+            produto.setNome(inputNomeProduto.getText().toUpperCase());
+            produto.setCategoria((Categoria) comboBoxCategoria.getSelectedItem());
+            produto.setValor(Float.parseFloat(inputValorProduto.getText().replace(",", ".")));
+            produto.setQtd_estoque((int) qtdEstoqueSpinner.getValue());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Informe um número válido como valor do produto.", "ERRO: Número inválido", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        return produto;
+    }
+    
     private void limparCampos() {
         inputNomeProduto.setText("");
         inputValorProduto.setText("");
