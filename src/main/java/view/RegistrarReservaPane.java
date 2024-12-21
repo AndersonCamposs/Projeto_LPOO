@@ -1,8 +1,10 @@
 package view;
 
+import jakarta.validation.ConstraintViolationException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.regex.Pattern;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import model.dao.ClienteDAOImpl;
@@ -14,6 +16,7 @@ import model.entity.Cliente;
 import model.entity.Horario;
 import model.entity.Quadra;
 import model.entity.Reserva;
+import utils.ValidationUtils;
 
 public class RegistrarReservaPane extends javax.swing.JPanel {
 
@@ -61,7 +64,8 @@ public class RegistrarReservaPane extends javax.swing.JPanel {
                 comboBoxQuadra.setEnabled(false);
             }
         } else {
-          comboBoxQuadra.setSelectedIndex(0);  
+          comboBoxQuadra.setSelectedIndex(0);
+          // ISSO ATIVA O ACTION PERFORMED DO comboBoxQuadra
         }
         
     }
@@ -284,9 +288,13 @@ public class RegistrarReservaPane extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVerificarDispobibilidadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerificarDispobibilidadesActionPerformed
-        painelAgendamento.setVisible(true);
-        this.formularioReservaJIF.setBounds(100, 100, 410, 300);
-        loadComboBoxQuadraContent();
+        if(Pattern.matches("[0-9]{2}/[0-9]{2}/[0-9]{4}", inputDataReserva.getText())) {
+            painelAgendamento.setVisible(true);
+            this.formularioReservaJIF.setBounds(100, 100, 410, 300);
+            loadComboBoxQuadraContent();
+        } else {
+            JOptionPane.showMessageDialog(this, "Data inválida, tente novamente.", "ERRO: Data inválida", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnVerificarDispobibilidadesActionPerformed
 
     private void comboBoxQuadraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxQuadraActionPerformed
@@ -317,19 +325,16 @@ public class RegistrarReservaPane extends javax.swing.JPanel {
         ClienteDAOImpl clienteDAOImpl = new ClienteDAOImpl();
         List<Cliente> listaClientes = clienteDAOImpl.findByCpf(inputCpfCliente.getText());
         if (!listaClientes.isEmpty()) {
-            ReservaDAOImpl reservaDAOImpl = new ReservaDAOImpl();
-            Reserva reserva = new Reserva();
-            reserva.setCliente(listaClientes.get(0));
-            reserva.setDataReserva(getDateObject(inputDataReserva.getText()));
-            reserva.setDiaSemana(new DiaSemanaDAOImpl().findByNome(reserva.getDataReserva().getDayOfWeek()).get(0));
-            reserva.setHorario((Horario) comboBoxHorario.getSelectedItem());
-            reserva.setQuadra((Quadra) comboBoxQuadra.getSelectedItem());
-            reserva.setValor(50.0f);
-            reservaDAOImpl.save(reserva);
-            JOptionPane.showMessageDialog(this, "Reserva cadastrada com sucesso.", "SUCESSO: Reserva cadastrada", JOptionPane.INFORMATION_MESSAGE);
-            this.limparCampos();
-            painelAgendamento.setVisible(false);
-            this.formularioReservaJIF.setBounds(100, 100, 360, 180);
+            try {
+                Reserva reserva = prepareReservaObj(listaClientes.get(0));
+                salvarReserva(reserva);
+                JOptionPane.showMessageDialog(this, "Reserva cadastrada com sucesso.", "SUCESSO: Reserva cadastrada", JOptionPane.INFORMATION_MESSAGE);
+                this.limparCampos();
+                painelAgendamento.setVisible(false);
+                this.formularioReservaJIF.setBounds(100, 100, 360, 180);
+            } catch (ConstraintViolationException e) {
+                ValidationUtils.formatValidationErrors(e.getConstraintViolations());
+            }
         } else {
             JOptionPane.showMessageDialog(this, "Cliente não encontrado, verifique e tente novamente.", "ERRO: Cliente não encontrado", JOptionPane.ERROR_MESSAGE);
         }
@@ -339,8 +344,8 @@ public class RegistrarReservaPane extends javax.swing.JPanel {
         if(JOptionPane.showConfirmDialog(this, "Tem ceteza que deseja deletar esta reserva?",
         "Deletar cliente", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) == 0) {
             if (r != null) {
-                ReservaDAOImpl resevaAOImpl = new ReservaDAOImpl();
-                resevaAOImpl.delete(r);
+                ReservaDAOImpl resevaDAOImpl = new ReservaDAOImpl();
+                resevaDAOImpl.delete(r);
                 JOptionPane.showMessageDialog(this, "Reserva deletada com sucesso!", "SUCESSO: Reserva deletado", JOptionPane.INFORMATION_MESSAGE);  
                 r = null;
                 limparCampos();
@@ -356,6 +361,26 @@ public class RegistrarReservaPane extends javax.swing.JPanel {
         int m = Integer.parseInt(arrayDate[1]);
         int d = Integer.parseInt(arrayDate[0]);
         return LocalDate.of(y, m, d);
+    }
+    
+    private void salvarReserva(Reserva reserva) throws ConstraintViolationException {
+        ReservaDAOImpl reservaDAOImpl = new ReservaDAOImpl();
+        reservaDAOImpl.save(reserva);
+    }
+    
+    private Reserva prepareReservaObj(Cliente cliente) {
+        Reserva reserva = new Reserva();
+        if (r != null) {
+            reserva.setId(r.getId());
+        }
+        reserva.setCliente(cliente);
+        reserva.setDataReserva(getDateObject(inputDataReserva.getText()));
+        reserva.setDiaSemana(new DiaSemanaDAOImpl().findByNome(reserva.getDataReserva().getDayOfWeek()).get(0));
+        reserva.setHorario((Horario) comboBoxHorario.getSelectedItem());
+        reserva.setQuadra((Quadra) comboBoxQuadra.getSelectedItem());
+        reserva.setValor(50.0f);
+        
+        return reserva;
     }
     
     private void limparCampos() {

@@ -1,8 +1,11 @@
 package view;
 
+import jakarta.persistence.RollbackException;
+import jakarta.validation.ConstraintViolationException;
 import javax.swing.JOptionPane;
 import model.dao.CategoriaDAOImpl;
 import model.entity.Categoria;
+import utils.ValidationUtils;
 
 public class RegistrarCategoriaPane extends javax.swing.JPanel {
 
@@ -94,18 +97,22 @@ public class RegistrarCategoriaPane extends javax.swing.JPanel {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         if (c != null) {
-            CategoriaDAOImpl categoriaDAOImpl = new CategoriaDAOImpl();
-            c.setNome(inputNomeCategoria.getText().toUpperCase());
-            
-            categoriaDAOImpl.update(c);
-            JOptionPane.showMessageDialog(this, "Categoria atualizada com sucesso!", "SUCESSO: Categoria atualizada", JOptionPane.INFORMATION_MESSAGE);
+            try {
+                Categoria categoria = prepareCategoriaObj();
+                atualizarCategoria(categoria);
+                JOptionPane.showMessageDialog(this, "Categoria atualizado com sucesso!", "SUCESSO: Categoria atualizado", JOptionPane.INFORMATION_MESSAGE);
+            } catch (ConstraintViolationException e) {
+                JOptionPane.showMessageDialog(this, ValidationUtils.formatValidationErrors(e.getConstraintViolations()), "ERRO: Violação de restrição", JOptionPane.ERROR_MESSAGE);
+            }
         } else {
-            CategoriaDAOImpl categoriaDAOImpl = new CategoriaDAOImpl();
-            Categoria categoria = new Categoria();
-            categoria.setNome(inputNomeCategoria.getText().toUpperCase());
-            categoriaDAOImpl.save(categoria);
-            JOptionPane.showMessageDialog(this, "Categoria salva com sucesso!", "SUCESSO: Categoria salva", JOptionPane.INFORMATION_MESSAGE);
-            this.limparCampos();
+            try {
+                Categoria categoria = prepareCategoriaObj();
+                salvarCategoria(categoria);
+                JOptionPane.showMessageDialog(this, "Categoria salva com sucesso!", "SUCESSO: Categoria salva", JOptionPane.INFORMATION_MESSAGE);
+                this.limparCampos();
+            } catch (ConstraintViolationException e) {
+                JOptionPane.showMessageDialog(this, ValidationUtils.formatValidationErrors(e.getConstraintViolations()), "ERRO: Violação de restrição", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
@@ -124,6 +131,24 @@ public class RegistrarCategoriaPane extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnDeletarActionPerformed
 
+    private void atualizarCategoria(Categoria categoria) throws RollbackException {
+        new CategoriaDAOImpl().update(categoria);
+    }
+    
+    private void salvarCategoria(Categoria categoria) throws ConstraintViolationException {
+        new CategoriaDAOImpl().save(categoria);
+    }
+    
+    private Categoria prepareCategoriaObj() {
+        Categoria categoria = new Categoria();
+        if (c != null) {
+            categoria.setId(categoria.getId());
+        }
+        categoria.setNome(inputNomeCategoria.getText().toUpperCase());
+        
+        return categoria;
+    }
+    
     private void limparCampos() {
         inputNomeCategoria.setText("");
     }
