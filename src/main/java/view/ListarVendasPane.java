@@ -3,10 +3,8 @@ package view;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import javax.swing.table.DefaultTableModel;
 import model.dao.VendaDAOImpl;
-import model.entity.ProdutoVenda;
 import model.entity.Venda;
 
 public class ListarVendasPane extends javax.swing.JPanel {
@@ -91,7 +89,7 @@ public class ListarVendasPane extends javax.swing.JPanel {
                 Long idSelecionado = (Long) tabelaVendas.getValueAt(linhaSelecionada, 0);
                 for(Venda venda: listaVendas) {
                     if(venda.getId().longValue() == idSelecionado.longValue()) {
-                        ListarCarrinhoDialog listarCarrinhoDialog = new ListarCarrinhoDialog(null, true, new ArrayList<>(venda.getProdutoVendas()), null);
+                        ListarCarrinhoDialog listarCarrinhoDialog = new ListarCarrinhoDialog(null, true, new ArrayList<>(venda.getProdutoVendas()));
                         listarCarrinhoDialog.setLocationRelativeTo(this);
                         listarCarrinhoDialog.setVisible(true);
                         return;
