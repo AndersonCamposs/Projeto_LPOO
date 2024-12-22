@@ -18,7 +18,7 @@ public class ProdutoVendaDAOImpl extends GenericDAOImpl<ProdutoVenda, Serializab
         try {
             beginTransaction();
             entityManager
-            .createStoredProcedureQuery("decrementar_estoque")
+            .createStoredProcedureQuery("AtualizarEstoque")
             .registerStoredProcedureParameter("p_id_produto", Long.class, ParameterMode.IN)
             .registerStoredProcedureParameter("p_qtd_produto", Integer.class, ParameterMode.IN)
             .setParameter("p_id_produto", produtoVenda.getProduto().getId())
