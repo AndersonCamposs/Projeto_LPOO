@@ -242,7 +242,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void listarUsuariosMenuItemActionPerformedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listarUsuariosMenuItemActionPerformedActionPerformed
         JInternalFrame listarUsuarioJIF = new JInternalFrame("Lista de Usuários");
-        listarUsuarioJIF.setBounds(100, 100, 410, 330);
+        listarUsuarioJIF.setBounds(100, 50, 410, 500);
         listarUsuarioJIF.setVisible(true);
         listarUsuarioJIF.setClosable(true);
         listarUsuarioJIF.setResizable(true);

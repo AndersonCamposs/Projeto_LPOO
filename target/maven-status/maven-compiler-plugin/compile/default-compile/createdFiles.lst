@@ -39,6 +39,7 @@ view\RegistrarUsuarioPane$2.class
 view\TelaPrincipal$2.class
 model\dao\ProdutoVendaDAOImpl.class
 view\TelaPrincipal$9.class
+model\filter\UsuarioFilter.class
 view\LoginFrame$3.class
 view\ListarCarrinhoDialog$2.class
 view\TelaPrincipal$10.class
@@ -95,6 +96,7 @@ model\dao\UsuarioDAO.class
 model\entity\Categoria.class
 model\entity\Usuario.class
 view\RegistrarVendaPane$5.class
+view\ListarUsuariosPane$3.class
 model\dao\VendaDAOImpl.class
 view\ListarProdutosPane$3.class
 view\TelaPrincipal$5.class
