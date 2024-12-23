@@ -15,7 +15,6 @@ model\entity\Cliente.class
 view\RegistrarClientePane$2.class
 view\ListarClientesPane$2.class
 view\RegistrarUsuarioPane$3.class
-view\ListarProdutosPane$5.class
 view\RegistrarUsuarioPane$1.class
 view\ListarReservasPane.class
 view\ListarProdutosPane.class
@@ -65,6 +64,7 @@ view\RegistrarVendaPane$6.class
 view\RegistrarProdutoPane$1.class
 view\TelaPrincipal.class
 model\dao\QuadraDAOImpl.class
+model\filter\ClienteFilter.class
 view\TelaPrincipal$7.class
 view\RegistrarVendaPane$3.class
 view\TelaPrincipal$12.class
@@ -98,6 +98,7 @@ view\RegistrarVendaPane$5.class
 model\dao\VendaDAOImpl.class
 view\ListarProdutosPane$3.class
 view\TelaPrincipal$5.class
+view\ListarClientesPane$3.class
 view\RegistrarUsuarioPane$5.class
 model\entity\Reserva.class
 model\dao\GenericDAO.class

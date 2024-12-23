@@ -6,6 +6,10 @@
         <class>Horario</class>
         <class>DiaSemana</class>
         <class>Reserva</class>
+        <class>Venda</class>
+        <class>ProdutoVenda</class>
+        <class>Produto</class>
+        <class>Categoria</class>
         <properties>
             <!-- Configuração do Banco de Dados -->
             <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/arena_campos?useSSL=false&amp;allowPublicKeyRetrieval=true&amp;serverTimezone=UTC" />

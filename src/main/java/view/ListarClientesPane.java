@@ -4,6 +4,7 @@ import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import model.dao.ClienteDAOImpl;
 import model.entity.Cliente;
+import model.filter.ClienteFilter;
 
 public class ListarClientesPane extends javax.swing.JPanel {
 
@@ -12,11 +13,7 @@ public class ListarClientesPane extends javax.swing.JPanel {
     public ListarClientesPane(TelaPrincipal telaPrincipal) {
         initComponents();
         this.telaPrincipal = telaPrincipal;
-        DefaultTableModel model = (DefaultTableModel) tabelaClientes.getModel();
-        List<Cliente> listaClientes = clienteDAOImpl.findAll();
-        for(Cliente cliente : listaClientes) {
-            model.addRow(new Object[] {cliente.getId(), cliente.getNome(), cliente.getCpf(), cliente.getTelefone()});
-        }
+        preencherTabela(clienteDAOImpl.findAll());
     }
 
     /**
@@ -30,6 +27,9 @@ public class ListarClientesPane extends javax.swing.JPanel {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaClientes = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        inputNomeCliente = new javax.swing.JTextField();
 
         tabelaClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -71,17 +71,41 @@ public class ListarClientesPane extends javax.swing.JPanel {
             tabelaClientes.getColumnModel().getColumn(3).setPreferredWidth(100);
         }
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel1.setText("Filtrar lista");
+
+        jLabel2.setText("Nome do cliente:");
+
+        inputNomeCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                inputNomeClienteKeyReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 523, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2)
+                    .addComponent(inputNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 67, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(inputNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 44, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -95,8 +119,32 @@ public class ListarClientesPane extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_tabelaClientesMouseClicked
 
+    private void inputNomeClienteKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_inputNomeClienteKeyReleased
+        buscaFiltrada();
+    }//GEN-LAST:event_inputNomeClienteKeyReleased
+
+    private void buscaFiltrada() {
+        String nomeCliente = inputNomeCliente.getText();
+            ClienteFilter clienteFilter = new ClienteFilter();
+            if (!nomeCliente.isEmpty()) {
+                clienteFilter = new ClienteFilter(nomeCliente);
+            } 
+            List<Cliente> listaFiltrada = clienteDAOImpl.findWithFilter(clienteFilter);
+            preencherTabela(listaFiltrada);
+    }
+    
+    private void preencherTabela(List<Cliente> lista) {
+        DefaultTableModel model = (DefaultTableModel) tabelaClientes.getModel();
+        model.setRowCount(0);
+        for (Cliente cliente: lista) {
+            model.addRow(new Object[] {cliente.getId(), cliente.getNome(), cliente.getCpf(), cliente.getTelefone()});
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField inputNomeCliente;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tabelaClientes;
     // End of variables declaration//GEN-END:variables

@@ -258,7 +258,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void listarClientesMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listarClientesMenuItemActionPerformed
         JInternalFrame listarClienteJIF = new JInternalFrame("Lista de clientes");
-        listarClienteJIF.setBounds(100, 100, 500, 330);
+        listarClienteJIF.setBounds(100, 50, 500, 500);
         listarClienteJIF.setVisible(true);
         listarClienteJIF.setClosable(true);
         listarClienteJIF.setResizable(true);
