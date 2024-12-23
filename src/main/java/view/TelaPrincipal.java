@@ -13,6 +13,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
      */
     public TelaPrincipal() {
         initComponents();
+        this.setResizable(false);
     }
    
     /**
@@ -241,7 +242,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void listarUsuariosMenuItemActionPerformedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listarUsuariosMenuItemActionPerformedActionPerformed
         JInternalFrame listarUsuarioJIF = new JInternalFrame("Lista de Usuários");
-        listarUsuarioJIF.setBounds(100, 100, 410, 330);
+        listarUsuarioJIF.setBounds(100, 50, 410, 500);
         listarUsuarioJIF.setVisible(true);
         listarUsuarioJIF.setClosable(true);
         listarUsuarioJIF.setResizable(true);
@@ -257,7 +258,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void listarClientesMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listarClientesMenuItemActionPerformed
         JInternalFrame listarClienteJIF = new JInternalFrame("Lista de clientes");
-        listarClienteJIF.setBounds(100, 100, 500, 330);
+        listarClienteJIF.setBounds(100, 50, 500, 500);
         listarClienteJIF.setVisible(true);
         listarClienteJIF.setClosable(true);
         listarClienteJIF.setResizable(true);
@@ -303,7 +304,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void listarProdutosMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listarProdutosMenuItemActionPerformed
        JInternalFrame listarProdutosJIF = new JInternalFrame("Lista de produtos");
-       listarProdutosJIF.setBounds(100, 100, 470, 330);
+       listarProdutosJIF.setBounds(100, 50, 480, 500);
        listarProdutosJIF.setVisible(true);
        listarProdutosJIF.setClosable(true);
        listarProdutosJIF.setResizable(true);

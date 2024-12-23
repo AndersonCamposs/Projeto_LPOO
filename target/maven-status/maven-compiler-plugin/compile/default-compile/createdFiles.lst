@@ -23,6 +23,7 @@ view\RegistrarClientePane$1.class
 model\dao\QuadraoDAO.class
 view\LoginFrame$2.class
 model\dao\ProdutoVendaDAO.class
+utils\NumberFormatUtils.class
 view\RegistrarUsuarioPane.class
 model\dao\GenericDAOImpl.class
 model\dao\CategoriaDAO.class
@@ -38,6 +39,7 @@ view\RegistrarUsuarioPane$2.class
 view\TelaPrincipal$2.class
 model\dao\ProdutoVendaDAOImpl.class
 view\TelaPrincipal$9.class
+model\filter\UsuarioFilter.class
 view\LoginFrame$3.class
 view\ListarCarrinhoDialog$2.class
 view\TelaPrincipal$10.class
@@ -50,6 +52,7 @@ model\dao\CategoriaDAOImpl.class
 view\RegistrarReservaPane$6.class
 view\RegistrarCategoriaPane.class
 view\RegistrarReservaPane.class
+model\filter\ProdutoFilter.class
 model\entity\Quadra.class
 view\ListarCarrinhoDialog$3$1.class
 view\TelaPrincipal$1.class
@@ -62,6 +65,7 @@ view\RegistrarVendaPane$6.class
 view\RegistrarProdutoPane$1.class
 view\TelaPrincipal.class
 model\dao\QuadraDAOImpl.class
+model\filter\ClienteFilter.class
 view\TelaPrincipal$7.class
 view\RegistrarVendaPane$3.class
 view\TelaPrincipal$12.class
@@ -82,6 +86,7 @@ view\ListarUsuariosPane$2.class
 view\RegistrarReservaPane$1.class
 view\TelaPrincipal$6.class
 view\RegistrarVendaPane$4.class
+view\ListarProdutosPane$4.class
 view\ListarReservasPane$2.class
 view\RegistrarUsuarioPane$4.class
 model\entity\Venda.class
@@ -91,8 +96,11 @@ model\dao\UsuarioDAO.class
 model\entity\Categoria.class
 model\entity\Usuario.class
 view\RegistrarVendaPane$5.class
+view\ListarUsuariosPane$3.class
 model\dao\VendaDAOImpl.class
+view\ListarProdutosPane$3.class
 view\TelaPrincipal$5.class
+view\ListarClientesPane$3.class
 view\RegistrarUsuarioPane$5.class
 model\entity\Reserva.class
 model\dao\GenericDAO.class

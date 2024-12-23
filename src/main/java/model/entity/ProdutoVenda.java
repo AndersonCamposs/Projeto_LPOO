@@ -17,8 +17,8 @@ import lombok.Setter;
 @Entity
 @Table(name = "ProdutoVenda")
 @NamedStoredProcedureQuery(
-        name = "decrementar_estoque",
-        procedureName = "decrementar_estoque",
+        name = "AtualizarEstoque",
+        procedureName = "AtualizarEstoque",
         parameters = {
             @StoredProcedureParameter(mode = ParameterMode.IN, type = Long.class, name = "p_id_produto"),
             @StoredProcedureParameter(mode = ParameterMode.IN, type = Integer.class, name = "p_qtd_produto")

@@ -14,6 +14,7 @@ import model.dao.ProdutoVendaDAOImpl;
 import model.entity.Venda;
 import model.entity.Produto;
 import model.entity.ProdutoVenda;
+import utils.NumberFormatUtils;
 
 public class RegistrarVendaPane extends javax.swing.JPanel {
 
@@ -25,7 +26,6 @@ public class RegistrarVendaPane extends javax.swing.JPanel {
         jLabel1.setText("Registrar Venda");
         ProdutoDAOImpl produtoDAOImpl = new ProdutoDAOImpl();
         listaProdutos = produtoDAOImpl.findAll();
-        //btnDeletar.setVisible(false);
     }
     
     
@@ -199,7 +199,7 @@ public class RegistrarVendaPane extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAddCarrinho)
                     .addComponent(btnVender))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -212,28 +212,30 @@ public class RegistrarVendaPane extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVenderActionPerformed
-        float valorTotal = carrinhoCompras.stream()
-            .map(produtoVenda -> produtoVenda.getProduto().getValor() * produtoVenda.getQtdProduto())
-            .reduce(0.0f, Float::sum);
         
-        if(JOptionPane.showConfirmDialog(this, String.format("Tem certeza que deseja registrar a venda no valor de %.2f?", valorTotal),
-        "Registrar venda", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
-            VendaDAOImpl vendaDAOImpl = new VendaDAOImpl();
-            Venda venda = new Venda();
-            venda.setDataVenda(LocalDate.now());
-            venda.setValor(valorTotal);
-            vendaDAOImpl.save(venda);
-            
-            ProdutoVendaDAOImpl produtoVendaDAOImpl = new ProdutoVendaDAOImpl();
-            for(ProdutoVenda produtoVenda: carrinhoCompras) {
-                produtoVenda.setVenda(venda);
-                produtoVendaDAOImpl.saveProdutoVendaAndDecrementStock(produtoVenda);
+        if (!carrinhoCompras.isEmpty()) {
+            if(JOptionPane.showConfirmDialog(this, String.format("Tem certeza que deseja registrar a venda no valor de R$ %s?", NumberFormatUtils.formatPtBr(somarCarrinho())),
+                "Registrar venda", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+                VendaDAOImpl vendaDAOImpl = new VendaDAOImpl();
+                Venda venda = new Venda();
+                venda.setDataVenda(LocalDate.now());
+                venda.setValor(somarCarrinho());
+                vendaDAOImpl.save(venda);
+
+                ProdutoVendaDAOImpl produtoVendaDAOImpl = new ProdutoVendaDAOImpl();
+                for(ProdutoVenda produtoVenda: carrinhoCompras) {
+                    produtoVenda.setVenda(venda);
+                    produtoVendaDAOImpl.saveProdutoVendaAndDecrementStock(produtoVenda);
+                }
+
+                JOptionPane.showMessageDialog(this, "Venda registrada com sucesso!", "SUCESSO: Venda registrada", JOptionPane.INFORMATION_MESSAGE);
+                atualizarEstoque();
+                esvaziarCarrinho();
             }
-            
-            JOptionPane.showMessageDialog(this, "Venda registrada com sucesso!", "SUCESSO: Venda registrada", JOptionPane.INFORMATION_MESSAGE);
-            atualizarEstoque();
-            esvaziarCarrinho();
+        } else {
+            JOptionPane.showMessageDialog(this, "Adicione itens ao carrinho para realizar uma venda.", "ERRO: Carrinho vazio", JOptionPane.ERROR_MESSAGE);
         }
+        
     }//GEN-LAST:event_btnVenderActionPerformed
 
     public void atualizarEstoque() {
@@ -267,7 +269,7 @@ public class RegistrarVendaPane extends javax.swing.JPanel {
                             produtoVenda.setQtdProduto(produtoVenda.getQtdProduto() + (Integer) qtdProdutoSpinner.getValue());
                         }
                         atualizarItensCarrinho();
-                        lblValorTotal.setText(Float.toString(somarCarrinho()));
+                        lblValorTotal.setText("R$ " + NumberFormatUtils.formatPtBr(somarCarrinho()));
                         comboBoxProduto.removeAllItems();
                         this.limparCampos();
                         return;
@@ -283,7 +285,7 @@ public class RegistrarVendaPane extends javax.swing.JPanel {
                 "SUCESSO: Item adicionado", 
                 JOptionPane.INFORMATION_MESSAGE);
                 addItemCarrinho(produtoVenda);
-                lblValorTotal.setText(Float.toString(somarCarrinho()));
+                lblValorTotal.setText("R$ " + NumberFormatUtils.formatPtBr(somarCarrinho()));
                 this.limparCampos();
             }
         }
@@ -300,7 +302,7 @@ public class RegistrarVendaPane extends javax.swing.JPanel {
                     DefaultTableModel model = (DefaultTableModel) tabelaCarrinho.getModel();
                     model.removeRow(linhaSelecionada);
                     JOptionPane.showMessageDialog(this, "Item removido do carrinho com sucesso!", "SUCESSO: Item removido", JOptionPane.INFORMATION_MESSAGE);
-                    lblValorTotal.setText(Float.toString(somarCarrinho()));
+                    lblValorTotal.setText("R$ " + NumberFormatUtils.formatPtBr(somarCarrinho()));
                 }
             }
         }
