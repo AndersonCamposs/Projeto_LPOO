@@ -15,6 +15,7 @@ model\entity\Cliente.class
 view\RegistrarClientePane$2.class
 view\ListarClientesPane$2.class
 view\RegistrarUsuarioPane$3.class
+view\ListarProdutosPane$5.class
 view\RegistrarUsuarioPane$1.class
 view\ListarReservasPane.class
 view\ListarProdutosPane.class

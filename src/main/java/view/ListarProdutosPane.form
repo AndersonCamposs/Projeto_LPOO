@@ -48,13 +48,9 @@
                           <Component id="jLabel3" max="32767" attributes="0"/>
                           <Component id="inputValorProduto" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
-                      <Component id="btnBuscar" min="-2" pref="76" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="btnCancelar" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace pref="210" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -73,10 +69,8 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="inputNomeProduto" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="inputValorProduto" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnBuscar" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnCancelar" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="40" max="32767" attributes="0"/>
+              <EmptySpace pref="41" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -153,6 +147,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="inputNomeProduto">
+      <Events>
+        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="inputNomeProdutoKeyReleased"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">
       <Properties>
@@ -160,21 +157,8 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="inputValorProduto">
-    </Component>
-    <Component class="javax.swing.JButton" name="btnBuscar">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Filtrar"/>
-      </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBuscarActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="btnCancelar">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Cancelar"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCancelarActionPerformed"/>
+        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="inputValorProdutoKeyReleased"/>
       </Events>
     </Component>
   </SubComponents>

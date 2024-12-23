@@ -38,8 +38,6 @@ public class ListarProdutosPane extends javax.swing.JPanel {
         inputNomeProduto = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         inputValorProduto = new javax.swing.JTextField();
-        btnBuscar = new javax.swing.JButton();
-        btnCancelar = new javax.swing.JButton();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -86,19 +84,17 @@ public class ListarProdutosPane extends javax.swing.JPanel {
 
         jLabel2.setText("Nome do produto:");
 
-        jLabel3.setText("Valor do produto:");
-
-        btnBuscar.setText("Filtrar");
-        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarActionPerformed(evt);
+        inputNomeProduto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                inputNomeProdutoKeyReleased(evt);
             }
         });
 
-        btnCancelar.setText("Cancelar");
-        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancelarActionPerformed(evt);
+        jLabel3.setText("Valor do produto:");
+
+        inputValorProduto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                inputValorProdutoKeyReleased(evt);
             }
         });
 
@@ -118,12 +114,8 @@ public class ListarProdutosPane extends javax.swing.JPanel {
                         .addGap(34, 34, 34)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(inputValorProduto))
-                        .addGap(27, 27, 27)
-                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnCancelar)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(inputValorProduto))))
+                .addContainerGap(210, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -138,10 +130,8 @@ public class ListarProdutosPane extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(inputNomeProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(inputValorProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBuscar)
-                    .addComponent(btnCancelar))
-                .addContainerGap(40, Short.MAX_VALUE))
+                    .addComponent(inputValorProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -155,37 +145,38 @@ public class ListarProdutosPane extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_tabelaProdutosMouseClicked
 
-    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        if (inputNomeProduto.getText().isEmpty() && inputValorProduto.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Informe valores válidos para realizar o filtro.", "ERRO: Valores inválidos", JOptionPane.ERROR_MESSAGE);
-        } else {
-           try {
-               String nomeProduto = inputNomeProduto.getText();
-                ProdutoFilter produtoFilter;
-                if (nomeProduto.isEmpty()) {
-                    produtoFilter = new ProdutoFilter(Float.valueOf(inputValorProduto.getText().replace(",", ".")));
-                } else if(inputValorProduto.getText().isEmpty()) {
-                    produtoFilter = new ProdutoFilter(nomeProduto);
-                } else {
-                    produtoFilter = new ProdutoFilter(nomeProduto, Float.valueOf(inputValorProduto.getText().replace(",", ".")));
-                }
-                
-                List<Produto> listaFiltrada = produtoDAOImpl.findWithFilter(produtoFilter);
-                preencherTabela(listaFiltrada);
-           } catch (NumberFormatException e) {
-               JOptionPane.showMessageDialog(this, "Informe um número válido no campo de valor do produto.", "ERRO: Número inválido", JOptionPane.ERROR_MESSAGE);
-           }
-            
+    private void inputNomeProdutoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_inputNomeProdutoKeyReleased
+        buscaFiltrada();
+    }//GEN-LAST:event_inputNomeProdutoKeyReleased
+
+    private void inputValorProdutoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_inputValorProdutoKeyReleased
+        buscaFiltrada();
+    }//GEN-LAST:event_inputValorProdutoKeyReleased
+
+
+    private void buscaFiltrada() {
+        try {
+            String nomeProduto = inputNomeProduto.getText();
+            ProdutoFilter produtoFilter = new ProdutoFilter();
+            if (nomeProduto.isEmpty() && !inputValorProduto.getText().isEmpty()) {
+                System.out.println("Apenas nome");
+                produtoFilter = new ProdutoFilter(Float.valueOf(inputValorProduto.getText().replace(",", ".")));
+            } else if(inputValorProduto.getText().isEmpty() && !nomeProduto.isEmpty()) {
+                System.out.println("Apenas valor");
+                produtoFilter = new ProdutoFilter(nomeProduto);
+            } else if(!nomeProduto.isEmpty() && !inputValorProduto.getText().isEmpty()) {
+                System.out.println("Todos dois");
+                produtoFilter = new ProdutoFilter(nomeProduto, Float.valueOf(inputValorProduto.getText().replace(",", ".")));
+            }
+
+             List<Produto> listaFiltrada = produtoDAOImpl.findWithFilter(produtoFilter);
+             preencherTabela(listaFiltrada);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Informe um número válido no campo de valor do produto.", "ERRO: Número inválido", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_btnBuscarActionPerformed
-
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        preencherTabela(produtoDAOImpl.findAll());
-        inputNomeProduto.setText("");
-        inputValorProduto.setText("");
-    }//GEN-LAST:event_btnCancelarActionPerformed
-
-
+            
+    }
+    
     private void preencherTabela(List<Produto> lista) {
         DefaultTableModel model = (DefaultTableModel) tabelaProdutos.getModel();
         model.setRowCount(0);
@@ -195,8 +186,6 @@ public class ListarProdutosPane extends javax.swing.JPanel {
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBuscar;
-    private javax.swing.JButton btnCancelar;
     private javax.swing.JTextField inputNomeProduto;
     private javax.swing.JTextField inputValorProduto;
     private javax.swing.JLabel jLabel1;
