@@ -52,6 +52,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         registrarVendaMenuItem = new javax.swing.JMenuItem();
         listarVendasMenuItem = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        sairMenuItem = new javax.swing.JMenuItem();
 
         jInternalFrame1.setVisible(true);
 
@@ -220,7 +221,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Edit");
+        jMenu2.setText("Opções");
+
+        sairMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_ESCAPE, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        sairMenuItem.setText("Sair");
+        sairMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sairMenuItemActionPerformed(evt);
+            }
+        });
+        jMenu2.add(sairMenuItem);
+
         jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
@@ -332,6 +343,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jDesktopPane1.add(listarVendasJIF);
     }//GEN-LAST:event_listarVendasMenuItemActionPerformed
 
+    private void sairMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sairMenuItemActionPerformed
+       logout();
+    }//GEN-LAST:event_sairMenuItemActionPerformed
+
     
     
     public void ativarEdicaoUsuario(Long id) {
@@ -387,7 +402,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         formularioEdicaoSenhaJIF.setVisible(true);
         formularioEdicaoSenhaJIF.setClosable(true);
         
-        EditarSenhaPane formulario = new EditarSenhaPane(id);
+        EditarSenhaPane formulario = new EditarSenhaPane(id, this);
         formularioEdicaoSenhaJIF.add(formulario);
         jDesktopPane1.add(formularioEdicaoSenhaJIF);
     }
@@ -487,6 +502,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
         return this.jDesktopPane1;
     }
     
+    public void logout() {
+        new LoginFrame().setVisible(true);
+        this.dispose();
+    }
     /**
      * @param args the command line arguments
      */
@@ -518,5 +537,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JCheckBoxMenuItem registrarReservaMenuItem;
     private javax.swing.JCheckBoxMenuItem registrarUsuarioMenuItem;
     private javax.swing.JMenuItem registrarVendaMenuItem;
+    private javax.swing.JMenuItem sairMenuItem;
     // End of variables declaration//GEN-END:variables
 }

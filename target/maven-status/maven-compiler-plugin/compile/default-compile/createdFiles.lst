@@ -83,6 +83,7 @@ model\dao\ProdutoDAOImpl.class
 view\LoginFrame.class
 model\dao\ClienteDAO.class
 view\ListarVendasPane$2.class
+view\TelaPrincipal$13.class
 model\dao\ClienteDAOImpl.class
 view\ListarUsuariosPane.class
 view\ListarUsuariosPane$2.class

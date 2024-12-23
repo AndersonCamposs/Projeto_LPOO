@@ -16,10 +16,11 @@ import utils.EncryptedPasswordUtils;
  */
 public class EditarSenhaPane extends javax.swing.JPanel {
     private Usuario usuario;
+    private TelaPrincipal telaPrincipal;
     /**
      * Creates new form EditarSenhaPane
      */
-    public EditarSenhaPane(Long id) {
+    public EditarSenhaPane(Long id, TelaPrincipal telaPrincipal) {
         initComponents();
         this.usuario = new UsuarioDAOImpl().findById(id);
     }
@@ -138,6 +139,7 @@ public class EditarSenhaPane extends javax.swing.JPanel {
                      new UsuarioDAOImpl().update(usuario);
                      JOptionPane.showMessageDialog(this, "Senha alterada com sucesso.", "SUCESSO: Senha alterada", JOptionPane.INFORMATION_MESSAGE);
                      limparCampos();
+                     telaPrincipal.logout();
                 } else {
                     JOptionPane.showMessageDialog(this, "As senhas informadas são diferentes, verifique e tente novamente.", "ERRO: Senhas diferentes", JOptionPane.ERROR_MESSAGE);
                 }
