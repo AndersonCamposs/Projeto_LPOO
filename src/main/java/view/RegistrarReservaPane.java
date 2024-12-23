@@ -333,7 +333,7 @@ public class RegistrarReservaPane extends javax.swing.JPanel {
                 painelAgendamento.setVisible(false);
                 this.formularioReservaJIF.setBounds(100, 100, 360, 180);
             } catch (ConstraintViolationException e) {
-                ValidationUtils.formatValidationErrors(e.getConstraintViolations());
+                JOptionPane.showMessageDialog(this, ValidationUtils.formatValidationErrors(e.getConstraintViolations()), "ERRO: Violação de restrição", JOptionPane.ERROR_MESSAGE);
             }
         } else {
             JOptionPane.showMessageDialog(this, "Cliente não encontrado, verifique e tente novamente.", "ERRO: Cliente não encontrado", JOptionPane.ERROR_MESSAGE);
