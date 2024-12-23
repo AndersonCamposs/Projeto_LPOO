@@ -4,18 +4,29 @@ import jakarta.persistence.TypedQuery;
 import java.util.List;
 import model.entity.Usuario;
 import model.filter.UsuarioFilter;
+import org.mindrot.jbcrypt.BCrypt;
+import utils.EncryptedPasswordUtils;
 
 public class UsuarioDAOImpl extends GenericDAOImpl<Usuario, Long> {
     public UsuarioDAOImpl() {
         super(Usuario.class);
     }
     
-    public boolean verificarLogin(String login, String senha) {
-        String jpql = "FROM Usuario u WHERE u.login = :login AND u.senha = :senha ";
-        return !entityManager.createQuery(jpql, Usuario.class)
+    public Usuario verificarLogin(String login, String senha) {
+        String jpql = "FROM Usuario u WHERE u.login = :login";
+        List<Usuario> listaUsuarios = entityManager.createQuery(jpql, Usuario.class)
                 .setParameter("login", login)
-                .setParameter("senha", senha)
-                .getResultList().isEmpty();
+                .getResultList();
+        
+        if(!listaUsuarios.isEmpty()) {
+            Usuario usuario = listaUsuarios.get(0);
+            
+            if (BCrypt.checkpw(senha, usuario.getSenha())) {
+                return usuario;
+            }
+        }
+        
+        return null;
     }
     
     public List<Usuario> findWithFilter(UsuarioFilter clienteFilter) { 

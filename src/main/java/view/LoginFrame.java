@@ -4,6 +4,7 @@
  */
 package view;
 
+import java.util.List;
 import javax.swing.JOptionPane;
 import model.dao.UsuarioDAOImpl;
 import model.entity.Usuario;
@@ -121,8 +122,9 @@ public class LoginFrame extends javax.swing.JFrame {
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
         String login = inputLogin.getText();
         String senha = new String(inputSenha.getPassword());
-        if(new UsuarioDAOImpl().verificarLogin(login, senha)) {
-            new TelaPrincipal().setVisible(true);
+        Usuario usuario = new UsuarioDAOImpl().verificarLogin(login, senha);
+        if(usuario != null) {
+            new TelaPrincipal(usuario).setVisible(true);
             this.dispose();
         } else {
             JOptionPane.showMessageDialog(this, "Login e/ou senhas incorretos.", "ERRO: Credenciais inválidas", JOptionPane.ERROR_MESSAGE);

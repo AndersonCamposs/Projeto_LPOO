@@ -1,9 +1,11 @@
 C:\Users\ander\Desktop\arenaCampos\src\main\java\model\dao\ReservaDAOImpl.java
+C:\Users\ander\Desktop\arenaCampos\src\main\java\view\EditarSenhaPane.java
 C:\Users\ander\Desktop\arenaCampos\src\main\java\model\dao\GenericDAOImpl.java
 C:\Users\ander\Desktop\arenaCampos\src\main\java\model\dao\QuadraoDAO.java
 C:\Users\ander\Desktop\arenaCampos\src\main\java\model\dao\ClienteDAOImpl.java
 C:\Users\ander\Desktop\arenaCampos\src\main\java\view\RegistrarVendaPane.java
 C:\Users\ander\Desktop\arenaCampos\src\main\java\model\entity\Venda.java
+C:\Users\ander\Desktop\arenaCampos\src\main\java\model\filter\UsuarioFilter.java
 C:\Users\ander\Desktop\arenaCampos\src\main\java\model\dao\DiaSemanaDAOImpl.java
 C:\Users\ander\Desktop\arenaCampos\src\main\java\model\dao\UsuarioDAOImpl.java
 C:\Users\ander\Desktop\arenaCampos\src\main\java\view\RegistrarClientePane.java
@@ -11,6 +13,7 @@ C:\Users\ander\Desktop\arenaCampos\src\main\java\model\dao\UsuarioDAO.java
 C:\Users\ander\Desktop\arenaCampos\src\main\java\view\ListarClientesPane.java
 C:\Users\ander\Desktop\arenaCampos\src\main\java\utils\NumberFormatUtils.java
 C:\Users\ander\Desktop\arenaCampos\src\main\java\model\dao\ProdutoVendaDAO.java
+C:\Users\ander\Desktop\arenaCampos\src\main\java\utils\EncryptedPasswordUtils.java
 C:\Users\ander\Desktop\arenaCampos\src\main\java\model\entity\ProdutoVenda.java
 C:\Users\ander\Desktop\arenaCampos\src\main\java\view\RegistrarCategoriaPane.java
 C:\Users\ander\Desktop\arenaCampos\src\main\java\model\entity\Usuario.java

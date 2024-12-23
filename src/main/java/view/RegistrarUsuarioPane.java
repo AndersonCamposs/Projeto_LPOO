@@ -5,29 +5,32 @@ import jakarta.validation.ConstraintViolationException;
 import javax.swing.JOptionPane;
 import model.dao.UsuarioDAOImpl;
 import model.entity.Usuario;
+import utils.EncryptedPasswordUtils;
 import utils.ValidationUtils;
 
 public class RegistrarUsuarioPane extends javax.swing.JPanel {
 
-    /**
-     * Creates new form RegistrarUsuario
-     */
+    private TelaPrincipal telaPrincipal;
+    
     public RegistrarUsuarioPane() {
         initComponents();
         jLabel1.setText("Registrar usuário");
         btnDeletar.setVisible(false);
+        btnAlterarSenha.setVisible(false);
     }
 
-    public RegistrarUsuarioPane(Long id) {
+    public RegistrarUsuarioPane(Long id, TelaPrincipal telaPrincipal) {
         initComponents();
+        this.telaPrincipal = telaPrincipal;
         UsuarioDAOImpl usuarioDAOImpl = new UsuarioDAOImpl();
         this.u = usuarioDAOImpl.findById(id);
         jLabel1.setText("Editar usuário");
         inputLoginUsuario.setText(u.getLogin());
+        inputLoginUsuario.setEnabled(false);
         inputNomeUsuario.setText(u.getNome());
-        inputSenhaUsuario.setText(u.getSenha());
-        inputRepetirSenhaUsuario.setText(u.getSenha());
+        changeVisibilityPasswordFields();
         btnDeletar.setVisible(true);
+        btnAlterarSenha.setVisible(true);
     }
 
     /**
@@ -44,13 +47,14 @@ public class RegistrarUsuarioPane extends javax.swing.JPanel {
         inputNomeUsuario = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         inputLoginUsuario = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
+        lblSenha = new javax.swing.JLabel();
         inputSenhaUsuario = new javax.swing.JPasswordField();
-        jLabel5 = new javax.swing.JLabel();
+        lblRepetirSenha = new javax.swing.JLabel();
         inputRepetirSenhaUsuario = new javax.swing.JPasswordField();
         btnSalvar = new javax.swing.JButton();
         btnLimpar = new javax.swing.JButton();
         btnDeletar = new javax.swing.JButton();
+        btnAlterarSenha = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(394, 322));
 
@@ -68,8 +72,8 @@ public class RegistrarUsuarioPane extends javax.swing.JPanel {
             }
         });
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel4.setText("Senha:");
+        lblSenha.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblSenha.setText("Senha:");
 
         inputSenhaUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -77,8 +81,8 @@ public class RegistrarUsuarioPane extends javax.swing.JPanel {
             }
         });
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel5.setText("Repetir senha:");
+        lblRepetirSenha.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblRepetirSenha.setText("Repetir senha:");
 
         btnSalvar.setText("Salvar");
         btnSalvar.addActionListener(new java.awt.event.ActionListener() {
@@ -101,6 +105,13 @@ public class RegistrarUsuarioPane extends javax.swing.JPanel {
             }
         });
 
+        btnAlterarSenha.setText("Alterar senha");
+        btnAlterarSenha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarSenhaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -120,29 +131,31 @@ public class RegistrarUsuarioPane extends javax.swing.JPanel {
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(inputNomeUsuario)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(inputLoginUsuario)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel4)
+                                        .addComponent(lblSenha)
                                         .addGap(0, 0, Short.MAX_VALUE))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(btnSalvar)
-                                            .addComponent(inputSenhaUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(14, 14, 14)))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(inputSenhaUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(0, 22, Short.MAX_VALUE))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addComponent(btnSalvar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addGap(16, 16, 16)
+                                                .addComponent(btnLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGap(18, 18, 18)))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(inputRepetirSenhaUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel5)
-                                    .addComponent(btnLimpar))))))
+                                    .addComponent(lblRepetirSenha)
+                                    .addComponent(btnDeletar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnAlterarSenha)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnDeletar)
-                .addGap(158, 158, 158))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -159,8 +172,8 @@ public class RegistrarUsuarioPane extends javax.swing.JPanel {
                 .addComponent(inputLoginUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel4))
+                    .addComponent(lblRepetirSenha, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblSenha))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(inputSenhaUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -168,10 +181,11 @@ public class RegistrarUsuarioPane extends javax.swing.JPanel {
                 .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSalvar)
-                    .addComponent(btnLimpar))
+                    .addComponent(btnLimpar)
+                    .addComponent(btnDeletar))
                 .addGap(18, 18, 18)
-                .addComponent(btnDeletar)
-                .addContainerGap(112, Short.MAX_VALUE))
+                .addComponent(btnAlterarSenha)
+                .addContainerGap(56, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -184,33 +198,37 @@ public class RegistrarUsuarioPane extends javax.swing.JPanel {
     }//GEN-LAST:event_inputSenhaUsuarioActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        if (!new String(inputSenhaUsuario.getPassword()).equals(new String(inputRepetirSenhaUsuario.getPassword()))) {
-            inputSenhaUsuario.setText("");
-            inputRepetirSenhaUsuario.setText("");
-            JOptionPane.showMessageDialog(this, "As senhas não são iguais. Tente novamente!", "ERRO: Senhas diferentes", JOptionPane.ERROR_MESSAGE);
-        }
-        if (this.u != null) {
-            try {
-                this.u = prepareUsuarioObj();
-                atualizarUsuario(u);
-                JOptionPane.showMessageDialog(this, "Usuário atualizado com sucesso!", "SUCESSO: Usuário atualizado", JOptionPane.INFORMATION_MESSAGE);
-                System.out.println("Bloco catch");
-            } catch (RollbackException e) {
-                Throwable cause = e.getCause();
-                if (cause instanceof ConstraintViolationException) {
-                    ConstraintViolationException constraintViolationException = (ConstraintViolationException) e.getCause();
-                    JOptionPane.showMessageDialog(this, ValidationUtils.formatValidationErrors(constraintViolationException.getConstraintViolations()), "ERRO: Violação de restrição", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-
+        if (inputSenhaUsuario.getPassword().length < 6) {
+            JOptionPane.showMessageDialog(this, "A senha deve ter no mínimo 6 caracteres", "ERRO: Violação de restrição", JOptionPane.ERROR_MESSAGE);
         } else {
-            try {
-                Usuario usuario = prepareUsuarioObj();
-                salvarUsuario(usuario);
-                JOptionPane.showMessageDialog(this, "Usuário salvo com sucesso!", "SUCESSO: Usuário salvo", JOptionPane.INFORMATION_MESSAGE);
-                this.limparCampos();
-            } catch (ConstraintViolationException e) {
-                ValidationUtils.formatValidationErrors(e.getConstraintViolations());
+            if (this.u == null && !new String(inputSenhaUsuario.getPassword()).equals(new String(inputRepetirSenhaUsuario.getPassword()))) {
+                inputSenhaUsuario.setText("");
+                inputRepetirSenhaUsuario.setText("");
+                JOptionPane.showMessageDialog(this, "As senhas não são iguais. Tente novamente!", "ERRO: Senhas diferentes", JOptionPane.ERROR_MESSAGE);
+            }
+            if (this.u != null) {
+                try {
+                    this.u = prepareUsuarioObj();
+                    atualizarUsuario(u);
+                    JOptionPane.showMessageDialog(this, "Usuário atualizado com sucesso!", "SUCESSO: Usuário atualizado", JOptionPane.INFORMATION_MESSAGE);
+                    System.out.println("Bloco catch");
+                } catch (RollbackException e) {
+                    Throwable cause = e.getCause();
+                    if (cause instanceof ConstraintViolationException) {
+                        ConstraintViolationException constraintViolationException = (ConstraintViolationException) e.getCause();
+                        JOptionPane.showMessageDialog(this, ValidationUtils.formatValidationErrors(constraintViolationException.getConstraintViolations()), "ERRO: Violação de restrição", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+
+            } else {
+                try {
+                    Usuario usuario = prepareUsuarioObj();
+                    salvarUsuario(usuario);
+                    JOptionPane.showMessageDialog(this, "Usuário salvo com sucesso!", "SUCESSO: Usuário salvo", JOptionPane.INFORMATION_MESSAGE);
+                    this.limparCampos();
+                } catch (ConstraintViolationException e) {
+                    JOptionPane.showMessageDialog(this, ValidationUtils.formatValidationErrors(e.getConstraintViolations()), "ERRO: Violação de restrição", JOptionPane.ERROR_MESSAGE);
+                }
             }
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
@@ -234,6 +252,17 @@ public class RegistrarUsuarioPane extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnDeletarActionPerformed
 
+    private void btnAlterarSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarSenhaActionPerformed
+        telaPrincipal.ativarEdicaoUsuarioSenha(u.getId());
+    }//GEN-LAST:event_btnAlterarSenhaActionPerformed
+
+    private void changeVisibilityPasswordFields() {
+        lblSenha.setVisible(false);
+        inputSenhaUsuario.setVisible(false);
+        lblRepetirSenha.setVisible(false);
+        inputRepetirSenhaUsuario.setVisible(false);
+    }
+    
     private void limparCampos() {
         inputNomeUsuario.setText("");
         inputLoginUsuario.setText("");
@@ -255,14 +284,17 @@ public class RegistrarUsuarioPane extends javax.swing.JPanel {
         Usuario usuario = new Usuario();
         if (this.u != null) {
             usuario.setId(u.getId());
+            usuario.setSenha(u.getSenha());
+        } else {
+            usuario.setSenha(EncryptedPasswordUtils.generateHash(new String(inputSenhaUsuario.getPassword())));
         }
         usuario.setNome(inputNomeUsuario.getText());
         usuario.setLogin(inputLoginUsuario.getText());
-        usuario.setSenha(new String(inputSenhaUsuario.getPassword()));
         return usuario;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAlterarSenha;
     private javax.swing.JButton btnDeletar;
     private javax.swing.JButton btnLimpar;
     private javax.swing.JButton btnSalvar;
@@ -273,8 +305,8 @@ public class RegistrarUsuarioPane extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel lblRepetirSenha;
+    private javax.swing.JLabel lblSenha;
     // End of variables declaration//GEN-END:variables
     private Usuario u;
 }

@@ -1,6 +1,7 @@
 package view;
 
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.entity.Usuario;
 import model.dao.UsuarioDAOImpl;
@@ -108,9 +109,12 @@ public class ListarUsuariosPane extends javax.swing.JPanel {
             int linhaSelecionada = tabelaUsuarios.getSelectedRow();
             if (linhaSelecionada != -1) {
                 Long idSelecionado = (Long) tabelaUsuarios.getValueAt(linhaSelecionada, 0);
-                telaPrincipal.ativarEdicaoUsuario(idSelecionado);
+                if (telaPrincipal.getAuthUser().getId().longValue() == idSelecionado.longValue()) {
+                    telaPrincipal.ativarEdicaoUsuario(idSelecionado);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Você não pode editar o perfil deste usuário.", "ERRO: Não autorizado", JOptionPane.ERROR_MESSAGE);
+                }
             }
-            
         }
     }//GEN-LAST:event_tabelaUsuariosMouseClicked
 
